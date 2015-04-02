@@ -2,9 +2,7 @@
  *
  * BlendAddf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -19,9 +17,7 @@ float blendAddf(float base, float blend) {
  *
  * BlendSubstractf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -36,9 +32,7 @@ float blendSubstractf(float base, float blend) {
  *
  * BlendLightenf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -53,9 +47,7 @@ float blendLightenf(float base, float blend) {
  *
  * BlendDarkenf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -70,9 +62,7 @@ float blendDarkenf(float base, float blend) {
  *
  * BlendLinearLightf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -90,9 +80,7 @@ float blendLinearLightf(float base, float blend) {
  *
  * BlendScreenf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -107,9 +95,7 @@ float blendScreenf(float base, float blend) {
  *
  * BlendOverlayf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -124,9 +110,7 @@ float blendOverlayf(float base, float blend) {
  *
  * BlendSoftLightf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -141,9 +125,7 @@ float blendSoftLightf(float base, float blend) {
  *
  * BlendColorDodgef
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -158,9 +140,7 @@ float blendColorDodgef(float base, float blend) {
  *
  * BlendColorBurnf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -175,9 +155,7 @@ float blendColorBurnf(float base, float blend) {
  *
  * BlendVividLightf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -195,9 +173,7 @@ float blendVividLightf(float base, float blend) {
  *
  * BlendPinLightf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -215,9 +191,7 @@ float blendPinLightf(float base, float blend) {
  *
  * BlendHardMixf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -234,9 +208,7 @@ float blendHardMixf(float base, float blend) {
  *
  * BlendReflectf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -251,9 +223,7 @@ float blendReflectf(float base, float blend) {
  *
  * BlendNormal
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -268,9 +238,7 @@ vec3 blendNormal(vec3 base, vec3 blend) {
  *
  * BlendMultiply
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -285,9 +253,7 @@ vec3 blendMultiply(vec3 base, vec3 blend) {
  *
  * BlendAverage
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -302,9 +268,7 @@ vec3 blendAverage(vec3 base, vec3 blend) {
  *
  * BlendAdd
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -319,9 +283,7 @@ vec3 blendAdd(vec3 base, vec3 blend) {
  *
  * BlendSubstract
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -336,9 +298,7 @@ vec3 blendSubstract(vec3 base, vec3 blend) {
  *
  * BlendDifference
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -353,9 +313,7 @@ vec3 blendDifference(vec3 base, vec3 blend) {
  *
  * BlendNegation
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -370,9 +328,7 @@ vec3 blendNegation(vec3 base, vec3 blend) {
  *
  * BlendExclusion
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -387,9 +343,7 @@ vec3 blendExclusion(vec3 base, vec3 blend) {
  *
  * BlendScreen
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -406,9 +360,7 @@ vec3 blendScreen(vec3 base, vec3 blend) {
  *
  * BlendOverlay
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -425,9 +377,7 @@ vec3 blendOverlay(vec3 base, vec3 blend) {
  *
  * BlendSoftLight
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -444,9 +394,7 @@ vec3 blendSoftLight(vec3 base, vec3 blend) {
  *
  * BlendHardLight
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -463,9 +411,7 @@ vec3 blendHardLight(vec3 base, vec3 blend) {
  *
  * BlendColorDodge
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -482,9 +428,7 @@ vec3 blendColorDodge(vec3 base, vec3 blend) {
  *
  * BlendColorBurn
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -501,9 +445,7 @@ vec3 blendColorBurn(vec3 base, vec3 blend) {
  *
  * BlendLinearLight
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -520,9 +462,7 @@ vec3 blendLinearLight(vec3 base, vec3 blend) {
  *
  * BlendVividLight
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -539,9 +479,7 @@ vec3 blendVividLight(vec3 base, vec3 blend) {
  *
  * BlendPinLight
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -558,9 +496,7 @@ vec3 blendPinLight(vec3 base, vec3 blend) {
  *
  * BlendHardMix
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -577,9 +513,7 @@ vec3 blendHardMix(vec3 base, vec3 blend) {
  *
  * BlendReflect
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -596,9 +530,7 @@ vec3 blendReflect(vec3 base, vec3 blend) {
  *
  * BlendGlow
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -615,9 +547,7 @@ vec3 blendGlow(vec3 base, vec3 blend) {
  *
  * BlendPhoenix
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -632,9 +562,7 @@ vec3 blendPhoenix(vec3 base, vec3 blend) {
  *
  * BlendLinearDodgef
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -650,9 +578,7 @@ float blendLinearDodgef(float base, float blend) {
  *
  * BlendLinearBurnf
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -668,9 +594,7 @@ float blendLinearBurnf(float base, float blend) {
  *
  * BlendLighten
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -686,9 +610,7 @@ float blendLighten(float base, float blend) {
  *
  * BlendDarken
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -704,9 +626,7 @@ float blendDarken(float base, float blend) {
  *
  * BlendLinearDodge
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 
@@ -722,9 +642,7 @@ vec3 blendLinearDodge(vec3 base, vec3 blend) {
  *
  * BlendLinearBurn
  * 
- * The code here is generated using the ../source/convert.js script.
- * Modify that file to update.
- * Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light
+ * Generated using the ../source/convert.js script.
  *
  */
 

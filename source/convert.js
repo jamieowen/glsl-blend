@@ -183,6 +183,10 @@ for( name in entryMap )
             content += '\t// ' + entry.comments + '\n';
         }
 
+        // could modify these implementations so similar to
+        // https://github.com/mattdesl/glsl-blend-soft-light'
+        // but this will do for now.
+
         if( entry.inlineBlend ){
             // blend function..
             //#define Blend(base, blend, funcf) 		vec3(funcf(base.r, blend.r), funcf(base.g, blend.g), funcf(base.b, blend.b))
@@ -204,9 +208,7 @@ for( name in entryMap )
     var message = [
         entry.name,
         '',
-        'The code here is generated using the ../source/convert.js script.',
-        'Modify that file to update.',
-        'Alternative implementations could be tried, for example : https://github.com/mattdesl/glsl-blend-soft-light'
+        'Generated using the ../source/convert.js script.'
     ];
 
     var messageString = '/**\n *\n';
