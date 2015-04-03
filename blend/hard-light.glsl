@@ -1,8 +1,6 @@
 /**
  *
  * BlendHardLight
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 

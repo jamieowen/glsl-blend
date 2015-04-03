@@ -1,8 +1,6 @@
 /**
  *
  * BlendAddf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -16,8 +14,6 @@ float blendAddf(float base, float blend) {
 /**
  *
  * BlendSubstractf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -31,8 +27,6 @@ float blendSubstractf(float base, float blend) {
 /**
  *
  * BlendLightenf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -46,8 +40,6 @@ float blendLightenf(float base, float blend) {
 /**
  *
  * BlendDarkenf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -61,8 +53,6 @@ float blendDarkenf(float base, float blend) {
 /**
  *
  * BlendLinearLightf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -79,8 +69,6 @@ float blendLinearLightf(float base, float blend) {
 /**
  *
  * BlendScreenf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -94,8 +82,6 @@ float blendScreenf(float base, float blend) {
 /**
  *
  * BlendOverlayf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -109,8 +95,6 @@ float blendOverlayf(float base, float blend) {
 /**
  *
  * BlendSoftLightf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -124,8 +108,6 @@ float blendSoftLightf(float base, float blend) {
 /**
  *
  * BlendColorDodgef
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -139,8 +121,6 @@ float blendColorDodgef(float base, float blend) {
 /**
  *
  * BlendColorBurnf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -154,8 +134,6 @@ float blendColorBurnf(float base, float blend) {
 /**
  *
  * BlendVividLightf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -172,8 +150,6 @@ float blendVividLightf(float base, float blend) {
 /**
  *
  * BlendPinLightf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -190,8 +166,6 @@ float blendPinLightf(float base, float blend) {
 /**
  *
  * BlendHardMixf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -207,8 +181,6 @@ float blendHardMixf(float base, float blend) {
 /**
  *
  * BlendReflectf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -222,8 +194,6 @@ float blendReflectf(float base, float blend) {
 /**
  *
  * BlendNormal
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -237,8 +207,6 @@ vec3 blendNormal(vec3 base, vec3 blend) {
 /**
  *
  * BlendMultiply
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -252,8 +220,6 @@ vec3 blendMultiply(vec3 base, vec3 blend) {
 /**
  *
  * BlendAverage
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -267,8 +233,6 @@ vec3 blendAverage(vec3 base, vec3 blend) {
 /**
  *
  * BlendAdd
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -282,8 +246,6 @@ vec3 blendAdd(vec3 base, vec3 blend) {
 /**
  *
  * BlendSubstract
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -297,8 +259,6 @@ vec3 blendSubstract(vec3 base, vec3 blend) {
 /**
  *
  * BlendDifference
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -312,8 +272,6 @@ vec3 blendDifference(vec3 base, vec3 blend) {
 /**
  *
  * BlendNegation
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -327,8 +285,6 @@ vec3 blendNegation(vec3 base, vec3 blend) {
 /**
  *
  * BlendExclusion
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -342,8 +298,6 @@ vec3 blendExclusion(vec3 base, vec3 blend) {
 /**
  *
  * BlendScreen
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -359,8 +313,6 @@ vec3 blendScreen(vec3 base, vec3 blend) {
 /**
  *
  * BlendOverlay
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -376,8 +328,6 @@ vec3 blendOverlay(vec3 base, vec3 blend) {
 /**
  *
  * BlendSoftLight
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -393,8 +343,6 @@ vec3 blendSoftLight(vec3 base, vec3 blend) {
 /**
  *
  * BlendHardLight
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -410,8 +358,6 @@ vec3 blendHardLight(vec3 base, vec3 blend) {
 /**
  *
  * BlendColorDodge
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -427,8 +373,6 @@ vec3 blendColorDodge(vec3 base, vec3 blend) {
 /**
  *
  * BlendColorBurn
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -444,8 +388,6 @@ vec3 blendColorBurn(vec3 base, vec3 blend) {
 /**
  *
  * BlendLinearLight
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -461,8 +403,6 @@ vec3 blendLinearLight(vec3 base, vec3 blend) {
 /**
  *
  * BlendVividLight
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -478,8 +418,6 @@ vec3 blendVividLight(vec3 base, vec3 blend) {
 /**
  *
  * BlendPinLight
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -495,8 +433,6 @@ vec3 blendPinLight(vec3 base, vec3 blend) {
 /**
  *
  * BlendHardMix
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -512,8 +448,6 @@ vec3 blendHardMix(vec3 base, vec3 blend) {
 /**
  *
  * BlendReflect
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -529,8 +463,6 @@ vec3 blendReflect(vec3 base, vec3 blend) {
 /**
  *
  * BlendGlow
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -546,8 +478,6 @@ vec3 blendGlow(vec3 base, vec3 blend) {
 /**
  *
  * BlendPhoenix
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -561,8 +491,6 @@ vec3 blendPhoenix(vec3 base, vec3 blend) {
 /**
  *
  * BlendLinearDodgef
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -577,8 +505,6 @@ float blendLinearDodgef(float base, float blend) {
 /**
  *
  * BlendLinearBurnf
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -593,8 +519,6 @@ float blendLinearBurnf(float base, float blend) {
 /**
  *
  * BlendLighten
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -609,8 +533,6 @@ float blendLighten(float base, float blend) {
 /**
  *
  * BlendDarken
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -625,8 +547,6 @@ float blendDarken(float base, float blend) {
 /**
  *
  * BlendLinearDodge
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -641,8 +561,6 @@ vec3 blendLinearDodge(vec3 base, vec3 blend) {
 /**
  *
  * BlendLinearBurn
- * 
- * Generated using the ../source/convert.js script.
  *
  */
 
@@ -652,5 +570,350 @@ vec3 blendLinearBurn(vec3 base, vec3 blend) {
 }
 
 #pragma glslify: export(blendLinearBurn)
+
+
+/**
+ *
+ * BlendNormalo
+ *
+ */
+
+#pragma glslify: blendNormal = require(./normal)
+
+vec3 blendNormalo(vec3 base, vec3 blend, float opacity) {
+	return (blendNormal(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendNormalo)
+
+
+/**
+ *
+ * BlendMultiplyo
+ *
+ */
+
+#pragma glslify: blendMultiply = require(./multiply)
+
+vec3 blendMultiplyo(vec3 base, vec3 blend, float opacity) {
+	return (blendMultiply(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendMultiplyo)
+
+
+/**
+ *
+ * BlendAverageo
+ *
+ */
+
+#pragma glslify: blendAverage = require(./average)
+
+vec3 blendAverageo(vec3 base, vec3 blend, float opacity) {
+	return (blendAverage(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendAverageo)
+
+
+/**
+ *
+ * BlendAddo
+ *
+ */
+
+#pragma glslify: blendAdd = require(./add)
+
+vec3 blendAddo(vec3 base, vec3 blend, float opacity) {
+	return (blendAdd(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendAddo)
+
+
+/**
+ *
+ * BlendSubstracto
+ *
+ */
+
+#pragma glslify: blendSubstract = require(./substract)
+
+vec3 blendSubstracto(vec3 base, vec3 blend, float opacity) {
+	return (blendSubstract(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendSubstracto)
+
+
+/**
+ *
+ * BlendDifferenceo
+ *
+ */
+
+#pragma glslify: blendDifference = require(./difference)
+
+vec3 blendDifferenceo(vec3 base, vec3 blend, float opacity) {
+	return (blendDifference(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendDifferenceo)
+
+
+/**
+ *
+ * BlendNegationo
+ *
+ */
+
+#pragma glslify: blendNegation = require(./negation)
+
+vec3 blendNegationo(vec3 base, vec3 blend, float opacity) {
+	return (blendNegation(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendNegationo)
+
+
+/**
+ *
+ * BlendExclusiono
+ *
+ */
+
+#pragma glslify: blendExclusion = require(./exclusion)
+
+vec3 blendExclusiono(vec3 base, vec3 blend, float opacity) {
+	return (blendExclusion(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendExclusiono)
+
+
+/**
+ *
+ * BlendScreeno
+ *
+ */
+
+#pragma glslify: blendScreen = require(./screen)
+
+vec3 blendScreeno(vec3 base, vec3 blend, float opacity) {
+	return (blendScreen(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendScreeno)
+
+
+/**
+ *
+ * BlendOverlayo
+ *
+ */
+
+#pragma glslify: blendOverlay = require(./overlay)
+
+vec3 blendOverlayo(vec3 base, vec3 blend, float opacity) {
+	return (blendOverlay(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendOverlayo)
+
+
+/**
+ *
+ * BlendSoftLighto
+ *
+ */
+
+#pragma glslify: blendSoftLight = require(./soft-light)
+
+vec3 blendSoftLighto(vec3 base, vec3 blend, float opacity) {
+	return (blendSoftLight(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendSoftLighto)
+
+
+/**
+ *
+ * BlendHardLighto
+ *
+ */
+
+#pragma glslify: blendHardLight = require(./hard-light)
+
+vec3 blendHardLighto(vec3 base, vec3 blend, float opacity) {
+	return (blendHardLight(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendHardLighto)
+
+
+/**
+ *
+ * BlendColorDodgeo
+ *
+ */
+
+#pragma glslify: blendColorDodge = require(./color-dodge)
+
+vec3 blendColorDodgeo(vec3 base, vec3 blend, float opacity) {
+	return (blendColorDodge(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendColorDodgeo)
+
+
+/**
+ *
+ * BlendColorBurno
+ *
+ */
+
+#pragma glslify: blendColorBurn = require(./color-burn)
+
+vec3 blendColorBurno(vec3 base, vec3 blend, float opacity) {
+	return (blendColorBurn(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendColorBurno)
+
+
+/**
+ *
+ * BlendLinearLighto
+ *
+ */
+
+#pragma glslify: blendLinearLight = require(./linear-light)
+
+vec3 blendLinearLighto(vec3 base, vec3 blend, float opacity) {
+	return (blendLinearLight(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendLinearLighto)
+
+
+/**
+ *
+ * BlendVividLighto
+ *
+ */
+
+#pragma glslify: blendVividLight = require(./vivid-light)
+
+vec3 blendVividLighto(vec3 base, vec3 blend, float opacity) {
+	return (blendVividLight(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendVividLighto)
+
+
+/**
+ *
+ * BlendPinLighto
+ *
+ */
+
+#pragma glslify: blendPinLight = require(./pin-light)
+
+vec3 blendPinLighto(vec3 base, vec3 blend, float opacity) {
+	return (blendPinLight(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendPinLighto)
+
+
+/**
+ *
+ * BlendHardMixo
+ *
+ */
+
+#pragma glslify: blendHardMix = require(./hard-mix)
+
+vec3 blendHardMixo(vec3 base, vec3 blend, float opacity) {
+	return (blendHardMix(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendHardMixo)
+
+
+/**
+ *
+ * BlendReflecto
+ *
+ */
+
+#pragma glslify: blendReflect = require(./reflect)
+
+vec3 blendReflecto(vec3 base, vec3 blend, float opacity) {
+	return (blendReflect(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendReflecto)
+
+
+/**
+ *
+ * BlendGlowo
+ *
+ */
+
+#pragma glslify: blendGlow = require(./glow)
+
+vec3 blendGlowo(vec3 base, vec3 blend, float opacity) {
+	return (blendGlow(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendGlowo)
+
+
+/**
+ *
+ * BlendPhoenixo
+ *
+ */
+
+#pragma glslify: blendPhoenix = require(./phoenix)
+
+vec3 blendPhoenixo(vec3 base, vec3 blend, float opacity) {
+	return (blendPhoenix(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendPhoenixo)
+
+
+/**
+ *
+ * BlendLinearDodgeo
+ *
+ */
+
+#pragma glslify: blendLinearDodge = require(./linear-dodge)
+
+vec3 blendLinearDodgeo(vec3 base, vec3 blend, float opacity) {
+	return (blendLinearDodge(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendLinearDodgeo)
+
+
+/**
+ *
+ * BlendLinearBurno
+ *
+ */
+
+#pragma glslify: blendLinearBurn = require(./linear-burn)
+
+vec3 blendLinearBurno(vec3 base, vec3 blend, float opacity) {
+	return (blendLinearBurn(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendLinearBurno)
 
 

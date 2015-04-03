@@ -18,6 +18,13 @@ var mapModes = { // map these modes to another mode.
     'BlendLinearBurn':'BlendSubstract'
 };
 
+// ignore from standard handling.
+// blend is inlined, opacity is exported as seperate function for each mode
+var ignoreModes = {
+    'Blend': true,
+    'BlendOpacity':true
+};
+
 var matches = glsl.match( /#define Blend.+\n/g ); // match preprocessor line.
 var ppLine;
 var chomp,c,b,name,sig,impl,entry;
@@ -77,14 +84,49 @@ for( var map in mapModes ){
         implMod: null, // assigned below - final impl after mod
         //mapTo: entryMap[ mapModes[ map ] ],
         float: entryMap[ mapModes[ map] ].float,
-        comments: 'Note : Same implementation as ' + entryMap[ mapModes[ map]].name
-    };
+        comments: 'Note : Same implementation as ' + entryMap[ mapModes[ map]].name,
+        opacityBlend: false // see below
 
+    };
 
     entryMap[ entry.name ] = entry;
 }
 
+
+// add function names &
+// add opacity blend modes.
+// we can't pass functions so we'll export a separate function for each mode.
+// #define BlendOpacity(base, blend, F, O) 	(F(base, blend) * O + blend * (1.0 - O))
+
+var entryO;
+var opacityImpl = '(F(base, blend) * opacity + blend * (1.0 - opacity))';
+for( name in entryMap )
+{
+    entry = entryMap[ name ];
+
+    // function name
+    entry.functionName = name[0].toLowerCase() + name.slice(1);
+
+    // opacity blend modes.
+    if( !entry.float && !ignoreModes[ entry.name ] )
+    {
+        // TODO : Create float modes for opacity?
+
+        entryO = {
+            name: name + 'o',
+            opacityBlend: true,
+            impl: opacityImpl.replace( 'F', entry.name ),
+            implMod: null,
+            float: false,
+            functionName: name[0].toLowerCase() + name.slice( 1 ) + 'o'
+        };
+
+        entryMap[ entryO.name ] = entryO;
+    }
+}
+
 // finalise
+
 for( name in entryMap )
 {
     entry = entryMap[ name ];
@@ -104,12 +146,9 @@ for( name in entryMap )
         chomp = chomp.slice( 0,-1 ) + '-f';
     }
 
+
     // remove the blend- bit.. so names become e.g. 'blend/hard-light.glsl'
     entry.filename = chomp.replace( 'blend-', '' );
-
-    // function name
-
-    entry.functionName = name[0].toLowerCase() + name.slice( 1 );
 
 }
 
@@ -129,6 +168,7 @@ for( name in entryMap )
     }
 
     matches = entry.impl.match( new RegExp( deps.join('|'), 'g' ) );
+
     entry.implMod = entry.impl;
     if( matches ){
         var andBlend = false;
@@ -161,7 +201,7 @@ for( name in entryMap )
 {
     entry = entryMap[ name ];
 
-    if( name !== 'Blend' && name !== 'BlendOpacity' ) // this has four arguments..
+    if( !ignoreModes[ name ] )
     {
         content = '\n';
 
@@ -175,6 +215,9 @@ for( name in entryMap )
 
         if( entry.float ){
             content += 'float ' + entry.functionName + '(float base, float blend) {\n';
+        }else
+        if( entry.opacityBlend ){
+            content += 'vec3 ' + entry.functionName + '(vec3 base, vec3 blend, float opacity) {\n';
         }else{
             content += 'vec3 ' + entry.functionName + '(vec3 base, vec3 blend) {\n';
         }
@@ -190,13 +233,12 @@ for( name in entryMap )
         if( entry.inlineBlend ){
             // blend function..
             //#define Blend(base, blend, funcf) 		vec3(funcf(base.r, blend.r), funcf(base.g, blend.g), funcf(base.b, blend.b))
-
             // this works for all functions that require it
             var inline = entryMap[ 'Blend' ].impl;
             content += '\t' + 'return ' + inline.replace( /funcf/g, entry.deps[0].functionName ) + ';';
             content += '\n';
 
-        }else {
+        }else{
             content += '\treturn ' + entry.implMod + ';\n';
         }
         content += '}\n\n';
@@ -206,9 +248,9 @@ for( name in entryMap )
     }
 
     var message = [
-        entry.name,
-        '',
-        'Generated using the ../source/convert.js script.'
+        entry.name
+        //'',
+        //'Generated using the ../source/convert.js script.'
     ];
 
     var messageString = '/**\n *\n';
@@ -222,7 +264,8 @@ for( name in entryMap )
 
     content = messageString + content;
 
-    if( entry.name !== 'Blend' && entry.name !== 'BlendOpacity' ){
+    if( !ignoreModes[ entry.name ] )
+    {
         allContent += content + '\n\n\n';
         fsUtil.writeFileSync( '../blend/' + entry.filename + '.glsl', content );
     }
@@ -238,7 +281,7 @@ for( name in entryMap )
 {
     entry = entryMap[ name ];
 
-    if( entry.name !== 'Blend' && entry.name !== 'BlendOpacity') {
+    if( !ignoreModes[ name ] ) {
         content += '#pragma glslify: ' + entry.name + ' = require(../blend/' + entry.filename + ')';
         content += '\n';
     }
