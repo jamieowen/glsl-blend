@@ -29,6 +29,7 @@ var matches = glsl.match( /#define Blend.+\n/g ); // match preprocessor line.
 var ppLine;
 var chomp,c,b,name,sig,impl,entry;
 var entryMap = {};
+var modes = {};
 
 for( var i = 0; i<matches.length; i++ )
 {
@@ -103,12 +104,6 @@ var opacityImpl = '(F(base, blend) * opacity + blend * (1.0 - opacity))';
 for( name in entryMap )
 {
     entry = entryMap[ name ];
-
-    // function name
-    entry.functionName = name[0].toLowerCase() + name.slice(1);
-
-
-
     // opacity blend modes.
     if( !entry.float && !ignoreModes[ entry.name ] )
     {
@@ -120,7 +115,7 @@ for( name in entryMap )
             impl: opacityImpl.replace( 'F', entry.name ),
             implMod: null,
             float: false,
-            functionName: name[0].toLowerCase() + name.slice( 1 ) + 'o'
+            functionName: null
         };
 
         entryMap[ entryO.name ] = entryO;
@@ -145,6 +140,7 @@ for( name in entryMap )
             chomp += c.toLowerCase();
         }
     }
+
     var mode = chomp;
 
     if( chomp[ chomp.length-1 ] === 'f' ){
@@ -160,6 +156,19 @@ for( name in entryMap )
     // remove the blend- bit.. so names become e.g. 'blend/hard-light.glsl'
     entry.filename = chomp.replace( 'blend-', '' );
     entry.mode = mode.replace( 'blend-', '' );
+    //entry.functionName = name[0].toLowerCase() + name.slice(1);
+
+    entry.functionName = entry.mode.split('-').map(function(s){
+        return s[0].toUpperCase() + s.slice(1);
+    }).join('');
+    entry.functionName = entry.functionName[0].toLowerCase() + entry.functionName.slice( 1 );
+
+    // store entries by mode.
+    if( !modes[ entry.mode ] ){
+        modes[ entry.mode ] = [];
+    }
+
+    modes[ entry.mode ].push( entry );
 }
 
 // determine dependencies..
@@ -212,37 +221,7 @@ for( name in entryMap )
 
     if( !ignoreModes[ name ] )
     {
-        content = '\n';
-
-        // handle changes in filename..
-        var file,dep;
-        for( j = 0; j<entry.deps.length; j++ ) {
-
-            dep = entry.deps[j];
-
-            if( dep.mode === entry.mode ){
-                file = '.';
-            }else{
-                file = '../' + dep.mode;
-            }
-
-            if( dep.float ){
-                file += '/f';
-            }else
-            if( dep.opacityBlend ){
-                file += '/o';
-            }else
-            if( dep.mode == entry.mode ){
-                file += '/';
-            }
-
-            content += '#pragma glslify: ' + dep.functionName + ' = require(' + file + ')\n';
-        }
-
-        if( entry.deps.length ){
-            content += '\n';
-        }
-
+        content = '';
         if( entry.float ){
             content += 'float ' + entry.functionName + '(float base, float blend) {\n';
         }else
@@ -271,58 +250,57 @@ for( name in entryMap )
         }else{
             content += '\treturn ' + entry.implMod + ';\n';
         }
-        content += '}\n\n';
-
-        content += '#pragma glslify: export(' + entry.functionName + ')';
+        content += '}';
 
     }
-
-    var message = [
-        entry.name
-        //'',
-        //'Generated using the ../source/convert.js script.'
-    ];
-
-    var messageString = '/**\n *\n';
-
-     for( i = 0; i<message.length; i++ )
-     {
-         messageString += ' * ' + message[i] + '\n';
-     }
-
-    messageString += ' *\n */\n';
-
-    content = messageString + content;
 
     if( !ignoreModes[ entry.name ] )
     {
         allContent += content + '\n\n\n';
-
-        // new file structure.
-        // ../blend/blendMode/index.glsl   // standard mode
-        // ../blend/blendMode/o.glsl       // opacity mode
-        // ../blend/blendMode/f.glsl       // float mode
-
-        if( !fsUtil.existsSync('../blend' ) ){
-            fsUtil.mkdirSync( '../blend' );
-        }
-        if( !fsUtil.existsSync('../blend/' + entry.mode ) ){
-            fsUtil.mkdirSync( '../blend/' + entry.mode );
-        }
-
-        if( entry.float ){
-            fsUtil.writeFileSync( '../blend/' + entry.mode + '/f.glsl', content );
-        }else
-        if( entry.opacityBlend ){
-            fsUtil.writeFileSync( '../blend/' + entry.mode + '/o.glsl', content );
-        }else{
-            fsUtil.writeFileSync( '../blend/' + entry.mode + '/index.glsl', content );
-        }
+        entry.content = content;
     }
 
 }
 
-//
+// export content for each mode in one file.
+// plus build integer enum of blend modes.
+var int = 0;
+var dep;
+for( mode in modes ){
+    if( mode === 'blend' || mode === 'opacity' ){
+        continue;
+    }
+
+    entry = modes[ mode ];
+
+    deps = {};
+    for( i = 0; i<entry.length; i++ ){
+        for( j = 0; j<entry[i].deps.length; j++ ){
+            dep = entry[i].deps[j];
+            if( !deps[dep.mode] && dep.mode !== mode ) { // not in the same file. ( not same mode )
+                deps[dep.mode] = dep;
+            }
+        }
+    }
+
+    content = '';
+
+    for( dep in deps ) { // dep is a mode
+        content = '#pragma glslify: ' + deps[dep].functionName + ' = require(' + './' + dep + ')\n' + content;
+    }
+    if( content.length !== 0 ){
+        content += '\n';
+    }
+
+    content += entry.map( function( obj ){
+        return obj.content;
+    }).join( '\n\n' );
+
+    content += '\n\n#pragma glslify: export(' + entry[0].functionName + ')';
+
+    fsUtil.writeFileSync( '../' + mode + '.glsl', content );
+}
+
 fsUtil.writeFileSync( 'debug.glsl', allContent );
 
 content = '';

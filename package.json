@@ -1,0 +1,32 @@
+{
+  "name": "glsl-photoshop",
+  "version": "1.0.0",
+  "description": "Photoshop blend modes for glslify",
+  "main": "index.js",
+  "scripts": {
+    "start": "wzrd demo/demo.js:bundle.js -- -t glslify",
+    "test": "browserify test.js -t glslify | tap-closer | smokestack | tap-spec",
+    "bundle": "browserify demo/demo.js -t glslify | uglifyjs -cm > bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jamieowen/glsl-photoshop.git"
+  },
+  "author": "Jamie Owen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jamieowen/glsl-photoshop/issues"
+  },
+  "homepage": "https://github.com/jamieowen/glsl-photoshop",
+  "devDependencies": {
+    "browserify": "^9.0.7",
+    "domready": "^1.0.7",
+    "gl-blend-demo": "^1.0.1",
+    "gl-shader": "^4.0.1",
+    "glslify": "^2.0.1",
+    "uglify-js": "^2.4.19",
+    "webgl-context": "^2.1.2",
+    "wzrd": "^1.2.1",
+    "xtend": "^4.0.0"
+  }
+}
