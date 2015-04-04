@@ -4,9 +4,9 @@
   "description": "Photoshop blend modes for glslify",
   "main": "index.js",
   "scripts": {
-    "start": "wzrd demo/demo.js:bundle.js -- -t glslify",
+    "start": "wzrd demo/demo.js:demo/demo.min.js -- -t glslify",
     "test": "browserify test.js -t glslify | tap-closer | smokestack | tap-spec",
-    "bundle": "browserify demo/demo.js -t glslify | uglifyjs -cm > bundle.js"
+    "bundle": "browserify demo/demo.js -t glslify | uglifyjs -cm > demo/demo.min.js"
   },
   "repository": {
     "type": "git",

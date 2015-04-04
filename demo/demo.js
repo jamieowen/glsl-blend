@@ -2,6 +2,7 @@
 
 var glslify = require('glslify');
 var createShader = require( 'gl-shader' );
+var modes = require( '../modes' );
 
 var createBlendShader = function( gl ){
     return createShader( gl,
@@ -20,20 +21,18 @@ require('domready')(function() {
 
     var modeSelect = document.createElement( 'select' );
     modeSelect.style.display = 'block';
-    modeSelect.style.margin = '6x';
-    var modes = { 'Multiply': 1, 'Darken':2, 'Lighten':3, 'Screen':4 };
+
     modeSelect.innerHTML = '';
     for( var mode in modes ){
-        modeSelect.innerHTML += '<option value="' + modes[mode] + '">' + mode + '</option>';
+        modeSelect.innerHTML += '<option style="margin:6px;" value="' + modes[mode] + '">' + mode + '</option>';
     }
 
     modeSelect.addEventListener( 'change', function(event){
-        console.log( 'change' );
+        console.log( 'render render' );
+        context.render();
     });
 
-    document.body.style.margin = '0';
+    document.body.style.margin = '0px';
     document.body.appendChild( modeSelect );
     document.body.appendChild(context.canvas);
-
-    console.log( context );
 });

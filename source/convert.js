@@ -262,10 +262,13 @@ for( name in entryMap )
 
 }
 
+
+fsUtil.writeFileSync( 'debug.glsl', allContent );
+
+
 // export content for each mode in one file.
-// plus build integer enum of blend modes.
-var int = 0;
 var dep;
+
 for( mode in modes ){
     if( mode === 'blend' || mode === 'opacity' ){
         continue;
@@ -301,19 +304,53 @@ for( mode in modes ){
     fsUtil.writeFileSync( '../' + mode + '.glsl', content );
 }
 
-fsUtil.writeFileSync( 'debug.glsl', allContent );
+// modes enum
 
-content = '';
-// Write a require test file.
-for( name in entryMap )
-{
-    entry = entryMap[ name ];
-
-    if( !ignoreModes[ name ] ) {
-        content += '#pragma glslify: ' + entry.name + ' = require(../blend/' + entry.filename + ')';
-        content += '\n';
+var int = 0;
+modesEnum = [];
+var modesSorted = [];
+for( mode in modes ){
+    if( mode === 'blend' || mode === 'opacity' ){
+        continue;
     }
+    modesSorted.push( mode );
+}
+
+modesSorted.sort();
+
+modesEnum = modesSorted.map( function( mode ){
+    return '\t' + mode.replace('-','_').toUpperCase() + ':' + ( ++int )
+});
+
+fsUtil.writeFileSync( '../modes.js', 'module.exports = {\n' + modesEnum.join(',\n') + '\n};' );
+
+// export a 'super' function for all blend modes.
+
+var allFunction = '';
+for( mode in modesSorted ){
+    mode = modesSorted[ mode ];
+    console.log( 'mode ', mode );
+    allFunction += '#pragma glslify: ' + modes[mode][0].functionName + ' = require(./' + mode + ');\n';
 
 }
 
-fsUtil.writeFileSync( 'require-test.glsl', content );
+var ifs = [];
+var ifStatement;
+allFunction += '\n\n';
+allFunction += 'vec3 blendMode( int mode, vec3 base, vec3 blend ){\n';
+int = 0;
+for( mode in modesSorted ){
+    mode = modesSorted[ mode ];
+
+    ifStatement = '\tif( mode == ' + (++int) + ' ){\n'
+    ifStatement+= '\t\treturn ' + modes[mode][0].functionName + '( base, blend );\n';
+    ifStatement+= '\t}';
+    ifs.push( ifStatement );
+}
+
+allFunction += ifs.join( 'else{\n' );
+
+allFunction += '\n}\n';
+allFunction += '#pragma glslify:export(blendMode)';
+
+fsUtil.writeFileSync( '../all.glsl', allFunction );
