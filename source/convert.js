@@ -107,6 +107,8 @@ for( name in entryMap )
     // function name
     entry.functionName = name[0].toLowerCase() + name.slice(1);
 
+
+
     // opacity blend modes.
     if( !entry.float && !ignoreModes[ entry.name ] )
     {
@@ -123,6 +125,7 @@ for( name in entryMap )
 
         entryMap[ entryO.name ] = entryO;
     }
+
 }
 
 // finalise
@@ -142,14 +145,21 @@ for( name in entryMap )
             chomp += c.toLowerCase();
         }
     }
+    var mode = chomp;
+
     if( chomp[ chomp.length-1 ] === 'f' ){
+        mode = chomp.slice( 0,-1 );
         chomp = chomp.slice( 0,-1 ) + '-f';
+    }else
+    if( chomp[ chomp.length-1 ] === 'o' ){
+        mode = chomp.slice( 0,-1 );
+        chomp = chomp.slice( 0,-1 ) + '-o';
     }
 
-
+    // mode
     // remove the blend- bit.. so names become e.g. 'blend/hard-light.glsl'
     entry.filename = chomp.replace( 'blend-', '' );
-
+    entry.mode = mode.replace( 'blend-', '' );
 }
 
 // determine dependencies..
@@ -175,7 +185,6 @@ for( name in entryMap )
 
         for( j = 0; j<matches.length; j++ ){
             d = entryMap[ matches[j].slice(0,-1) ];
-
 
             // replace the impl with our deps correct function names
             if(d.name === 'Blend'){
@@ -205,8 +214,29 @@ for( name in entryMap )
     {
         content = '\n';
 
+        // handle changes in filename..
+        var file,dep;
         for( j = 0; j<entry.deps.length; j++ ) {
-            content += '#pragma glslify: ' + entry.deps[j].functionName + ' = require(' + './' + entry.deps[j].filename + ')\n';
+
+            dep = entry.deps[j];
+
+            if( dep.mode === entry.mode ){
+                file = '.';
+            }else{
+                file = '../' + dep.mode;
+            }
+
+            if( dep.float ){
+                file += '/f';
+            }else
+            if( dep.opacityBlend ){
+                file += '/o';
+            }else
+            if( dep.mode == entry.mode ){
+                file += '/';
+            }
+
+            content += '#pragma glslify: ' + dep.functionName + ' = require(' + file + ')\n';
         }
 
         if( entry.deps.length ){
@@ -267,7 +297,27 @@ for( name in entryMap )
     if( !ignoreModes[ entry.name ] )
     {
         allContent += content + '\n\n\n';
-        fsUtil.writeFileSync( '../blend/' + entry.filename + '.glsl', content );
+
+        // new file structure.
+        // ../blend/blendMode/index.glsl   // standard mode
+        // ../blend/blendMode/o.glsl       // opacity mode
+        // ../blend/blendMode/f.glsl       // float mode
+
+        if( !fsUtil.existsSync('../blend' ) ){
+            fsUtil.mkdirSync( '../blend' );
+        }
+        if( !fsUtil.existsSync('../blend/' + entry.mode ) ){
+            fsUtil.mkdirSync( '../blend/' + entry.mode );
+        }
+
+        if( entry.float ){
+            fsUtil.writeFileSync( '../blend/' + entry.mode + '/f.glsl', content );
+        }else
+        if( entry.opacityBlend ){
+            fsUtil.writeFileSync( '../blend/' + entry.mode + '/o.glsl', content );
+        }else{
+            fsUtil.writeFileSync( '../blend/' + entry.mode + '/index.glsl', content );
+        }
     }
 
 }

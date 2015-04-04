@@ -56,8 +56,8 @@ float blendDarkenf(float base, float blend) {
  *
  */
 
-#pragma glslify: blendLinearBurnf = require(./linear-burn-f)
-#pragma glslify: blendLinearDodgef = require(./linear-dodge-f)
+#pragma glslify: blendLinearBurnf = require(../linear-burn/f)
+#pragma glslify: blendLinearDodgef = require(../linear-dodge/f)
 
 float blendLinearLightf(float base, float blend) {
 	return blend<0.5?blendLinearBurnf(base,(2.0*blend)):blendLinearDodgef(base,(2.0*(blend-0.5)));
@@ -137,8 +137,8 @@ float blendColorBurnf(float base, float blend) {
  *
  */
 
-#pragma glslify: blendColorBurnf = require(./color-burn-f)
-#pragma glslify: blendColorDodgef = require(./color-dodge-f)
+#pragma glslify: blendColorBurnf = require(../color-burn/f)
+#pragma glslify: blendColorDodgef = require(../color-dodge/f)
 
 float blendVividLightf(float base, float blend) {
 	return (blend<0.5)?blendColorBurnf(base,(2.0*blend)):blendColorDodgef(base,(2.0*(blend-0.5)));
@@ -153,8 +153,8 @@ float blendVividLightf(float base, float blend) {
  *
  */
 
-#pragma glslify: blendDarkenf = require(./darken-f)
-#pragma glslify: blendLightenf = require(./lighten-f)
+#pragma glslify: blendDarkenf = require(../darken/f)
+#pragma glslify: blendLightenf = require(../lighten/f)
 
 float blendPinLightf(float base, float blend) {
 	return (blend<0.5)?blendDarkenf(base,(2.0*blend)):blendLightenf(base,(2.0*(blend-0.5)));
@@ -169,7 +169,7 @@ float blendPinLightf(float base, float blend) {
  *
  */
 
-#pragma glslify: blendVividLightf = require(./vivid-light-f)
+#pragma glslify: blendVividLightf = require(../vivid-light/f)
 
 float blendHardMixf(float base, float blend) {
 	return (blendVividLightf(base,blend)<0.5)?0.0:1.0;
@@ -301,7 +301,7 @@ vec3 blendExclusion(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendScreenf = require(./screen-f)
+#pragma glslify: blendScreenf = require(./f)
 
 vec3 blendScreen(vec3 base, vec3 blend) {
 	return vec3(blendScreenf(base.r,blend.r),blendScreenf(base.g,blend.g),blendScreenf(base.b,blend.b));
@@ -316,7 +316,7 @@ vec3 blendScreen(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendOverlayf = require(./overlay-f)
+#pragma glslify: blendOverlayf = require(./f)
 
 vec3 blendOverlay(vec3 base, vec3 blend) {
 	return vec3(blendOverlayf(base.r,blend.r),blendOverlayf(base.g,blend.g),blendOverlayf(base.b,blend.b));
@@ -331,7 +331,7 @@ vec3 blendOverlay(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendSoftLightf = require(./soft-light-f)
+#pragma glslify: blendSoftLightf = require(./f)
 
 vec3 blendSoftLight(vec3 base, vec3 blend) {
 	return vec3(blendSoftLightf(base.r,blend.r),blendSoftLightf(base.g,blend.g),blendSoftLightf(base.b,blend.b));
@@ -346,7 +346,7 @@ vec3 blendSoftLight(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendOverlay = require(./overlay)
+#pragma glslify: blendOverlay = require(../overlay)
 
 vec3 blendHardLight(vec3 base, vec3 blend) {
 	return blendOverlay(blend,base);
@@ -361,7 +361,7 @@ vec3 blendHardLight(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendColorDodgef = require(./color-dodge-f)
+#pragma glslify: blendColorDodgef = require(./f)
 
 vec3 blendColorDodge(vec3 base, vec3 blend) {
 	return vec3(blendColorDodgef(base.r,blend.r),blendColorDodgef(base.g,blend.g),blendColorDodgef(base.b,blend.b));
@@ -376,7 +376,7 @@ vec3 blendColorDodge(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendColorBurnf = require(./color-burn-f)
+#pragma glslify: blendColorBurnf = require(./f)
 
 vec3 blendColorBurn(vec3 base, vec3 blend) {
 	return vec3(blendColorBurnf(base.r,blend.r),blendColorBurnf(base.g,blend.g),blendColorBurnf(base.b,blend.b));
@@ -391,7 +391,7 @@ vec3 blendColorBurn(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendLinearLightf = require(./linear-light-f)
+#pragma glslify: blendLinearLightf = require(./f)
 
 vec3 blendLinearLight(vec3 base, vec3 blend) {
 	return vec3(blendLinearLightf(base.r,blend.r),blendLinearLightf(base.g,blend.g),blendLinearLightf(base.b,blend.b));
@@ -406,7 +406,7 @@ vec3 blendLinearLight(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendVividLightf = require(./vivid-light-f)
+#pragma glslify: blendVividLightf = require(./f)
 
 vec3 blendVividLight(vec3 base, vec3 blend) {
 	return vec3(blendVividLightf(base.r,blend.r),blendVividLightf(base.g,blend.g),blendVividLightf(base.b,blend.b));
@@ -421,7 +421,7 @@ vec3 blendVividLight(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendPinLightf = require(./pin-light-f)
+#pragma glslify: blendPinLightf = require(./f)
 
 vec3 blendPinLight(vec3 base, vec3 blend) {
 	return vec3(blendPinLightf(base.r,blend.r),blendPinLightf(base.g,blend.g),blendPinLightf(base.b,blend.b));
@@ -436,7 +436,7 @@ vec3 blendPinLight(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendHardMixf = require(./hard-mix-f)
+#pragma glslify: blendHardMixf = require(./f)
 
 vec3 blendHardMix(vec3 base, vec3 blend) {
 	return vec3(blendHardMixf(base.r,blend.r),blendHardMixf(base.g,blend.g),blendHardMixf(base.b,blend.b));
@@ -451,7 +451,7 @@ vec3 blendHardMix(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendReflectf = require(./reflect-f)
+#pragma glslify: blendReflectf = require(./f)
 
 vec3 blendReflect(vec3 base, vec3 blend) {
 	return vec3(blendReflectf(base.r,blend.r),blendReflectf(base.g,blend.g),blendReflectf(base.b,blend.b));
@@ -466,7 +466,7 @@ vec3 blendReflect(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendReflect = require(./reflect)
+#pragma glslify: blendReflect = require(../reflect)
 
 vec3 blendGlow(vec3 base, vec3 blend) {
 	return blendReflect(blend,base);
@@ -578,7 +578,7 @@ vec3 blendLinearBurn(vec3 base, vec3 blend) {
  *
  */
 
-#pragma glslify: blendNormal = require(./normal)
+#pragma glslify: blendNormal = require(./)
 
 vec3 blendNormalo(vec3 base, vec3 blend, float opacity) {
 	return (blendNormal(base, blend) * opacity + blend * (1.0 - opacity));
@@ -593,7 +593,7 @@ vec3 blendNormalo(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendMultiply = require(./multiply)
+#pragma glslify: blendMultiply = require(./)
 
 vec3 blendMultiplyo(vec3 base, vec3 blend, float opacity) {
 	return (blendMultiply(base, blend) * opacity + blend * (1.0 - opacity));
@@ -608,7 +608,7 @@ vec3 blendMultiplyo(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendAverage = require(./average)
+#pragma glslify: blendAverage = require(./)
 
 vec3 blendAverageo(vec3 base, vec3 blend, float opacity) {
 	return (blendAverage(base, blend) * opacity + blend * (1.0 - opacity));
@@ -623,7 +623,7 @@ vec3 blendAverageo(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendAdd = require(./add)
+#pragma glslify: blendAdd = require(./)
 
 vec3 blendAddo(vec3 base, vec3 blend, float opacity) {
 	return (blendAdd(base, blend) * opacity + blend * (1.0 - opacity));
@@ -638,7 +638,7 @@ vec3 blendAddo(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendSubstract = require(./substract)
+#pragma glslify: blendSubstract = require(./)
 
 vec3 blendSubstracto(vec3 base, vec3 blend, float opacity) {
 	return (blendSubstract(base, blend) * opacity + blend * (1.0 - opacity));
@@ -653,7 +653,7 @@ vec3 blendSubstracto(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendDifference = require(./difference)
+#pragma glslify: blendDifference = require(./)
 
 vec3 blendDifferenceo(vec3 base, vec3 blend, float opacity) {
 	return (blendDifference(base, blend) * opacity + blend * (1.0 - opacity));
@@ -668,7 +668,7 @@ vec3 blendDifferenceo(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendNegation = require(./negation)
+#pragma glslify: blendNegation = require(./)
 
 vec3 blendNegationo(vec3 base, vec3 blend, float opacity) {
 	return (blendNegation(base, blend) * opacity + blend * (1.0 - opacity));
@@ -683,7 +683,7 @@ vec3 blendNegationo(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendExclusion = require(./exclusion)
+#pragma glslify: blendExclusion = require(./)
 
 vec3 blendExclusiono(vec3 base, vec3 blend, float opacity) {
 	return (blendExclusion(base, blend) * opacity + blend * (1.0 - opacity));
@@ -698,7 +698,7 @@ vec3 blendExclusiono(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendScreen = require(./screen)
+#pragma glslify: blendScreen = require(./)
 
 vec3 blendScreeno(vec3 base, vec3 blend, float opacity) {
 	return (blendScreen(base, blend) * opacity + blend * (1.0 - opacity));
@@ -713,7 +713,7 @@ vec3 blendScreeno(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendOverlay = require(./overlay)
+#pragma glslify: blendOverlay = require(./)
 
 vec3 blendOverlayo(vec3 base, vec3 blend, float opacity) {
 	return (blendOverlay(base, blend) * opacity + blend * (1.0 - opacity));
@@ -728,7 +728,7 @@ vec3 blendOverlayo(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendSoftLight = require(./soft-light)
+#pragma glslify: blendSoftLight = require(./)
 
 vec3 blendSoftLighto(vec3 base, vec3 blend, float opacity) {
 	return (blendSoftLight(base, blend) * opacity + blend * (1.0 - opacity));
@@ -743,7 +743,7 @@ vec3 blendSoftLighto(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendHardLight = require(./hard-light)
+#pragma glslify: blendHardLight = require(./)
 
 vec3 blendHardLighto(vec3 base, vec3 blend, float opacity) {
 	return (blendHardLight(base, blend) * opacity + blend * (1.0 - opacity));
@@ -758,7 +758,7 @@ vec3 blendHardLighto(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendColorDodge = require(./color-dodge)
+#pragma glslify: blendColorDodge = require(./)
 
 vec3 blendColorDodgeo(vec3 base, vec3 blend, float opacity) {
 	return (blendColorDodge(base, blend) * opacity + blend * (1.0 - opacity));
@@ -773,7 +773,7 @@ vec3 blendColorDodgeo(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendColorBurn = require(./color-burn)
+#pragma glslify: blendColorBurn = require(./)
 
 vec3 blendColorBurno(vec3 base, vec3 blend, float opacity) {
 	return (blendColorBurn(base, blend) * opacity + blend * (1.0 - opacity));
@@ -788,7 +788,7 @@ vec3 blendColorBurno(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendLinearLight = require(./linear-light)
+#pragma glslify: blendLinearLight = require(./)
 
 vec3 blendLinearLighto(vec3 base, vec3 blend, float opacity) {
 	return (blendLinearLight(base, blend) * opacity + blend * (1.0 - opacity));
@@ -803,7 +803,7 @@ vec3 blendLinearLighto(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendVividLight = require(./vivid-light)
+#pragma glslify: blendVividLight = require(./)
 
 vec3 blendVividLighto(vec3 base, vec3 blend, float opacity) {
 	return (blendVividLight(base, blend) * opacity + blend * (1.0 - opacity));
@@ -818,7 +818,7 @@ vec3 blendVividLighto(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendPinLight = require(./pin-light)
+#pragma glslify: blendPinLight = require(./)
 
 vec3 blendPinLighto(vec3 base, vec3 blend, float opacity) {
 	return (blendPinLight(base, blend) * opacity + blend * (1.0 - opacity));
@@ -833,7 +833,7 @@ vec3 blendPinLighto(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendHardMix = require(./hard-mix)
+#pragma glslify: blendHardMix = require(./)
 
 vec3 blendHardMixo(vec3 base, vec3 blend, float opacity) {
 	return (blendHardMix(base, blend) * opacity + blend * (1.0 - opacity));
@@ -848,7 +848,7 @@ vec3 blendHardMixo(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendReflect = require(./reflect)
+#pragma glslify: blendReflect = require(./)
 
 vec3 blendReflecto(vec3 base, vec3 blend, float opacity) {
 	return (blendReflect(base, blend) * opacity + blend * (1.0 - opacity));
@@ -863,7 +863,7 @@ vec3 blendReflecto(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendGlow = require(./glow)
+#pragma glslify: blendGlow = require(./)
 
 vec3 blendGlowo(vec3 base, vec3 blend, float opacity) {
 	return (blendGlow(base, blend) * opacity + blend * (1.0 - opacity));
@@ -878,7 +878,7 @@ vec3 blendGlowo(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendPhoenix = require(./phoenix)
+#pragma glslify: blendPhoenix = require(./)
 
 vec3 blendPhoenixo(vec3 base, vec3 blend, float opacity) {
 	return (blendPhoenix(base, blend) * opacity + blend * (1.0 - opacity));
@@ -893,7 +893,7 @@ vec3 blendPhoenixo(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendLinearDodge = require(./linear-dodge)
+#pragma glslify: blendLinearDodge = require(./)
 
 vec3 blendLinearDodgeo(vec3 base, vec3 blend, float opacity) {
 	return (blendLinearDodge(base, blend) * opacity + blend * (1.0 - opacity));
@@ -908,7 +908,7 @@ vec3 blendLinearDodgeo(vec3 base, vec3 blend, float opacity) {
  *
  */
 
-#pragma glslify: blendLinearBurn = require(./linear-burn)
+#pragma glslify: blendLinearBurn = require(./)
 
 vec3 blendLinearBurno(vec3 base, vec3 blend, float opacity) {
 	return (blendLinearBurn(base, blend) * opacity + blend * (1.0 - opacity));
