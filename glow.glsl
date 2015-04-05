@@ -1,11 +1,11 @@
-#pragma glslify: reflect = require(./reflect)
+#pragma glslify: blendReflect = require(./reflect)
 
-vec3 glow(vec3 base, vec3 blend) {
-	return reflect(blend,base);
+vec3 blendGlow(vec3 base, vec3 blend) {
+	return blendReflect(blend,base);
 }
 
-vec3 glow(vec3 base, vec3 blend, float opacity) {
-	return (glow(base, blend) * opacity + blend * (1.0 - opacity));
+vec3 blendGlow(vec3 base, vec3 blend, float opacity) {
+	return (blendGlow(base, blend) * opacity + blend * (1.0 - opacity));
 }
 
-#pragma glslify: export(glow)
+#pragma glslify: export(blendGlow)

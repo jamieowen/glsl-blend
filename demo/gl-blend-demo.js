@@ -57,6 +57,5 @@ module.exports = function( opt )
 {
     var blendDemo = new BlendDemo(opt);
     return blendDemo;
-
 };
 

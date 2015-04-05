@@ -5,10 +5,14 @@ var createShader = require( 'gl-shader' );
 var modes = require( '../modes' );
 
 var createBlendShader = function( gl ){
-    return createShader( gl,
+    var shader = createShader( gl,
         glslify( './blend.vert' ),
         glslify( './blend.frag' )
     );
+
+    shader.bind();
+    shader.uniforms.blendMode = 1;
+    return shader;
 };
 
 //create our WebGL test example
@@ -28,7 +32,7 @@ require('domready')(function() {
     }
 
     modeSelect.addEventListener( 'change', function(event){
-        console.log( 'render render' );
+        context.shader.uniforms.blendMode = event.target.value;
         context.render();
     });
 

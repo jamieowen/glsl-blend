@@ -1,10 +1,13 @@
-float darken(float base, float blend) {
+float blendDarken(float base, float blend) {
 	return min(blend,base);
 }
 
-float darken(float base, float blend) {
-	// Note : Same implementation as BlendDarkenf
-	return min(blend,base);
+vec3 blendDarken(vec3 base, vec3 blend) {
+	return vec3(blendDarken(base.r,blend.r),blendDarken(base.g,blend.g),blendDarken(base.b,blend.b));
 }
 
-#pragma glslify: export(darken)
+vec3 blendDarken(vec3 base, vec3 blend, float opacity) {
+	return (blendDarken(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendDarken)

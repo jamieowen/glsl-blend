@@ -184,8 +184,9 @@ vec3 ContrastSaturationBrightness(vec3 color, float brt, float sat, float con)
 #define Blend(base, blend, funcf) 		vec3(funcf(base.r, blend.r), funcf(base.g, blend.g), funcf(base.b, blend.b))
 
 #define BlendNormal(base, blend) 		(blend)
-#define BlendLighten				BlendLightenf
-#define BlendDarken				BlendDarkenf
+// glsl-blend - Modified : Lighten & Darken only worked on floats. Not sure why?
+#define BlendLighten(base, blend)       Blend(base, blend, BlendLightenf)
+#define BlendDarken(base, blend)        Blend(base, blend, BlendDarkenf)
 #define BlendMultiply(base, blend) 		(base * blend)
 #define BlendAverage(base, blend) 		((base + blend) / 2.0)
 #define BlendAdd(base, blend) 		min(base + blend, vec3(1.0))

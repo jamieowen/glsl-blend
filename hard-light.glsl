@@ -1,11 +1,11 @@
-#pragma glslify: overlay = require(./overlay)
+#pragma glslify: blendOverlay = require(./overlay)
 
-vec3 hardLight(vec3 base, vec3 blend) {
-	return overlay(blend,base);
+vec3 blendHardLight(vec3 base, vec3 blend) {
+	return blendOverlay(blend,base);
 }
 
-vec3 hardLight(vec3 base, vec3 blend, float opacity) {
-	return (hardLight(base, blend) * opacity + blend * (1.0 - opacity));
+vec3 blendHardLight(vec3 base, vec3 blend, float opacity) {
+	return (blendHardLight(base, blend) * opacity + blend * (1.0 - opacity));
 }
 
-#pragma glslify: export(hardLight)
+#pragma glslify: export(blendHardLight)

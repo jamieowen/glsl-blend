@@ -1,10 +1,13 @@
-float lighten(float base, float blend) {
+float blendLighten(float base, float blend) {
 	return max(blend,base);
 }
 
-float lighten(float base, float blend) {
-	// Note : Same implementation as BlendLightenf
-	return max(blend,base);
+vec3 blendLighten(vec3 base, vec3 blend) {
+	return vec3(blendLighten(base.r,blend.r),blendLighten(base.g,blend.g),blendLighten(base.b,blend.b));
 }
 
-#pragma glslify: export(lighten)
+vec3 blendLighten(vec3 base, vec3 blend, float opacity) {
+	return (blendLighten(base, blend) * opacity + blend * (1.0 - opacity));
+}
+
+#pragma glslify: export(blendLighten)

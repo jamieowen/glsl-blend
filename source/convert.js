@@ -12,8 +12,6 @@ var glsl = fsUtil.readFileSync( './ThanksPhotoshopMathFP.glsl', 'utf-8' );
 var mapModes = { // map these modes to another mode.
     'BlendLinearDodgef':'BlendAddf',
     'BlendLinearBurnf':'BlendSubstractf',
-    'BlendLighten':'BlendLightenf',
-    'BlendDarken':'BlendDarkenf',
     'BlendLinearDodge':'BlendAdd',
     'BlendLinearBurn':'BlendSubstract'
 };
@@ -161,7 +159,11 @@ for( name in entryMap )
     entry.functionName = entry.mode.split('-').map(function(s){
         return s[0].toUpperCase() + s.slice(1);
     }).join('');
-    entry.functionName = entry.functionName[0].toLowerCase() + entry.functionName.slice( 1 );
+
+    //entry.functionName = entry.functionName[0].toLowerCase() + entry.functionName.slice( 1 );
+
+    // reflect is an existing glsl function. prepend blend..
+    entry.functionName = 'blend' + entry.functionName;
 
     // store entries by mode.
     if( !modes[ entry.mode ] ){
@@ -313,6 +315,8 @@ for( mode in modes ){
     if( mode === 'blend' || mode === 'opacity' ){
         continue;
     }
+    console.log( modes[mode].length, modes[ mode].length <3 ? mode : 'ok' );
+
     modesSorted.push( mode );
 }
 
@@ -327,11 +331,15 @@ fsUtil.writeFileSync( '../modes.js', 'module.exports = {\n' + modesEnum.join(',\
 // export a 'super' function for all blend modes.
 
 var allFunction = '';
+var count = 9;
+int = 0;
 for( mode in modesSorted ){
-    mode = modesSorted[ mode ];
-    console.log( 'mode ', mode );
-    allFunction += '#pragma glslify: ' + modes[mode][0].functionName + ' = require(./' + mode + ');\n';
 
+    mode = modesSorted[ mode ];
+    if( mode === 'hard-mix' || mode === 'vivid-light' || mode === 'linear-light' || mode === 'pin-light' ){
+        continue;
+    }
+    allFunction += '#pragma glslify: ' + modes[mode][0].functionName + ' = require(./' + mode + ');\n';
 }
 
 var ifs = [];
@@ -340,15 +348,22 @@ allFunction += '\n\n';
 allFunction += 'vec3 blendMode( int mode, vec3 base, vec3 blend ){\n';
 int = 0;
 for( mode in modesSorted ){
-    mode = modesSorted[ mode ];
 
+    mode = modesSorted[ mode ];
     ifStatement = '\tif( mode == ' + (++int) + ' ){\n'
-    ifStatement+= '\t\treturn ' + modes[mode][0].functionName + '( base, blend );\n';
+
+    if( mode === 'hard-mix' || mode === 'vivid-light' || mode === 'linear-light' || mode === 'pin-light' ){
+        ifStatement+= '\t\t// ( problem with this ) return ' + modes[mode][0].functionName + '( base, blend );\n';
+    }else{
+        ifStatement+= '\t\treturn ' + modes[mode][0].functionName + '( base, blend );\n';
+    }
+
     ifStatement+= '\t}';
     ifs.push( ifStatement );
+
 }
 
-allFunction += ifs.join( 'else{\n' );
+allFunction += ifs.join( 'else\n' );
 
 allFunction += '\n}\n';
 allFunction += '#pragma glslify:export(blendMode)';
