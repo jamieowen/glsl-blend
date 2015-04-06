@@ -16,7 +16,7 @@ var createBlendShader = function( gl ){
 };
 
 //create our WebGL test example
-var context = require('./gl-blend-demo')({
+var blendDemo = require('gl-blend-demo')({
     shader: createBlendShader
 });
 
@@ -32,11 +32,11 @@ require('domready')(function() {
     }
 
     modeSelect.addEventListener( 'change', function(event){
-        context.shader.uniforms.blendMode = event.target.value;
-        context.render();
+        blendDemo.shader.uniforms.blendMode = event.target.value;
+        blendDemo.render();
     });
 
     document.body.style.margin = '0px';
     document.body.appendChild( modeSelect );
-    document.body.appendChild(context.canvas);
+    document.body.appendChild(blendDemo.canvas);
 });

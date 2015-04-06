@@ -1,5 +1,5 @@
 {
-  "name": "glsl-photoshop",
+  "name": "glsl-blend",
   "version": "1.0.0",
   "description": "Photoshop blend modes for glslify",
   "main": "index.js",
@@ -10,18 +10,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:jamieowen/glsl-photoshop.git"
+    "url": "git@github.com:jamieowen/glsl-blend.git"
   },
   "author": "Jamie Owen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jamieowen/glsl-photoshop/issues"
+    "url": "https://github.com/jamieowen/glsl-blend/issues"
   },
-  "homepage": "https://github.com/jamieowen/glsl-photoshop",
+  "homepage": "https://github.com/jamieowen/glsl-blend",
   "devDependencies": {
     "browserify": "^9.0.7",
     "domready": "^1.0.7",
-    "gl-blend-demo": "^1.0.1",
+    "gl-blend-demo": "^2.0.0",
     "gl-shader": "^4.0.1",
     "glslify": "^2.0.1",
     "uglify-js": "^2.4.19",
