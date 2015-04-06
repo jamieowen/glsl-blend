@@ -333,10 +333,19 @@ fsUtil.writeFileSync( '../modes.js', 'module.exports = {\n' + modesEnum.join(',\
 var allFunction = '';
 var count = 9;
 int = 0;
+
+var skipMode = function( mode ){
+    if( mode === 'hard-mix' || mode === 'vivid-light' || mode === 'linear-light' || mode === 'pin-light' ) {
+        return true;
+    }else{
+        return false;
+    }
+}
 for( mode in modesSorted ){
 
     mode = modesSorted[ mode ];
-    if( mode === 'hard-mix' || mode === 'vivid-light' || mode === 'linear-light' || mode === 'pin-light' ){
+
+    if( skipMode(mode) ){
         continue;
     }
     allFunction += '#pragma glslify: ' + modes[mode][0].functionName + ' = require(./' + mode + ');\n';
@@ -352,7 +361,7 @@ for( mode in modesSorted ){
     mode = modesSorted[ mode ];
     ifStatement = '\tif( mode == ' + (++int) + ' ){\n'
 
-    if( mode === 'hard-mix' || mode === 'vivid-light' || mode === 'linear-light' || mode === 'pin-light' ){
+    if( skipMode(mode) ){
         ifStatement+= '\t\t// ( problem with this ) return ' + modes[mode][0].functionName + '( base, blend );\n';
     }else{
         ifStatement+= '\t\treturn ' + modes[mode][0].functionName + '( base, blend );\n';
