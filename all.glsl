@@ -1,24 +1,28 @@
-#pragma glslify: blendAdd = require(./add);
-#pragma glslify: blendAverage = require(./average);
-#pragma glslify: blendColorBurn = require(./color-burn);
-#pragma glslify: blendColorDodge = require(./color-dodge);
-#pragma glslify: blendDarken = require(./darken);
-#pragma glslify: blendDifference = require(./difference);
-#pragma glslify: blendExclusion = require(./exclusion);
+#pragma glslify: blendHardMix = require(./hard-mix);
+#pragma glslify: blendVividLight = require(./vivid-light);
+#pragma glslify: blendLinearLight = require(./linear-light);
+#pragma glslify: blendPinLight = require(./pin-light);
 #pragma glslify: blendGlow = require(./glow);
 #pragma glslify: blendHardLight = require(./hard-light);
-#pragma glslify: blendLighten = require(./lighten);
-#pragma glslify: blendLinearBurn = require(./linear-burn);
-#pragma glslify: blendLinearDodge = require(./linear-dodge);
-#pragma glslify: blendMultiply = require(./multiply);
-#pragma glslify: blendNegation = require(./negation);
-#pragma glslify: blendNormal = require(./normal);
-#pragma glslify: blendOverlay = require(./overlay);
 #pragma glslify: blendPhoenix = require(./phoenix);
+#pragma glslify: blendOverlay = require(./overlay);
+#pragma glslify: blendNormal = require(./normal);
+#pragma glslify: blendNegation = require(./negation);
+#pragma glslify: blendMultiply = require(./multiply);
 #pragma glslify: blendReflect = require(./reflect);
+#pragma glslify: blendAverage = require(./average);
+#pragma glslify: blendLinearBurn = require(./linear-burn);
+#pragma glslify: blendLighten = require(./lighten);
 #pragma glslify: blendScreen = require(./screen);
 #pragma glslify: blendSoftLight = require(./soft-light);
 #pragma glslify: blendSubstract = require(./substract);
+#pragma glslify: blendExclusion = require(./exclusion);
+#pragma glslify: blendDifference = require(./difference);
+#pragma glslify: blendDarken = require(./darken);
+#pragma glslify: blendColorDodge = require(./color-dodge);
+#pragma glslify: blendColorBurn = require(./color-burn);
+#pragma glslify: blendAdd = require(./add);
+#pragma glslify: blendLinearDodge = require(./linear-dodge);
 
 
 vec3 blendMode( int mode, vec3 base, vec3 blend ){
@@ -50,7 +54,7 @@ vec3 blendMode( int mode, vec3 base, vec3 blend ){
 		return blendHardLight( base, blend );
 	}else
 	if( mode == 10 ){
-		// ( problem with this ) return blendHardMix( base, blend );
+		return blendHardMix( base, blend );
 	}else
 	if( mode == 11 ){
 		return blendLighten( base, blend );
@@ -62,7 +66,7 @@ vec3 blendMode( int mode, vec3 base, vec3 blend ){
 		return blendLinearDodge( base, blend );
 	}else
 	if( mode == 14 ){
-		// ( problem with this ) return blendLinearLight( base, blend );
+		return blendLinearLight( base, blend );
 	}else
 	if( mode == 15 ){
 		return blendMultiply( base, blend );
@@ -80,7 +84,7 @@ vec3 blendMode( int mode, vec3 base, vec3 blend ){
 		return blendPhoenix( base, blend );
 	}else
 	if( mode == 20 ){
-		// ( problem with this ) return blendPinLight( base, blend );
+		return blendPinLight( base, blend );
 	}else
 	if( mode == 21 ){
 		return blendReflect( base, blend );
@@ -95,7 +99,7 @@ vec3 blendMode( int mode, vec3 base, vec3 blend ){
 		return blendSubstract( base, blend );
 	}else
 	if( mode == 25 ){
-		// ( problem with this ) return blendVividLight( base, blend );
+		return blendVividLight( base, blend );
 	}
 }
 #pragma glslify:export(blendMode)

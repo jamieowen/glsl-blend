@@ -315,26 +315,58 @@ for( mode in modes ){
     if( mode === 'blend' || mode === 'opacity' ){
         continue;
     }
-    console.log( modes[mode].length, modes[ mode].length <3 ? mode : 'ok' );
+    console.log( mode, modes[mode][0].deps.length, modes[mode].length, modes[ mode].length <3 ? mode : 'ok' );
 
-    modesSorted.push( mode );
+    // HACK HERE - force hard-mix to the top of the require statements.. glslify throws a wobbly otherwise
+    // ( something to do with glslify-bundle module i think )
+    if( mode === 'hard-mix' ){
+        modesSorted.push( { name: mode, depCount: 100 } );    
+    }else{
+        modesSorted.push( { name: mode, depCount: modes[mode][0].deps.length } );    
+    }
+    
 }
 
-modesSorted.sort();
+var byName = function(a,b){
+    if( a.name > b.name ){
+        return 1;
+    }else
+    if( a.name < b.name ){
+        return -1;
+    }else{
+        return 0;
+    }
+}
+var byDepCount = function(a,b){
+    if( a.depCount > b.depCount ){
+        return 1;
+    }else
+    if( a.depCount < b.depCount ){
+        return -1;
+    }else{
+        return 0;
+    }
+}
+modesSorted.sort(byName);
 
 modesEnum = modesSorted.map( function( mode ){
-    return '\t' + mode.replace('-','_').toUpperCase() + ':' + ( ++int )
+    return '\t' + mode.name.replace('-','_').toUpperCase() + ':' + ( ++int )
 });
 
 fsUtil.writeFileSync( '../modes.js', 'module.exports = {\n' + modesEnum.join(',\n') + '\n};' );
 
 // export a 'super' function for all blend modes.
 
+// sort by dependency count - seems to cause issues with glslify otherwise
+modesSorted.sort(byDepCount).reverse();
+
 var allFunction = '';
 var count = 9;
 int = 0;
 
 var skipMode = function( mode ){
+    return false;
+
     if( mode === 'hard-mix' || mode === 'vivid-light' || mode === 'linear-light' || mode === 'pin-light' ) {
         return true;
     }else{
@@ -345,11 +377,13 @@ for( mode in modesSorted ){
 
     mode = modesSorted[ mode ];
 
-    if( skipMode(mode) ){
+    if( skipMode(mode.name) ){
         continue;
     }
-    allFunction += '#pragma glslify: ' + modes[mode][0].functionName + ' = require(./' + mode + ');\n';
+    allFunction += '#pragma glslify: ' + modes[mode.name][0].functionName + ' = require(./' + mode.name + ');\n';
 }
+
+modesSorted.sort(byName);
 
 var ifs = [];
 var ifStatement;
@@ -359,12 +393,13 @@ int = 0;
 for( mode in modesSorted ){
 
     mode = modesSorted[ mode ];
+
     ifStatement = '\tif( mode == ' + (++int) + ' ){\n'
 
-    if( skipMode(mode) ){
-        ifStatement+= '\t\t// ( problem with this ) return ' + modes[mode][0].functionName + '( base, blend );\n';
+    if( skipMode(mode.name) ){
+        ifStatement+= '\t\t// ( problem with this ) return ' + modes[mode.name][0].functionName + '( base, blend );\n';
     }else{
-        ifStatement+= '\t\treturn ' + modes[mode][0].functionName + '( base, blend );\n';
+        ifStatement+= '\t\treturn ' + modes[mode.name][0].functionName + '( base, blend );\n';
     }
 
     ifStatement+= '\t}';
