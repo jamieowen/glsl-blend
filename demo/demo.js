@@ -12,6 +12,8 @@ var createBlendShader = function( gl ){
 
     shader.bind();
     shader.uniforms.blendMode = 1;
+    shader.uniforms.blendOpacity = 0.5;
+
     return shader;
 };
 
@@ -24,7 +26,9 @@ var blendDemo = require('gl-blend-demo')({
 require('domready')(function() {
 
     var modeSelect = document.createElement( 'select' );
-    modeSelect.style.display = 'block';
+    var modeOpacity = document.createElement( 'input' );
+    modeOpacity.setAttribute( 'type','range' );
+    blendDemo.canvas.style.display = 'block';
 
     modeSelect.innerHTML = '';
     for( var mode in modes ){
@@ -36,7 +40,17 @@ require('domready')(function() {
         blendDemo.render();
     });
 
+    modeOpacity.addEventListener( 'input', function(event){
+        var opacity = event.target.value / 100;
+        if( !isNaN(opacity) ){
+            blendDemo.shader.uniforms.blendOpacity = opacity;
+            blendDemo.render();
+        }          
+    });
+
     document.body.style.margin = '0px';
     document.body.appendChild( modeSelect );
+
+    document.body.appendChild( modeOpacity );
     document.body.appendChild(blendDemo.canvas);
 });

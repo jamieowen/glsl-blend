@@ -317,8 +317,10 @@ for( mode in modes ){
     }
     console.log( mode, modes[mode][0].deps.length, modes[mode].length, modes[ mode].length <3 ? mode : 'ok' );
 
+
     // HACK HERE - force hard-mix to the top of the require statements.. glslify throws a wobbly otherwise
     // ( something to do with glslify-bundle module i think )
+    // ( sorting by dep count might be pointless )
     if( mode === 'hard-mix' ){
         modesSorted.push( { name: mode, depCount: 100 } );    
     }else{
@@ -388,6 +390,9 @@ modesSorted.sort(byName);
 var ifs = [];
 var ifStatement;
 allFunction += '\n\n';
+
+// Standard Blend Mode / No Opacity Signature
+
 allFunction += 'vec3 blendMode( int mode, vec3 base, vec3 blend ){\n';
 int = 0;
 for( mode in modesSorted ){
@@ -409,6 +414,33 @@ for( mode in modesSorted ){
 
 allFunction += ifs.join( 'else\n' );
 
+// Opacity Blend Mode Signature
+
+var opacityFunction = '\n}\n\n';
+
+opacityFunction += 'vec3 blendMode( int mode, vec3 base, vec3 blend, float opacity ){\n';
+int = 0;
+ifs = [];
+for( mode in modesSorted ){
+
+    mode = modesSorted[ mode ];
+
+    ifStatement = '\tif( mode == ' + (++int) + ' ){\n'
+
+    if( skipMode(mode.name) ){
+        ifStatement+= '\t\t// ( problem with this ) return ' + modes[mode.name][0].functionName + '( base, blend, opacity );\n';
+    }else{
+        ifStatement+= '\t\treturn ' + modes[mode.name][0].functionName + '( base, blend, opacity );\n';
+    }
+
+    ifStatement+= '\t}';
+    ifs.push( ifStatement );
+
+}
+
+opacityFunction += ifs.join( 'else\n' );
+
+allFunction += opacityFunction;
 allFunction += '\n}\n';
 allFunction += '#pragma glslify:export(blendMode)';
 
