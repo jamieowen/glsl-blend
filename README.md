@@ -74,17 +74,19 @@ vec3 color = blend(bgColor.rgb, fgColor.rgb, opacity );
 
 The [demo](http://jamieowen.github.io/glsl-blend) shows all blend modes switchable via a drop down.
 
-For this, there is an additional 'all' glsl function that can be imported to require all blend mode functions at once and
-specify which one to use via an integer.  Integers for each blend mode can be imported using the javascript [modes](http://github.com/jamieowen/glsl-blend/blob/master/modes.js) module, then passed as a uniform to the shader.
+For this, there is an additional 'all' glsl function that can be required to import all blend mode functions at once and
+specify which one to use via an integer.  Integers for each blend mode can be imported using the javascript [modes](http://github.com/jamieowen/glsl-blend/blob/master/modes.js) module, and passed as a uniform to the shader.
 
 ```javascript
+// javascript
 var modes = require( 'glsl-blend/modes' );
 
 // using stackgl
 myShader.uniforms.blendMode = modes.HARD_LIGHT;
 ```
-Then passed to the blend function in the shader.
+
 ```glsl
+// glsl
 #pragma glslify: blend = require(glsl-blend/all)
 uniform int blendMode;
 
