@@ -21,5 +21,5 @@
 #pragma glslify: blendReflect = require(glsl-blend/reflect)
 #pragma glslify: blendScreen = require(glsl-blend/screen)
 #pragma glslify: blendSoftLight = require(glsl-blend/soft-light)
-#pragma glslify: blendSubstract = require(glsl-blend/substract)
+#pragma glslify: blendSubtract = require(glsl-blend/subtract)
 #pragma glslify: blendVividLight = require(glsl-blend/vivid-light)

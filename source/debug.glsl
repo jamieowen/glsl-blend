@@ -3,7 +3,7 @@ float blendAdd(float base, float blend) {
 }
 
 
-float blendSubstract(float base, float blend) {
+float blendSubtract(float base, float blend) {
 	return max(base+blend-1.0,0.0);
 }
 
@@ -98,7 +98,7 @@ vec3 blendAdd(vec3 base, vec3 blend) {
 }
 
 
-vec3 blendSubstract(vec3 base, vec3 blend) {
+vec3 blendSubtract(vec3 base, vec3 blend) {
 	return max(base+blend-vec3(1.0),vec3(0.0));
 }
 
@@ -190,7 +190,7 @@ float blendLinearDodge(float base, float blend) {
 
 
 float blendLinearBurn(float base, float blend) {
-	// Note : Same implementation as BlendSubstractf
+	// Note : Same implementation as BlendSubtractf
 	return max(base+blend-1.0,0.0);
 }
 
@@ -202,7 +202,7 @@ vec3 blendLinearDodge(vec3 base, vec3 blend) {
 
 
 vec3 blendLinearBurn(vec3 base, vec3 blend) {
-	// Note : Same implementation as BlendSubstract
+	// Note : Same implementation as BlendSubtract
 	return max(base+blend-vec3(1.0),vec3(0.0));
 }
 
@@ -237,8 +237,8 @@ vec3 blendAdd(vec3 base, vec3 blend, float opacity) {
 }
 
 
-vec3 blendSubstract(vec3 base, vec3 blend, float opacity) {
-	return (blendSubstract(base, blend) * opacity + blend * (1.0 - opacity));
+vec3 blendSubtract(vec3 base, vec3 blend, float opacity) {
+	return (blendSubtract(base, blend) * opacity + blend * (1.0 - opacity));
 }
 
 

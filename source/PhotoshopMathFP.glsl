@@ -159,9 +159,9 @@ vec3 ContrastSaturationBrightness(vec3 color, float brt, float sat, float con)
 */
 
 #define BlendLinearDodgef 			BlendAddf
-#define BlendLinearBurnf 			BlendSubstractf
+#define BlendLinearBurnf 			BlendSubtractf
 #define BlendAddf(base, blend) 		min(base + blend, 1.0)
-#define BlendSubstractf(base, blend) 	max(base + blend - 1.0, 0.0)
+#define BlendSubtractf(base, blend) 	max(base + blend - 1.0, 0.0)
 #define BlendLightenf(base, blend) 		max(blend, base)
 #define BlendDarkenf(base, blend) 		min(blend, base)
 #define BlendLinearLightf(base, blend) 	(blend < 0.5 ? BlendLinearBurnf(base, (2.0 * blend)) : BlendLinearDodgef(base, (2.0 * (blend - 0.5))))
@@ -190,7 +190,7 @@ vec3 ContrastSaturationBrightness(vec3 color, float brt, float sat, float con)
 #define BlendMultiply(base, blend) 		(base * blend)
 #define BlendAverage(base, blend) 		((base + blend) / 2.0)
 #define BlendAdd(base, blend) 		min(base + blend, vec3(1.0))
-#define BlendSubstract(base, blend) 	max(base + blend - vec3(1.0), vec3(0.0))
+#define BlendSubtract(base, blend) 	max(base + blend - vec3(1.0), vec3(0.0))
 #define BlendDifference(base, blend) 	abs(base - blend)
 #define BlendNegation(base, blend) 	(vec3(1.0) - abs(vec3(1.0) - base - blend))
 #define BlendExclusion(base, blend) 	(base + blend - 2.0 * base * blend)
@@ -201,7 +201,7 @@ vec3 ContrastSaturationBrightness(vec3 color, float brt, float sat, float con)
 #define BlendColorDodge(base, blend) 	Blend(base, blend, BlendColorDodgef)
 #define BlendColorBurn(base, blend) 	Blend(base, blend, BlendColorBurnf)
 #define BlendLinearDodge			BlendAdd
-#define BlendLinearBurn			BlendSubstract
+#define BlendLinearBurn			BlendSubtract
 // Linear Light is another contrast-increasing mode
 // If the blend color is darker than midgray, Linear Light darkens the image by decreasing the brightness. If the blend color is lighter than midgray, the result is a brighter image due to increased brightness.
 #define BlendLinearLight(base, blend) 	Blend(base, blend, BlendLinearLightf)

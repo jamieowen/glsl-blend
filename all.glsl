@@ -15,7 +15,7 @@
 #pragma glslify: blendLighten = require(./lighten)
 #pragma glslify: blendScreen = require(./screen)
 #pragma glslify: blendSoftLight = require(./soft-light)
-#pragma glslify: blendSubstract = require(./substract)
+#pragma glslify: blendSubtract = require(./subtract)
 #pragma glslify: blendExclusion = require(./exclusion)
 #pragma glslify: blendDifference = require(./difference)
 #pragma glslify: blendDarken = require(./darken)
@@ -96,7 +96,7 @@ vec3 blendMode( int mode, vec3 base, vec3 blend ){
 		return blendSoftLight( base, blend );
 	}else
 	if( mode == 24 ){
-		return blendSubstract( base, blend );
+		return blendSubtract( base, blend );
 	}else
 	if( mode == 25 ){
 		return blendVividLight( base, blend );
@@ -174,7 +174,7 @@ vec3 blendMode( int mode, vec3 base, vec3 blend, float opacity ){
 		return blendSoftLight( base, blend, opacity );
 	}else
 	if( mode == 24 ){
-		return blendSubstract( base, blend, opacity );
+		return blendSubtract( base, blend, opacity );
 	}else
 	if( mode == 25 ){
 		return blendVividLight( base, blend, opacity );

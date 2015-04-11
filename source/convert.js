@@ -11,9 +11,9 @@ var glsl = fsUtil.readFileSync( './PhotoshopMathFP.glsl', 'utf-8' );
 
 var mapModes = { // map these modes to another mode.
     'BlendLinearDodgef':'BlendAddf',
-    'BlendLinearBurnf':'BlendSubstractf',
+    'BlendLinearBurnf':'BlendSubtractf',
     'BlendLinearDodge':'BlendAdd',
-    'BlendLinearBurn':'BlendSubstract'
+    'BlendLinearBurn':'BlendSubtract'
 };
 
 // ignore from standard handling.
