@@ -14,7 +14,7 @@ Implementations sourced from this article on [Photoshop math](https://mouaif.wor
 npm install glsl-blend
 ```
 
-[![NPM](https://nodei.co/npm/gl-geometry.png)](https://nodei.co/npm/gl-geometry/)
+[![NPM](https://nodei.co/npm/glsl-blend.png)](https://nodei.co/npm/glsl-blend/)
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
@@ -64,7 +64,7 @@ void main() {
 }
 ```
 
-Blend modes can also specify an additional opacity argument using function overloading.
+Blend modes can also specify an additional opacity argument.
 ```glsl
 float opacity = 0.75;
 vec3 color = blend(bgColor.rgb, fgColor.rgb, opacity );
@@ -72,28 +72,31 @@ vec3 color = blend(bgColor.rgb, fgColor.rgb, opacity );
 
 ## Modal Usage
 
-There is also an additional 'all' glsl function that can be imported to allow you to use
-any blend mode by specifying an integer.  Integers for each mode are imported from the javascript modes module.
+The [demo](http://jamieowen.github.io/glsl-blend) shows all blend modes switchable via a drop down.
 
-```glsl
-#pragma glslify: blend = require(glsl-blend/all)
+For this, there is an additional 'all' glsl function that can be imported to require all blend mode functions at once and
+specify which one to use via an integer.  Integers for each blend mode can be imported in via the javascript [modes](http://github.com/jamieowen/glsl-blend/blob/master/modes.js) module.
 
-// ...
-
-int blendMode = 1; // ADD blend mode
-vec3 color = blend( blendMode, bgColor.rgb, fgColor.rgb, 0.75 );
-```
-
-Blend modes would probably be set via a uniform passed into the shader so integers can be found in the modes javascript module.
 ```javascript
 var modes = require( 'glsl-blend/modes' );
 
-uniforms.blendMode = modes.HARD_LIGHT
+// using stackgl
+myShader.uniforms.blendMode = modes.HARD_LIGHT;
+```
+Then passed to the blend function in the shader.
+```glsl
+#pragma glslify: blend = require(glsl-blend/all)
+uniform int blendMode;
+
+// ...
+
+vec3 color = blend( blendMode, bgColor.rgb, fgColor.rgb, 0.75 );
 ```
 
 ## Todo
 
-* Hue, Luminance, Saturation & Color Modes. ( req. color conversion dependencies )
+* Add Hue, Luminance, Saturation & Color Modes.
+* Implement color conversion functions for the above as separate glsl modules.
 
 
 ## Contributing
@@ -102,5 +105,5 @@ See [stackgl/contributing](https://github.com/stackgl/contributing).
 
 ## License
 
-MIT. See [LICENSE.md](http://github.com/mattdesl/glsl-blend-soft-light/blob/master/LICENSE.md) for details.
+MIT. See [LICENSE.md](https://github.com/jamieowen/glsl-blend/blob/master/LICENSE.md) for details.
 
