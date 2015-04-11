@@ -4,6 +4,7 @@ Photoshop blending modes in glsl for use with [glslify](https://github.com/stack
 Blending modes include Screen, Multiply, Soft Light, Vivid Light, Overlay, etc.
 Implementations sourced from this article on [Photoshop math](https://mouaif.wordpress.com/2009/01/05/photoshop-math-with-glsl-shaders/).
 
+### Demo
 <http://jamieowen.github.io/glsl-blend>
 
 
@@ -55,24 +56,40 @@ A foreground and background color is needed to perform a blend operation.
 #pragma glslify: blend = require(glsl-blend/screen)
 
 void main() {
-  vec4 bgColor = texture2D(bg, vUv);
-  vec4 fgColor = texture2D(foreground, vUv);
+    vec4 bgColor = texture2D(bg, vUv);
+    vec4 fgColor = texture2D(foreground, vUv);
 
-  vec3 color = blend(bgColor.rgb, fgColor.rgb);
-  gl_FragColor = vec4(color, 1.0);
+    vec3 color = blend(bgColor.rgb, fgColor.rgb);
+    gl_FragColor = vec4(color, 1.0);
 }
 ```
 
 Blend modes can also specify an additional opacity argument using function overloading.
 ```glsl
-  float opacity = 0.75;
-  vec3 color = blend(bgColor.rgb, fgColor.rgb, opacity );
+float opacity = 0.75;
+vec3 color = blend(bgColor.rgb, fgColor.rgb, opacity );
 ```
 
 ## Modal Usage
 
 There is also an additional 'all' glsl function that can be imported to allow you to use
-any blend mode by specifying an integer.  The modes
+any blend mode by specifying an integer.  Integers for each mode are imported from the javascript modes module.
+
+```glsl
+#pragma glslify: blend = require(glsl-blend/all)
+
+// ...
+
+int blendMode = 1; // ADD blend mode
+vec3 color = blend( blendMode, bgColor.rgb, fgColor.rgb, 0.75 );
+```
+
+Blend modes would probably be set via a uniform passed into the shader so integers can be found in the modes javascript module.
+```javascript
+var modes = require( 'glsl-blend/modes' );
+
+uniforms.blendMode = modes.HARD_LIGHT
+```
 
 ## Todo
 
