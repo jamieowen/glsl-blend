@@ -6,7 +6,7 @@
 
 var fsUtil = require( 'fs' );
 var pathUtil = require( 'path' );
-var glsl = fsUtil.readFileSync( './ThanksPhotoshopMathFP.glsl', 'utf-8' );
+var glsl = fsUtil.readFileSync( './PhotoshopMathFP.glsl', 'utf-8' );
 
 
 var mapModes = { // map these modes to another mode.
@@ -320,7 +320,7 @@ for( mode in modes ){
 
     // HACK HERE - force hard-mix to the top of the require statements.. glslify throws a wobbly otherwise
     // ( something to do with glslify-bundle module i think )
-    // ( sorting by dep count might be pointless )
+    // ( sorting by dep count might be pointless now actually )
     if( mode === 'hard-mix' ){
         modesSorted.push( { name: mode, depCount: 100 } );    
     }else{
@@ -338,7 +338,7 @@ var byName = function(a,b){
     }else{
         return 0;
     }
-}
+};
 var byDepCount = function(a,b){
     if( a.depCount > b.depCount ){
         return 1;
@@ -348,7 +348,8 @@ var byDepCount = function(a,b){
     }else{
         return 0;
     }
-}
+};
+
 modesSorted.sort(byName);
 
 modesEnum = modesSorted.map( function( mode ){
@@ -356,6 +357,11 @@ modesEnum = modesSorted.map( function( mode ){
 });
 
 fsUtil.writeFileSync( '../modes.js', 'module.exports = {\n' + modesEnum.join(',\n') + '\n};' );
+
+// write contents for doc..
+fsUtil.writeFileSync( 'doc.glsl', modesSorted.map( function(mode){
+    return '#pragma glslify: ' + modes[mode.name][0].functionName + ' = require(glsl-blend/' + mode.name + ')';
+}).join('\n') );
 
 // export a 'super' function for all blend modes.
 
@@ -382,7 +388,7 @@ for( mode in modesSorted ){
     if( skipMode(mode.name) ){
         continue;
     }
-    allFunction += '#pragma glslify: ' + modes[mode.name][0].functionName + ' = require(./' + mode.name + ');\n';
+    allFunction += '#pragma glslify: ' + modes[mode.name][0].functionName + ' = require(./' + mode.name + ')\n';
 }
 
 modesSorted.sort(byName);
