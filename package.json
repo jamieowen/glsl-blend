@@ -1,6 +1,6 @@
 {
   "name": "glsl-blend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "glsl photoshop blend modes. glslify formatted.",
   "main": "index.js",
   "scripts": {
