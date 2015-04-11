@@ -64,7 +64,7 @@ void main() {
 }
 ```
 
-Blend modes can also specify an additional opacity argument.
+Blend modes can also specify an additional opacity parameter.
 ```glsl
 float opacity = 0.75;
 vec3 color = blend(bgColor.rgb, fgColor.rgb, opacity );
