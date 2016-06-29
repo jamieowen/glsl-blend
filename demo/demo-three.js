@@ -9,7 +9,7 @@ window.onload = function(){
 	document.body.style.margin = '0px';
 	document.body.style.overflow = 'hidden';
 
-	var loadQ = [ '/demo/lena.png', '/demo/baboon.png' ];
+	var loadQ = [ 'demo/lena.png', 'demo/baboon.png' ];
 	var textures = [];
 
 	var load = function(){
