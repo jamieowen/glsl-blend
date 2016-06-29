@@ -7,7 +7,7 @@ vec3 blendColorDodge(vec3 base, vec3 blend) {
 }
 
 vec3 blendColorDodge(vec3 base, vec3 blend, float opacity) {
-	return (blendColorDodge(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendColorDodge(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 #pragma glslify: export(blendColorDodge)

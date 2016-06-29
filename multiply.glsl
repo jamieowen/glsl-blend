@@ -3,7 +3,7 @@ vec3 blendMultiply(vec3 base, vec3 blend) {
 }
 
 vec3 blendMultiply(vec3 base, vec3 blend, float opacity) {
-	return (blendMultiply(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendMultiply(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 #pragma glslify: export(blendMultiply)

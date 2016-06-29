@@ -10,7 +10,7 @@ vec3 blendPinLight(vec3 base, vec3 blend) {
 }
 
 vec3 blendPinLight(vec3 base, vec3 blend, float opacity) {
-	return (blendPinLight(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendPinLight(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 #pragma glslify: export(blendPinLight)

@@ -208,127 +208,127 @@ vec3 blendLinearBurn(vec3 base, vec3 blend) {
 
 
 vec3 blendNormal(vec3 base, vec3 blend, float opacity) {
-	return (blendNormal(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendNormal(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendLighten(vec3 base, vec3 blend, float opacity) {
-	return (blendLighten(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendLighten(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendDarken(vec3 base, vec3 blend, float opacity) {
-	return (blendDarken(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendDarken(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendMultiply(vec3 base, vec3 blend, float opacity) {
-	return (blendMultiply(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendMultiply(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendAverage(vec3 base, vec3 blend, float opacity) {
-	return (blendAverage(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendAverage(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendAdd(vec3 base, vec3 blend, float opacity) {
-	return (blendAdd(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendAdd(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendSubtract(vec3 base, vec3 blend, float opacity) {
-	return (blendSubtract(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendSubtract(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendDifference(vec3 base, vec3 blend, float opacity) {
-	return (blendDifference(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendDifference(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendNegation(vec3 base, vec3 blend, float opacity) {
-	return (blendNegation(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendNegation(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendExclusion(vec3 base, vec3 blend, float opacity) {
-	return (blendExclusion(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendExclusion(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendScreen(vec3 base, vec3 blend, float opacity) {
-	return (blendScreen(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendScreen(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendOverlay(vec3 base, vec3 blend, float opacity) {
-	return (blendOverlay(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendOverlay(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendSoftLight(vec3 base, vec3 blend, float opacity) {
-	return (blendSoftLight(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendSoftLight(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendHardLight(vec3 base, vec3 blend, float opacity) {
-	return (blendHardLight(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendHardLight(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendColorDodge(vec3 base, vec3 blend, float opacity) {
-	return (blendColorDodge(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendColorDodge(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendColorBurn(vec3 base, vec3 blend, float opacity) {
-	return (blendColorBurn(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendColorBurn(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendLinearLight(vec3 base, vec3 blend, float opacity) {
-	return (blendLinearLight(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendLinearLight(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendVividLight(vec3 base, vec3 blend, float opacity) {
-	return (blendVividLight(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendVividLight(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendPinLight(vec3 base, vec3 blend, float opacity) {
-	return (blendPinLight(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendPinLight(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendHardMix(vec3 base, vec3 blend, float opacity) {
-	return (blendHardMix(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendHardMix(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendReflect(vec3 base, vec3 blend, float opacity) {
-	return (blendReflect(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendReflect(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendGlow(vec3 base, vec3 blend, float opacity) {
-	return (blendGlow(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendGlow(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendPhoenix(vec3 base, vec3 blend, float opacity) {
-	return (blendPhoenix(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendPhoenix(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendLinearDodge(vec3 base, vec3 blend, float opacity) {
-	return (blendLinearDodge(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendLinearDodge(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 
 vec3 blendLinearBurn(vec3 base, vec3 blend, float opacity) {
-	return (blendLinearBurn(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendLinearBurn(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 

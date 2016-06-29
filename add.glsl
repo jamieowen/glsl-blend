@@ -7,7 +7,7 @@ vec3 blendAdd(vec3 base, vec3 blend) {
 }
 
 vec3 blendAdd(vec3 base, vec3 blend, float opacity) {
-	return (blendAdd(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendAdd(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 #pragma glslify: export(blendAdd)

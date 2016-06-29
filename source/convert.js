@@ -98,7 +98,7 @@ for( var map in mapModes ){
 // #define BlendOpacity(base, blend, F, O) 	(F(base, blend) * O + blend * (1.0 - O))
 
 var entryO;
-var opacityImpl = '(F(base, blend) * opacity + blend * (1.0 - opacity))';
+var opacityImpl = '(F(base, blend) * opacity + base * (1.0 - opacity))';
 for( name in entryMap )
 {
     entry = entryMap[ name ];

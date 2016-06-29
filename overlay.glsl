@@ -7,7 +7,7 @@ vec3 blendOverlay(vec3 base, vec3 blend) {
 }
 
 vec3 blendOverlay(vec3 base, vec3 blend, float opacity) {
-	return (blendOverlay(base, blend) * opacity + blend * (1.0 - opacity));
+	return (blendOverlay(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 #pragma glslify: export(blendOverlay)

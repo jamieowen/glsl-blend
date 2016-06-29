@@ -34,7 +34,7 @@ window.onload = function(){
 		document.body.appendChild( renderer.domElement );
 
 		var controls = OrbitControls({
-			distance: 100,
+			distance: 50,
 			parent: renderer.domElement
 		});
 		var target = new THREE.Vector3();
@@ -50,6 +50,7 @@ window.onload = function(){
 		var h2 = w2;
 
 		var sharedOpacityUniform = { type: 'f', value: 0.8 };
+		var materials = [];
 
 		for( var key in modes ){
 
@@ -64,9 +65,11 @@ window.onload = function(){
 					opacity: sharedOpacityUniform,
 					base: { type: 't', value: textures[0] },
 					blend: { type: 't', value: textures[1] },
-					mode: { type: 'i', value: modes[key] }
+					mode: { type: 'i', value: modes[key], defaultMode:modes[key] }
 				}
 			});
+
+			materials.push( material );
 
 			mesh = new THREE.Mesh( geometry,material );
 			mesh.scale.set( size,size,1 );
@@ -109,9 +112,11 @@ window.onload = function(){
 
 		var element = document.createElement( 'div' );
 		element.innerHTML = '' +
-			'<div style="position:absolute;top:10px;left:10px;color:#efefef;font-family: Arial; font-size:10px;">' +
+			'<div style="position:absolute;top:10px;left:10px;color:#aaa;font-family: Arial; font-size:12px;">' +
 				'<p>opacity:</p>' +
-				'<input id="opacity-slider" type="range" min="0" max="1" step="0.001" style="width:200px;"></input>' +
+				'<input id="opacity-slider" type="range" min="0" max="1" step="0.001" style="width:160px;"></input>' +
+				'<p>mode:</p>' +
+				'<select id="mode-select" style="width:160px;"><option>ALL</option></select>' +
 			'</div>';
 
 		document.body.appendChild( element );
@@ -120,7 +125,31 @@ window.onload = function(){
 		slider.setAttribute( 'value', sharedOpacityUniform.value.toString() );
 		slider.oninput = function(){
 			sharedOpacityUniform.value = parseFloat( slider.value );
+		};
+
+		var select = document.getElementById( 'mode-select' );
+		var opt;
+		for( var key in modes ){
+			opt = document.createElement( 'option' );
+			opt.innerText = key;
+			opt.setAttribute( 'value', key );
+			select.appendChild( opt );
 		}
+		select.onchange = function(){
+
+			if( select.value === 'ALL' ){
+				for( var i = 0; i<materials.length; i++ ){
+					materials[i].uniforms.mode.value = materials[i].uniforms.mode.defaultMode
+				}
+			}else{
+				for( var i = 0; i<materials.length; i++ ){
+					materials[i].uniforms.mode.value = modes[ select.value ];
+				}
+			}
+
+		}
+
+
 	};
 
 };
