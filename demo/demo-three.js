@@ -117,6 +117,7 @@ window.onload = function(){
 				'<input id="opacity-slider" type="range" min="0" max="1" step="0.001" style="width:160px;"></input>' +
 				'<p>mode:</p>' +
 				'<select id="mode-select" style="width:160px;"><option>ALL</option></select>' +
+				'<p>( use mouse to zoom & rotate )</p>' +
 			'</div>';
 
 		document.body.appendChild( element );
