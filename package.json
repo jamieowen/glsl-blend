@@ -4,8 +4,8 @@
   "description": "glsl photoshop blend modes. glslify formatted.",
   "main": "index.js",
   "scripts": {
-    "start": "wzrd demo/demo.js:demo/demo.min.js -- -t glslify",
-    "bundle": "browserify demo/demo.js -t glslify | uglifyjs -cm > demo/demo.min.js"
+    "start": "budo demo/demo-three.js -- -t glslify",
+    "bundle": "browserify demo/demo-three.js -t glslify | uglifyjs -cm > demo/demo-three.min.js"
   },
   "repository": {
     "type": "git",
