@@ -1,5 +1,5 @@
 float blendColorDodge(float base, float blend) {
-	return (blend==1.0)?blend:min(base/(1.0-blend),1.0);
+	return (blend>=1.0)?1.0:min(base/(1.0-blend),1.0);
 }
 
 vec3 blendColorDodge(vec3 base, vec3 blend) {
