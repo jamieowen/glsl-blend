@@ -12,6 +12,7 @@ import {
 } from "@thi.ng/webgl";
 import {
   $xy,
+  $xyz,
   assign,
   defMain,
   float,
@@ -19,10 +20,8 @@ import {
   texture,
   vec4,
 } from "@thi.ng/shader-ast";
-import { stream, sync } from "@thi.ng/rstream";
-import { defBlendFn } from "../src/core";
-
-console.log(defBlendFn);
+import { stream, sync, fromDOMEvent } from "@thi.ng/rstream";
+import { blendAdd } from "../src";
 
 const fromImage = (gl: WebGLRenderingContext, url: string) =>
   stream<Texture>(($) => {
@@ -36,7 +35,7 @@ const fromImage = (gl: WebGLRenderingContext, url: string) =>
         target: TextureTarget.TEXTURE_2D,
         format: TextureFormat.RGBA,
         flip: true,
-        // Specifying width/heigh here causes an ArrayBufferView error.
+        // Specifying width/height here causes an ArrayBufferView error.
         // width: image.naturalWidth,
         // height: image.naturalHeight,
         filter: TextureFilter.LINEAR,
@@ -45,10 +44,13 @@ const fromImage = (gl: WebGLRenderingContext, url: string) =>
     });
   });
 
+const domContainer = document.getElementById("container");
+const domOpacity = document.getElementById("opacity");
+
 const { gl } = glCanvas({
   width: 975,
   height: 1300,
-  parent: document.body,
+  parent: domContainer,
 });
 
 const model = defQuadModel({});
@@ -64,7 +66,9 @@ model.shader = defShader(gl, {
   fs: (gl, unis, inputs) => {
     const base = sym(texture(unis.base, $xy(inputs.vUv)));
     const blend = sym(texture(unis.blend, $xy(inputs.vUv)));
-    return [defMain(() => [base, blend, assign(gl.gl_FragColor, base)])];
+    const add = blendAdd($xyz(base), $xyz(blend), unis.opacity);
+    const out = vec4(add, 1.0);
+    return [defMain(() => [base, blend, assign(gl.gl_FragColor, out)])];
   },
   attribs: {
     position: "vec2",
@@ -76,6 +80,7 @@ model.shader = defShader(gl, {
   uniforms: {
     base: ["sampler2D", 0],
     blend: ["sampler2D", 1],
+    opacity: ["float", 0],
   },
 });
 
@@ -88,13 +93,14 @@ sync({
   src: {
     base: fromImage(gl, "/image1.jpeg"),
     blend: fromImage(gl, "/image2.jpeg"),
+    input: fromDOMEvent(domOpacity, "input"),
   },
 }).subscribe({
-  next: ({ base, blend }) => {
-    console.log("Loaded..");
-    console.log(base, blend);
-
+  next: ({ base, blend, input }) => {
     model.textures = [base, blend];
+    model.uniforms.opacity = (input.target as HTMLInputElement).valueAsNumber;
     draw(model);
   },
 });
+
+domOpacity.dispatchEvent(new Event("input"));

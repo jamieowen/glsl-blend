@@ -22,12 +22,21 @@ export const defBlendFn = (blendFn: any) =>
     "blendFunc",
     ["vec3", "vec3", "float"],
     (base, blend, opacity) => [
-      ret(mul(blendFn, mul(add(opacity, base), sub(float(1.0), opacity)))),
+      // ret(
+      //   mul(
+      //     blendFn(base, blend),
+      //     mul(add(opacity, base), sub(float(1.0), opacity))
+      //   )
+      // ),
+      ret(
+        add(
+          mul(blendFn(base, blend), opacity),
+          mul(base, sub(float(1.0), opacity))
+        )
+        // ret(vec3(1.0, 1.0, 0.0)),
+      ),
     ]
   );
-
-export const blendAdd = (base: Vec3Term, blend: Vec3Term) =>
-  min(add(base, blend), vec3(1.0));
 
 export const blendAverage = (base: Vec3Term, blend: Vec3Term) =>
   div(add(base, blend), float(2.0));
