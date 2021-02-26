@@ -21,7 +21,7 @@ import {
   vec4,
 } from "@thi.ng/shader-ast";
 import { stream, sync, fromDOMEvent } from "@thi.ng/rstream";
-import { blendAdd } from "../src";
+import { blendModeSelect, BLEND_MODES } from "../src";
 
 const fromImage = (gl: WebGLRenderingContext, url: string) =>
   stream<Texture>(($) => {
@@ -45,7 +45,19 @@ const fromImage = (gl: WebGLRenderingContext, url: string) =>
   });
 
 const domContainer = document.getElementById("container");
-const domOpacity = document.getElementById("opacity");
+const domOpacity = document.getElementById("opacityInput");
+const domMode = document.getElementById("optionSelect") as HTMLSelectElement;
+const domNext = document.getElementById("nextButton");
+
+Object.keys(BLEND_MODES).forEach((key) => {
+  const option = document.createElement("option");
+  option.innerText = key;
+  domMode.appendChild(option);
+});
+domNext.onclick = () => {
+  domMode.selectedIndex = (domMode.selectedIndex + 1) % domMode.options.length;
+  domMode.dispatchEvent(new Event("change"));
+};
 
 const { gl } = glCanvas({
   width: 975,
@@ -66,7 +78,13 @@ model.shader = defShader(gl, {
   fs: (gl, unis, inputs) => {
     const base = sym(texture(unis.base, $xy(inputs.vUv)));
     const blend = sym(texture(unis.blend, $xy(inputs.vUv)));
-    const add = blendAdd($xyz(base), $xyz(blend), unis.opacity);
+    // const add = blendAverage($xyz(base), $xyz(blend), unis.opacity);
+    const add = blendModeSelect(
+      unis.mode,
+      $xyz(base),
+      $xyz(blend),
+      unis.opacity
+    );
     const out = vec4(add, 1.0);
     return [defMain(() => [base, blend, assign(gl.gl_FragColor, out)])];
   },
@@ -81,6 +99,7 @@ model.shader = defShader(gl, {
     base: ["sampler2D", 0],
     blend: ["sampler2D", 1],
     opacity: ["float", 0],
+    mode: ["int", 0],
   },
 });
 
@@ -94,13 +113,17 @@ sync({
     base: fromImage(gl, "/image1.jpeg"),
     blend: fromImage(gl, "/image2.jpeg"),
     input: fromDOMEvent(domOpacity, "input"),
+    mode: fromDOMEvent(domMode, "change"),
   },
 }).subscribe({
-  next: ({ base, blend, input }) => {
+  next: ({ base, blend, input, mode }) => {
+    const idx = (mode.target as HTMLSelectElement).selectedIndex;
     model.textures = [base, blend];
     model.uniforms.opacity = (input.target as HTMLInputElement).valueAsNumber;
+    model.uniforms.mode = (mode.target as HTMLSelectElement).selectedIndex;
     draw(model);
   },
 });
 
 domOpacity.dispatchEvent(new Event("input"));
+domMode.dispatchEvent(new Event("change"));
