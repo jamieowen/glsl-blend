@@ -8,7 +8,7 @@
     "build": "snowpack build",
     "__start": "budo demo/demo-three.js -- -t glslify",
     "__bundle": "browserify demo/demo-three.js -t glslify | uglifyjs -cm > demo/demo-three.min.js",
-    "gh-pages": "node scripts/gh-pages.js"
+    "gh-pages": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
