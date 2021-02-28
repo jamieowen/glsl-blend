@@ -21,16 +21,17 @@ import {
   vec4,
 } from "@thi.ng/shader-ast";
 import { stream, sync, fromDOMEvent } from "@thi.ng/rstream";
-import { blendModeSelect, BLEND_MODES } from "../src";
+import { blendModeSelect3, blendModeSelect4, BLEND_MODES_3 } from "../src";
 
 const fromImage = (gl: WebGLRenderingContext, url: string) =>
   stream<Texture>(($) => {
     const image = document.createElement("img");
+    let texture: Texture;
     image.src = url;
     image.decode().then(() => {
       console.log(image.width, image.height);
       console.log(image.naturalWidth, image.naturalHeight);
-      const texture = defTexture(gl, {
+      texture = defTexture(gl, {
         image,
         target: TextureTarget.TEXTURE_2D,
         format: TextureFormat.RGBA,
@@ -40,7 +41,14 @@ const fromImage = (gl: WebGLRenderingContext, url: string) =>
         // height: image.naturalHeight,
         filter: TextureFilter.LINEAR,
       });
+
       $.next(texture);
+
+      return () => {
+        if (texture) {
+          texture.release();
+        }
+      };
     });
   });
 
@@ -48,14 +56,20 @@ const domContainer = document.getElementById("container");
 const domOpacity = document.getElementById("opacityInput");
 const domMode = document.getElementById("optionSelect") as HTMLSelectElement;
 const domNext = document.getElementById("nextButton");
+const domPrev = document.getElementById("prevButton");
 
-Object.keys(BLEND_MODES).forEach((key) => {
+Object.keys(BLEND_MODES_3).forEach((key) => {
   const option = document.createElement("option");
   option.innerText = key;
   domMode.appendChild(option);
 });
 domNext.onclick = () => {
   domMode.selectedIndex = (domMode.selectedIndex + 1) % domMode.options.length;
+  domMode.dispatchEvent(new Event("change"));
+};
+domPrev.onclick = () => {
+  const len = domMode.options.length;
+  domMode.selectedIndex = (((domMode.selectedIndex - 1) % len) + len) % len;
   domMode.dispatchEvent(new Event("change"));
 };
 
@@ -78,15 +92,14 @@ model.shader = defShader(gl, {
   fs: (gl, unis, inputs) => {
     const base = sym(texture(unis.base, $xy(inputs.vUv)));
     const blend = sym(texture(unis.blend, $xy(inputs.vUv)));
-    // const add = blendAverage($xyz(base), $xyz(blend), unis.opacity);
-    const add = blendModeSelect(
-      unis.mode,
-      $xyz(base),
-      $xyz(blend),
-      unis.opacity
+
+    const out3 = vec4(
+      blendModeSelect3(unis.mode, $xyz(base), $xyz(blend), unis.opacity),
+      1.0
     );
-    const out = vec4(add, 1.0);
-    return [defMain(() => [base, blend, assign(gl.gl_FragColor, out)])];
+    // const out4 = blendModeSelect4(unis.mode, base, blend, unis.opacity);
+
+    return [defMain(() => [base, blend, assign(gl.gl_FragColor, out3)])];
   },
   attribs: {
     position: "vec2",
@@ -117,7 +130,6 @@ sync({
   },
 }).subscribe({
   next: ({ base, blend, input, mode }) => {
-    const idx = (mode.target as HTMLSelectElement).selectedIndex;
     model.textures = [base, blend];
     model.uniforms.opacity = (input.target as HTMLInputElement).valueAsNumber;
     model.uniforms.mode = (mode.target as HTMLSelectElement).selectedIndex;

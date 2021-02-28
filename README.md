@@ -1,15 +1,33 @@
 # glsl-blend
 
+## Updates.. v2.
+
+## Notes...
+
+- Vec3 + Vec4 implentations.
+
+- Replaced
+  blend==1.0 to blend>=1.0
+  blend==0.0 to blend<=0.0
+
+Which did occur on some ternary statement blends..
+
+As per https://github.com/jamieowen/glsl-blend/pull/4
+
+- Double Check Reflect & Glow Filters
+
+# ----
+
 Photoshop blending modes in glsl for use with [glslify](https://github.com/stackgl/glslify).
 Blending modes include Screen, Multiply, Soft Light, Vivid Light, Overlay, etc.
 Implementations sourced from this article on [Photoshop math](https://mouaif.wordpress.com/2009/01/05/photoshop-math-with-glsl-shaders/).
 
 ### Demo
+
 <http://jamieowen.github.io/glsl-blend>
 
-
-
 ## Installation
+
 ```shell
 npm install glsl-blend
 ```
@@ -65,6 +83,7 @@ void main() {
 ```
 
 Blend modes can also specify an additional opacity parameter.
+
 ```glsl
 float opacity = 0.75;
 vec3 color = blend(bgColor.rgb, fgColor.rgb, opacity );
@@ -75,11 +94,11 @@ vec3 color = blend(bgColor.rgb, fgColor.rgb, opacity );
 The [demo](http://jamieowen.github.io/glsl-blend) shows all blend modes switchable via a drop down.
 
 For this, there is an additional 'all' glsl function that can be required to import all blend mode functions at once and
-specify which one to use via an integer.  Integers for each blend mode can be imported using the javascript [modes](http://github.com/jamieowen/glsl-blend/blob/master/modes.js) module, and passed as a uniform to the shader.
+specify which one to use via an integer. Integers for each blend mode can be imported using the javascript [modes](http://github.com/jamieowen/glsl-blend/blob/master/modes.js) module, and passed as a uniform to the shader.
 
 ```javascript
 // javascript
-var modes = require( 'glsl-blend/modes' );
+var modes = require("glsl-blend/modes");
 
 // using stackgl
 myShader.uniforms.blendMode = modes.HARD_LIGHT;
@@ -97,9 +116,8 @@ vec3 color = blend( blendMode, bgColor.rgb, fgColor.rgb, 0.75 );
 
 ## Todo
 
-* Add Hue, Luminance, Saturation & Color Modes.
-* Implement color conversion functions for the above as separate glsl modules.
-
+- Add Hue, Luminance, Saturation & Color Modes.
+- Implement color conversion functions for the above as separate glsl modules.
 
 ## Contributing
 
@@ -108,4 +126,3 @@ See [stackgl/contributing](https://github.com/stackgl/contributing).
 ## License
 
 MIT. See [LICENSE.md](https://github.com/jamieowen/glsl-blend/blob/master/LICENSE.md) for details.
-
