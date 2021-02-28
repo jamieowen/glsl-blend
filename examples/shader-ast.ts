@@ -123,8 +123,8 @@ gl.clear(gl.COLOR_BUFFER_BIT);
 
 sync({
   src: {
-    base: fromImage(gl, "/image1.jpeg"),
-    blend: fromImage(gl, "/image2.jpeg"),
+    base: fromImage(gl, "image1.jpeg"),
+    blend: fromImage(gl, "image2.jpeg"),
     input: fromDOMEvent(domOpacity, "input"),
     mode: fromDOMEvent(domMode, "change"),
   },

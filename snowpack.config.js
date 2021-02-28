@@ -6,4 +6,7 @@ module.exports = {
     public: "/",
     src: "/src",
   },
+  buildOptions: {
+    baseUrl: "./",
+  },
 };
