@@ -1,5 +1,5 @@
 import { ifThen, defn, int, eq, ret } from "@thi.ng/shader-ast";
-import { BLEND_MODES_3, BLEND_MODES_4 } from "./api";
+import { BLEND_MODES_3, BLEND_MODES_4 } from "./constants";
 
 export const blendModeSelect3 = defn(
   "vec3",

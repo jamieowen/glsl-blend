@@ -14,7 +14,7 @@ import {
   vec3,
   vec4,
 } from "@thi.ng/shader-ast";
-import { BlendMode, BlendModeFloat, BlendModeVec } from "./api";
+import { BlendModeFloat, BlendModeVec } from "./api";
 
 export const blendAddVec3: BlendModeVec<"vec3"> = (base, blend) =>
   min(add(base, blend), vec3(1.0));
@@ -62,6 +62,22 @@ export const blendHardMixFloat: BlendModeFloat = (base, blend) =>
     float(0.0),
     float(1.0)
   );
+
+export const blendLightenVec: BlendModeVec<"vec3" | "vec4"> = (base, blend) =>
+  max(base, blend);
+
+// Linear Burn
+// Linear Dodge
+// Linear Light
+
+export const blendMultiplyVec: BlendModeVec<"vec3" | "vec4"> = (base, blend) =>
+  mul(base, blend);
+
+export const blendNegationVec: BlendModeVec<"vec3" | "vec4"> = (base, blend) =>
+  sub(1.0, abs(sub(1.0, sub(base, blend))));
+
+export const blendNormalVec: BlendModeVec<"vec3" | "vec4"> = (base, blend) =>
+  blend;
 
 export const blendOverlayFloat: BlendModeFloat = (base, blend) =>
   ternary(
