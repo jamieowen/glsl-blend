@@ -12,6 +12,7 @@ import {
   max,
   min,
   mul,
+  ret,
   sub,
   Term,
   ternary,
@@ -26,6 +27,7 @@ import type {
   BlendModeVec4,
   ColorTerm,
 } from "./api";
+import { defBlendFloat } from "./def-blend";
 
 export const blendAddVec3: BlendModeVec3 = (base, blend) =>
   min(add(base, blend), vec3(FLOAT1));
@@ -33,25 +35,91 @@ export const blendAddVec3: BlendModeVec3 = (base, blend) =>
 export const blendAddVec4: BlendModeVec4 = (base, blend) =>
   min(add(base, blend), vec4(FLOAT1));
 
+export const blendColorBurnFloat = defBlendFloat(
+  "blendColorBurnFloat",
+  (base, blend) => [
+    ret(
+      ternary(
+        lte(blend, FLOAT0),
+        blend,
+        max(sub(FLOAT1, div(sub(FLOAT1, base), blend)), FLOAT0)
+      )
+    ),
+  ]
+);
+
+export const blendColorDodgeFloat = defBlendFloat(
+  "blendColorDodgeFloat",
+  (base, blend) => [
+    ret(
+      ternary(
+        gte(blend, FLOAT1),
+        blend,
+        min(div(base, sub(FLOAT1, blend)), FLOAT1)
+      )
+    ),
+  ]
+);
+
+export const blendGlowFloat: BlendModeFloat = (base, blend) =>
+  blendReflectFloat(blend, base);
+
+export const blendHardLightFloat: BlendModeFloat = (base, blend) =>
+  blendOverlayFloat(blend, base);
+
+export const blendVividLightFloat = defBlendFloat(
+  "blendVividLightFloat",
+  (base, blend) => [
+    ret(
+      ternary(
+        lt(base, FLOAT05),
+        blendColorBurnFloat(base, mul(FLOAT2, blend)),
+        blendColorDodgeFloat(base, mul(FLOAT2, sub(blend, FLOAT05)))
+      )
+    ),
+  ]
+);
+
+export const blendHardMixFloat = defBlendFloat(
+  "blendHardMixFloat",
+  (base, blend) => [
+    ret(
+      ternary(lt(blendVividLightFloat(base, blend), FLOAT05), FLOAT0, FLOAT1)
+    ),
+  ]
+);
+
+export const blendOverlayFloat = defBlendFloat(
+  "blendOverlayFloat",
+  (base, blend) => [
+    ret(
+      ternary(
+        lt(base, FLOAT05),
+        mul(FLOAT2, mul(base, blend)),
+        sub(FLOAT1, mul(FLOAT2, mul(sub(FLOAT1, base), sub(FLOAT1, blend))))
+      )
+    ),
+  ]
+);
+
+export const blendReflectFloat = defBlendFloat(
+  "blendReflectFloat",
+  (base, blend) => [
+    ret(
+      ternary(
+        gte(blend, FLOAT1),
+        blend,
+        min(div(mul(base, base), sub(FLOAT1, blend)), FLOAT1)
+      )
+    ),
+  ]
+);
+
 export function blendAverageVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
 export function blendAverageVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
 export function blendAverageVec(base: ColorTerm, blend: ColorTerm): Term<any> {
   return div(add(base, blend), FLOAT2);
 }
-
-export const blendColorBurnFloat: BlendModeFloat = (base, blend) =>
-  ternary(
-    lte(blend, FLOAT0),
-    blend,
-    max(sub(FLOAT1, div(sub(FLOAT1, base), blend)), FLOAT0)
-  );
-
-export const blendColorDodgeFloat: BlendModeFloat = (base, blend) =>
-  ternary(
-    gte(blend, FLOAT1),
-    blend,
-    min(div(base, sub(FLOAT1, blend)), FLOAT1)
-  );
 
 export function blendDarkenVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
 export function blendDarkenVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
@@ -76,15 +144,6 @@ export function blendExclusionVec(
 ): Term<any> {
   return add(base, sub(blend, mul(FLOAT2, mul(base, blend))));
 }
-
-export const blendGlowFloat: BlendModeFloat = (base, blend) =>
-  blendReflectFloat(blend, base);
-
-export const blendHardLightFloat: BlendModeFloat = (base, blend) =>
-  blendOverlayFloat(blend, base);
-
-export const blendHardMixFloat: BlendModeFloat = (base, blend) =>
-  ternary(lt(blendVividLightFloat(base, blend), FLOAT05), FLOAT0, FLOAT1);
 
 export function blendLightenVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
 export function blendLightenVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
@@ -113,24 +172,3 @@ export function blendNormalVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
 export function blendNormalVec(_: ColorTerm, blend: ColorTerm): Term<any> {
   return blend;
 }
-
-export const blendOverlayFloat: BlendModeFloat = (base, blend) =>
-  ternary(
-    lt(base, FLOAT05),
-    mul(FLOAT2, mul(base, blend)),
-    sub(FLOAT1, mul(FLOAT2, mul(sub(FLOAT1, base), sub(FLOAT1, blend))))
-  );
-
-export const blendReflectFloat: BlendModeFloat = (base, blend) =>
-  ternary(
-    gte(blend, FLOAT1),
-    blend,
-    min(div(mul(base, base), sub(FLOAT1, blend)), FLOAT1)
-  );
-
-export const blendVividLightFloat: BlendModeFloat = (base, blend) =>
-  ternary(
-    lt(base, FLOAT05),
-    blendColorBurnFloat(base, mul(FLOAT2, blend)),
-    blendColorDodgeFloat(base, mul(FLOAT2, sub(blend, FLOAT05)))
-  );

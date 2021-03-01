@@ -1,4 +1,13 @@
-import { add, defn, mul, ret, sub } from "@thi.ng/shader-ast";
+import type { Fn2 } from "@thi.ng/api";
+import {
+  add,
+  defn,
+  FloatSym,
+  mul,
+  ret,
+  ScopeBody,
+  sub,
+} from "@thi.ng/shader-ast";
 import type {
   BlendModeDef3,
   BlendModeDef4,
@@ -7,6 +16,11 @@ import type {
   BlendModeVec4,
   Color,
 } from "./api";
+
+export const defBlendFloat = (
+  name: string,
+  body: Fn2<FloatSym, FloatSym, ScopeBody>
+) => defn("float", name, ["float", "float"], body);
 
 export const defBlendFn = <T extends Color>(
   type: T,
