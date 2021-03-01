@@ -1,5 +1,7 @@
-import { Term } from "@thi.ng/shader-ast";
-import { defBlendFn3, defBlendFn4 } from "./def-blend";
+import type { FloatTerm, TaggedFn3, Term } from "@thi.ng/shader-ast";
+
+export type Color = "vec3" | "vec4";
+export type ColorTerm = Term<Color>;
 
 export type BlendMode =
   | "add"
@@ -20,17 +22,19 @@ export type BlendMode =
   | "vivid-light"
   | "reflect";
 
-export type BlendModeFloat = (
-  base: Term<"float">,
-  blend: Term<"float">
-) => Term<"float">;
+export type BlendModeFloat = (base: FloatTerm, blend: FloatTerm) => FloatTerm;
 
-export type BlendModeVec<T extends "vec3" | "vec4"> = (
-  base: Term<T>,
-  blend: Term<T>
-) => Term<T>;
+export type BlendModeVec<A extends Color, B extends A = A> = (
+  base: Term<A>,
+  blend: Term<B>
+) => Term<A>;
 
-export type BlendModeDef3 = ReturnType<typeof defBlendFn3>;
-export type BlendModeDef4 = ReturnType<typeof defBlendFn4>;
+export type BlendModeVec3 = BlendModeVec<"vec3">;
+export type BlendModeVec4 = BlendModeVec<"vec4">;
+
+export type BlendModeDef<T extends Color> = TaggedFn3<T, T, "float", T>;
+
+export type BlendModeDef3 = BlendModeDef<"vec3">;
+export type BlendModeDef4 = BlendModeDef<"vec4">;
 
 export default {};
