@@ -6,13 +6,16 @@ import {
   FLOAT05,
   FLOAT1,
   FLOAT2,
+  FloatTerm,
   gte,
   lt,
   lte,
   max,
   min,
+  mix,
   mul,
   ret,
+  step,
   sub,
   Term,
   ternary,
@@ -21,51 +24,25 @@ import {
   vec4,
   Vec4Term,
 } from "@thi.ng/shader-ast";
-import type {
-  BlendModeFloat,
-  BlendModeVec3,
-  BlendModeVec4,
-  ColorTerm,
-} from "./api";
+import type { BlendModeFloat, ColorTerm } from "./api";
 import { defBlendFloat } from "./def-blend";
 
-export const blendAddVec3: BlendModeVec3 = (base, blend) =>
-  min(add(base, blend), vec3(FLOAT1));
+const asVec = <T extends ColorTerm>(base: T, x: FloatTerm) =>
+  (base.type === "vec3" ? vec3 : vec4)(x);
 
-export const blendAddVec4: BlendModeVec4 = (base, blend) =>
-  min(add(base, blend), vec4(FLOAT1));
+export const blendColorBurnFloat: BlendModeFloat = (base, blend) =>
+  ternary(
+    lte(blend, FLOAT0),
+    blend,
+    max(sub(FLOAT1, div(sub(FLOAT1, base), blend)), FLOAT0)
+  );
 
-export const blendColorBurnFloat = defBlendFloat(
-  "blendColorBurnFloat",
-  (base, blend) => [
-    ret(
-      ternary(
-        lte(blend, FLOAT0),
-        blend,
-        max(sub(FLOAT1, div(sub(FLOAT1, base), blend)), FLOAT0)
-      )
-    ),
-  ]
-);
-
-export const blendColorDodgeFloat = defBlendFloat(
-  "blendColorDodgeFloat",
-  (base, blend) => [
-    ret(
-      ternary(
-        gte(blend, FLOAT1),
-        blend,
-        min(div(base, sub(FLOAT1, blend)), FLOAT1)
-      )
-    ),
-  ]
-);
-
-export const blendGlowFloat: BlendModeFloat = (base, blend) =>
-  blendReflectFloat(blend, base);
-
-export const blendHardLightFloat: BlendModeFloat = (base, blend) =>
-  blendOverlayFloat(blend, base);
+export const blendColorDodgeFloat: BlendModeFloat = (base, blend) =>
+  ternary(
+    gte(blend, FLOAT1),
+    blend,
+    min(div(base, sub(FLOAT1, blend)), FLOAT1)
+  );
 
 export const blendVividLightFloat = defBlendFloat(
   "blendVividLightFloat",
@@ -82,43 +59,43 @@ export const blendVividLightFloat = defBlendFloat(
 
 export const blendHardMixFloat = defBlendFloat(
   "blendHardMixFloat",
-  (base, blend) => [
-    ret(
-      ternary(lt(blendVividLightFloat(base, blend), FLOAT05), FLOAT0, FLOAT1)
-    ),
-  ]
+  (base, blend) => [ret(step(FLOAT05, blendVividLightFloat(base, blend)))]
 );
 
-export const blendOverlayFloat = defBlendFloat(
-  "blendOverlayFloat",
-  (base, blend) => [
-    ret(
-      ternary(
-        lt(base, FLOAT05),
-        mul(FLOAT2, mul(base, blend)),
-        sub(FLOAT1, mul(FLOAT2, mul(sub(FLOAT1, base), sub(FLOAT1, blend))))
-      )
-    ),
-  ]
-);
-
-export const blendReflectFloat = defBlendFloat(
-  "blendReflectFloat",
-  (base, blend) => [
-    ret(
-      ternary(
-        gte(blend, FLOAT1),
-        blend,
-        min(div(mul(base, base), sub(FLOAT1, blend)), FLOAT1)
-      )
-    ),
-  ]
-);
+export function blendAddVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendAddVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendAddVec(base: ColorTerm, blend: ColorTerm): Term<any> {
+  return min(add(base, blend), asVec(base, FLOAT1));
+}
 
 export function blendAverageVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
 export function blendAverageVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
 export function blendAverageVec(base: ColorTerm, blend: ColorTerm): Term<any> {
   return div(add(base, blend), FLOAT2);
+}
+
+export function blendColorBurnVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendColorBurnVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendColorBurnVec(
+  base: ColorTerm,
+  blend: ColorTerm
+): Term<any> {
+  const zero = asVec(base, FLOAT0);
+  return mix(
+    blend,
+    max(sub(FLOAT1, div(sub(FLOAT1, base), blend)), zero),
+    step(zero, blend)
+  );
+}
+
+export function blendColorDodgeVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendColorDodgeVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendColorDodgeVec(
+  base: ColorTerm,
+  blend: ColorTerm
+): Term<any> {
+  const one = asVec(base, FLOAT1);
+  return mix(min(div(base, sub(FLOAT1, blend)), one), blend, step(one, blend));
 }
 
 export function blendDarkenVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
@@ -145,15 +122,26 @@ export function blendExclusionVec(
   return add(base, sub(blend, mul(FLOAT2, mul(base, blend))));
 }
 
+export function blendGlowVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendGlowVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendGlowVec(base: ColorTerm, blend: ColorTerm): Term<any> {
+  return blendReflectVec(<any>blend, <any>base);
+}
+
+export function blendHardLightVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendHardLightVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendHardLightVec(
+  base: ColorTerm,
+  blend: ColorTerm
+): Term<any> {
+  return blendOverlayVec(<any>blend, <any>base);
+}
+
 export function blendLightenVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
 export function blendLightenVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
 export function blendLightenVec(base: ColorTerm, blend: ColorTerm): Term<any> {
   return max(base, blend);
 }
-
-// Linear Burn
-// Linear Dodge
-// Linear Light
 
 export function blendMultiplyVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
 export function blendMultiplyVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
@@ -172,3 +160,28 @@ export function blendNormalVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
 export function blendNormalVec(_: ColorTerm, blend: ColorTerm): Term<any> {
   return blend;
 }
+
+export function blendOverlayVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendOverlayVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendOverlayVec(base: ColorTerm, blend: ColorTerm): Term<any> {
+  return mix(
+    mul(FLOAT2, mul(base, blend)),
+    sub(FLOAT1, mul(FLOAT2, mul(sub(FLOAT1, base), sub(FLOAT1, blend)))),
+    step(asVec(base, FLOAT05), base)
+  );
+}
+
+export function blendReflectVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendReflectVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendReflectVec(base: ColorTerm, blend: ColorTerm): Term<any> {
+  const one = asVec(base, FLOAT1);
+  return mix(
+    min(div(mul(base, base), sub(FLOAT1, blend)), one),
+    blend,
+    step(one, blend)
+  );
+}
+
+// Linear Burn
+// Linear Dodge
+// Linear Light

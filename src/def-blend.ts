@@ -33,9 +33,9 @@ export const defBlendFn = <T extends Color>(
 
 export const defBlendFnPair = (
   fnName: string,
-  blend3: BlendModeVec3,
-  blend4: BlendModeVec4
+  blend3: BlendModeVec<Color>,
+  blend4: BlendModeVec<Color> = blend3
 ): [BlendModeDef3, BlendModeDef4] => [
-  defBlendFn("vec3", blend3, fnName),
-  defBlendFn("vec4", blend4, fnName),
+  defBlendFn("vec3", <BlendModeVec3>blend3, fnName),
+  defBlendFn("vec4", <BlendModeVec4>blend4, fnName),
 ];
