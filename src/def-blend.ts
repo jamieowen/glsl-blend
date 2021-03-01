@@ -1,20 +1,41 @@
-import { add, float, sub, defn, ret, mul, Term } from "@thi.ng/shader-ast";
-import { BlendModeVec } from "./api";
+import type { Fn2 } from "@thi.ng/api";
+import {
+  add,
+  defn,
+  FloatSym,
+  mul,
+  ret,
+  ScopeBody,
+  sub,
+} from "@thi.ng/shader-ast";
+import type {
+  BlendModeDef3,
+  BlendModeDef4,
+  BlendModeVec,
+  BlendModeVec3,
+  BlendModeVec4,
+  Color,
+} from "./api";
 
-export const blendLayerOpacity = (
-  blendFn: BlendModeVec<"vec3" | "vec4">,
-  base: Term<"vec3" | "vec4">,
-  blend: Term<"vec3" | "vec4">,
-  opacity: Term<"float">
+export const defBlendFloat = (
+  name: string,
+  body: Fn2<FloatSym, FloatSym, ScopeBody>
+) => defn("float", name, ["float", "float"], body);
+
+export const defBlendFn = <T extends Color>(
+  type: T,
+  blendFn: BlendModeVec<T>,
+  fnName: string
 ) =>
-  add(mul(blendFn(base, blend), opacity), mul(base, sub(float(1.0), opacity)));
-
-export const defBlendFn3 = (blendFn: BlendModeVec<"vec3">, fnName: string) =>
-  defn("vec3", fnName, ["vec3", "vec3", "float"], (base, blend, opacity) => [
-    ret(blendLayerOpacity(blendFn, base, blend, opacity)),
+  defn(type, fnName, [type, type, "float"], (base, blend, opacity) => [
+    ret(add(mul(blendFn(base, blend), opacity), mul(base, sub(1, opacity)))),
   ]);
 
-export const defBlendFn4 = (blendFn: BlendModeVec<"vec4">, fnName: string) =>
-  defn("vec4", fnName, ["vec4", "vec4", "float"], (base, blend, opacity) => [
-    ret(blendLayerOpacity(blendFn, base, blend, opacity)),
-  ]);
+export const defBlendFnPair = (
+  fnName: string,
+  blend3: BlendModeVec<Color>,
+  blend4: BlendModeVec<Color> = blend3
+): [BlendModeDef3, BlendModeDef4] => [
+  defBlendFn("vec3", <BlendModeVec3>blend3, fnName),
+  defBlendFn("vec4", <BlendModeVec4>blend4, fnName),
+];

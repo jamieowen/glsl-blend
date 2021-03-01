@@ -9,6 +9,7 @@ import {
   Texture,
   TextureFormat,
   TextureTarget,
+  setLogger,
 } from "@thi.ng/webgl";
 import {
   $xy,
@@ -20,8 +21,12 @@ import {
   texture,
   vec4,
 } from "@thi.ng/shader-ast";
+import { ConsoleLogger } from "@thi.ng/api";
 import { stream, sync, fromDOMEvent } from "@thi.ng/rstream";
 import { blendModeSelect3, blendModeSelect4, BLEND_MODES_3 } from "../src";
+
+// enable logger to see generated GLSL output
+setLogger(new ConsoleLogger("webgl"));
 
 const fromImage = (gl: WebGLRenderingContext, url: string) =>
   stream<Texture>(($) => {
