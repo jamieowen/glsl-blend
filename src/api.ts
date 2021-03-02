@@ -15,10 +15,13 @@ export type BlendMode =
   | "hard-light"
   | "hard-mix"
   | "lighten"
+  | "linear-burn"
+  | "linear-dodge"
   | "multiply"
   | "negation"
   | "normal"
   | "overlay"
+  | "phoenix"
   | "vivid-light"
   | "reflect";
 

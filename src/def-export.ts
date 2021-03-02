@@ -10,10 +10,13 @@ import {
   blendHardLightVec,
   blendHardMixFloat,
   blendLightenVec,
+  blendLinearBurnVec,
+  blendLinearDodgeVec,
   blendMultiplyVec,
   blendNegationVec,
   blendNormalVec,
   blendOverlayVec,
+  blendPhoenixVec,
   blendReflectVec,
   blendVividLightFloat,
 } from "./blend-impl";
@@ -74,6 +77,16 @@ export const [blendLighten3, blendLighten4] = defBlendFnPair(
   blendLightenVec
 );
 
+export const [blendLinearBurn3, blendLinearBurn4] = defBlendFnPair(
+  FN_NAMES["linear-burn"],
+  blendLinearBurnVec
+);
+
+export const [blendLinearDodge3, blendLinearDodge4] = defBlendFnPair(
+  FN_NAMES["linear-dodge"],
+  blendLinearDodgeVec
+);
+
 export const [blendMultiply3, blendMultiply4] = defBlendFnPair(
   FN_NAMES.multiply,
   blendMultiplyVec
@@ -92,6 +105,11 @@ export const [blendNormal3, blendNormal4] = defBlendFnPair(
 export const [blendOverlay3, blendOverlay4] = defBlendFnPair(
   FN_NAMES.overlay,
   blendOverlayVec
+);
+
+export const [blendPhoenix3, blendPhoenix4] = defBlendFnPair(
+  FN_NAMES.phoenix,
+  blendPhoenixVec
 );
 
 export const [blendReflect3, blendReflect4] = defBlendFnPair(

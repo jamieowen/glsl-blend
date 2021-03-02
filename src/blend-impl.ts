@@ -143,6 +143,26 @@ export function blendLightenVec(base: ColorTerm, blend: ColorTerm): Term<any> {
   return max(base, blend);
 }
 
+export function blendLinearBurnVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendLinearBurnVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendLinearBurnVec(
+  base: ColorTerm,
+  blend: ColorTerm
+): Term<any> {
+  return max(sub(add(base, blend), FLOAT1), asVec(base, FLOAT0));
+}
+
+export function blendLinearDodgeVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendLinearDodgeVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendLinearDodgeVec(
+  base: ColorTerm,
+  blend: ColorTerm
+): Term<any> {
+  return min(add(base, blend), asVec(base, FLOAT1));
+}
+
+// Linear Light
+
 export function blendMultiplyVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
 export function blendMultiplyVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
 export function blendMultiplyVec(base: ColorTerm, blend: ColorTerm): Term<any> {
@@ -171,6 +191,12 @@ export function blendOverlayVec(base: ColorTerm, blend: ColorTerm): Term<any> {
   );
 }
 
+export function blendPhoenixVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendPhoenixVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendPhoenixVec(base: ColorTerm, blend: ColorTerm): Term<any> {
+  return add(sub(min(base, blend), max(base, blend)), FLOAT1);
+}
+
 export function blendReflectVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
 export function blendReflectVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
 export function blendReflectVec(base: ColorTerm, blend: ColorTerm): Term<any> {
@@ -181,7 +207,3 @@ export function blendReflectVec(base: ColorTerm, blend: ColorTerm): Term<any> {
     step(one, blend)
   );
 }
-
-// Linear Burn
-// Linear Dodge
-// Linear Light
