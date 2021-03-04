@@ -24,6 +24,7 @@ export type BlendMode =
   | "overlay"
   | "phoenix"
   | "pin-light"
+  | "screen"
   | "vivid-light"
   | "reflect";
 

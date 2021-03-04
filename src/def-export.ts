@@ -17,7 +17,8 @@ import {
   blendOverlayVec,
   blendPhoenixVec,
   blendReflectVec,
-} from "./blend-impl";
+  blendScreenVec,
+} from "./blend-impl-vec";
 import {
   blendHardMixFloat,
   blendLinearLightFloat,
@@ -131,6 +132,11 @@ export const [blendPhoenix3, blendPhoenix4] = defBlendFnPair(
 export const [blendReflect3, blendReflect4] = defBlendFnPair(
   FN_NAMES.reflect,
   blendReflectVec
+);
+
+export const [blendScreen3, blendScreen4] = defBlendFnPair(
+  FN_NAMES.screen,
+  blendScreenVec
 );
 
 export const [blendVividLight3, blendVividLight4] = defBlendFnPair(

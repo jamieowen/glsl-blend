@@ -22,5 +22,6 @@ export const FN_NAMES: Record<BlendMode, string> = {
   phoenix: "blendPhoenix",
   "pin-light": "blendPinLight",
   reflect: "blendReflect",
+  screen: "blendScreen",
   "vivid-light": "blendVividLight",
 };

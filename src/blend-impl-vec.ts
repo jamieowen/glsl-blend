@@ -169,3 +169,10 @@ export function blendReflectVec(base: ColorTerm, blend: ColorTerm): Term<any> {
     step(one, blend)
   );
 }
+
+export function blendScreenVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendScreenVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendScreenVec(base: ColorTerm, blend: ColorTerm): Term<any> {
+  const one = asVec(base, FLOAT1);
+  return sub(one, mul(sub(one, base), sub(one, blend)));
+}
