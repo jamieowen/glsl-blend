@@ -30,19 +30,29 @@ import { defBlendFloat } from "./def-blend";
 const asVec = <T extends ColorTerm>(base: T, x: FloatTerm) =>
   (base.type === "vec3" ? vec3 : vec4)(x);
 
+// export const blendColorBurnFloat: BlendModeFloat = (base, blend) =>
+//   ternary(
+//     lte(blend, FLOAT0),
+//     blend,
+//     max(sub(FLOAT1, div(sub(FLOAT1, base), blend)), FLOAT0)
+//   );
+
 export const blendColorBurnFloat: BlendModeFloat = (base, blend) =>
-  ternary(
-    lte(blend, FLOAT0),
+  mix(
     blend,
-    max(sub(FLOAT1, div(sub(FLOAT1, base), blend)), FLOAT0)
+    max(sub(FLOAT1, div(sub(FLOAT1, base), blend)), FLOAT0),
+    step(FLOAT05, blend)
   );
 
+// export const blendColorDodgeFloat: BlendModeFloat = (base, blend) =>
+//   ternary(
+//     gte(blend, FLOAT1),
+//     blend,
+//     min(div(base, sub(FLOAT1, blend)), FLOAT1)
+//   );
+
 export const blendColorDodgeFloat: BlendModeFloat = (base, blend) =>
-  ternary(
-    gte(blend, FLOAT1),
-    blend,
-    min(div(base, sub(FLOAT1, blend)), FLOAT1)
-  );
+  mix(min(div(base, sub(FLOAT1, blend)), FLOAT1), blend, step(FLOAT1, blend));
 
 export const blendVividLightFloat = defBlendFloat(
   "blendVividLightFloat",
