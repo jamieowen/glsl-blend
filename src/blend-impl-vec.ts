@@ -18,6 +18,7 @@ import {
   Vec3Term,
   vec4,
   Vec4Term,
+  sqrt,
 } from "@thi.ng/shader-ast";
 import type { ColorTerm } from "./api";
 
@@ -175,4 +176,26 @@ export function blendScreenVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
 export function blendScreenVec(base: ColorTerm, blend: ColorTerm): Term<any> {
   const one = asVec(base, FLOAT1);
   return sub(one, mul(sub(one, base), sub(one, blend)));
+}
+
+export function blendSoftLightVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendSoftLightVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendSoftLightVec(
+  base: ColorTerm,
+  blend: ColorTerm
+): Term<any> {
+  return mix(
+    add(
+      mul(FLOAT2, mul(base, blend)),
+      mul(mul(base, base), sub(FLOAT1, mul(FLOAT2, blend)))
+    ),
+    mul(
+      sqrt(base),
+      add(
+        sub(mul(FLOAT2, blend), FLOAT1),
+        mul(FLOAT2, mul(base, sub(FLOAT1, blend)))
+      )
+    ),
+    step(asVec(base, FLOAT05), blend)
+  );
 }

@@ -18,6 +18,7 @@ import {
   blendPhoenixVec,
   blendReflectVec,
   blendScreenVec,
+  blendSoftLightVec,
 } from "./blend-impl-vec";
 import {
   blendHardMixFloat,
@@ -137,6 +138,11 @@ export const [blendReflect3, blendReflect4] = defBlendFnPair(
 export const [blendScreen3, blendScreen4] = defBlendFnPair(
   FN_NAMES.screen,
   blendScreenVec
+);
+
+export const [blendSoftLight3, blendSoftLight4] = defBlendFnPair(
+  FN_NAMES["soft-light"],
+  blendSoftLightVec
 );
 
 export const [blendVividLight3, blendVividLight4] = defBlendFnPair(

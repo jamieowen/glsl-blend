@@ -23,5 +23,6 @@ export const FN_NAMES: Record<BlendMode, string> = {
   "pin-light": "blendPinLight",
   reflect: "blendReflect",
   screen: "blendScreen",
+  "soft-light": "blendSoftLight",
   "vivid-light": "blendVividLight",
 };

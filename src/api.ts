@@ -24,9 +24,10 @@ export type BlendMode =
   | "overlay"
   | "phoenix"
   | "pin-light"
+  | "reflect"
   | "screen"
-  | "vivid-light"
-  | "reflect";
+  | "soft-light"
+  | "vivid-light";
 
 export type BlendModeFloat = (base: FloatTerm, blend: FloatTerm) => FloatTerm;
 

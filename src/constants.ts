@@ -44,6 +44,8 @@ import {
   blendReflect4,
   blendScreen3,
   blendScreen4,
+  blendSoftLight3,
+  blendSoftLight4,
   blendVividLight3,
   blendVividLight4,
 } from "./def-export";
@@ -71,6 +73,7 @@ export const BLEND_MODES_3: Record<BlendMode, BlendModeDef3> = {
   "pin-light": blendPinLight3,
   reflect: blendReflect3,
   screen: blendScreen3,
+  "soft-light": blendSoftLight3,
   "vivid-light": blendVividLight3,
 };
 
@@ -97,5 +100,6 @@ export const BLEND_MODES_4: Record<BlendMode, BlendModeDef4> = {
   "pin-light": blendPinLight4,
   reflect: blendReflect4,
   screen: blendScreen4,
+  "soft-light": blendSoftLight4,
   "vivid-light": blendVividLight4,
 };
