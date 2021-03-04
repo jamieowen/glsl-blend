@@ -18,7 +18,6 @@ import {
   Vec3Term,
   vec4,
   Vec4Term,
-  sqrt,
 } from "@thi.ng/shader-ast";
 import type { ColorTerm } from "./api";
 

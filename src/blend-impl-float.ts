@@ -1,15 +1,11 @@
 import {
-  abs,
   add,
   div,
   FLOAT0,
   FLOAT05,
   FLOAT1,
   FLOAT2,
-  FloatTerm,
-  gte,
   lt,
-  lte,
   max,
   min,
   mix,
@@ -17,15 +13,9 @@ import {
   ret,
   step,
   sub,
-  Term,
   ternary,
-  vec3,
-  Vec3Term,
-  vec4,
-  Vec4Term,
 } from "@thi.ng/shader-ast";
-import { Blend } from "@thi.ng/webgl";
-import type { BlendModeFloat, ColorTerm } from "./api";
+import type { BlendModeFloat } from "./api";
 import { defBlendFloat } from "./def-blend";
 
 export const blendColorBurnFloat: BlendModeFloat = (base, blend) =>
