@@ -178,24 +178,46 @@ export function blendScreenVec(base: ColorTerm, blend: ColorTerm): Term<any> {
   return sub(one, mul(sub(one, base), sub(one, blend)));
 }
 
+/**
+ *
+ * NOTE:
+ * This was the direct translation, but produced banding on gradients.
+ * The simplified one below produces the more accurate effect.
+ * ( setting step to FLOAT1 and removing the second part of the mix )
+ *
+ * @param base
+ * @param blend
+ */
+// export function blendSoftLightVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+// export function blendSoftLightVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+// export function blendSoftLightVec(
+//   base: ColorTerm,
+//   blend: ColorTerm
+// ): Term<any> {
+//   return mix(
+//     add(
+//       mul(FLOAT2, mul(base, blend)),
+//       mul(mul(base, base), sub(FLOAT1, mul(FLOAT2, blend)))
+//     ),
+//     mul(
+//       sqrt(base),
+//       add(
+//         sub(mul(FLOAT2, blend), FLOAT1),
+//         mul(FLOAT2, mul(base, sub(FLOAT1, blend)))
+//       )
+//     ),
+//     step(asVec(base, FLOAT05), blend)
+//   );
+// }
+
 export function blendSoftLightVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
 export function blendSoftLightVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
 export function blendSoftLightVec(
   base: ColorTerm,
   blend: ColorTerm
 ): Term<any> {
-  return mix(
-    add(
-      mul(FLOAT2, mul(base, blend)),
-      mul(mul(base, base), sub(FLOAT1, mul(FLOAT2, blend)))
-    ),
-    mul(
-      sqrt(base),
-      add(
-        sub(mul(FLOAT2, blend), FLOAT1),
-        mul(FLOAT2, mul(base, sub(FLOAT1, blend)))
-      )
-    ),
-    step(asVec(base, FLOAT05), blend)
+  return add(
+    mul(FLOAT2, mul(base, blend)),
+    mul(mul(base, base), sub(FLOAT1, mul(FLOAT2, blend)))
   );
 }

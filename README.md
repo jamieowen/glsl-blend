@@ -16,7 +16,7 @@ As per https://github.com/jamieowen/glsl-blend/pull/4
 
 - Double Check Reflect & Glow Filters
 
-- Vivid Light & Soft Light have quite a bit of 'banding' - need to look into this.
+- Vivid Light & Soft Light ( NOW FIXED ) have quite a bit of 'banding' - need to look into this.
 
 # ----
 
