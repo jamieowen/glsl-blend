@@ -14,11 +14,13 @@ export const FN_NAMES: Record<BlendMode, string> = {
   lighten: "blendLighten",
   "linear-burn": "blendLinearBurn",
   "linear-dodge": "blendLinearDodge",
+  "linear-light": "blendLinearLight",
   multiply: "blendMultiply",
   negation: "blendNegation",
   normal: "blendNormal",
   overlay: "blendOverlay",
   phoenix: "blendPhoenix",
+  "pin-light": "blendPinLight",
   reflect: "blendReflect",
   "vivid-light": "blendVividLight",
 };

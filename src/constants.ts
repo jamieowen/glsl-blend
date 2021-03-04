@@ -38,6 +38,8 @@ import {
   blendOverlay4,
   blendPhoenix3,
   blendPhoenix4,
+  blendPinLight3,
+  blendPinLight4,
   blendReflect3,
   blendReflect4,
   blendVividLight3,
@@ -64,6 +66,7 @@ export const BLEND_MODES_3: Record<BlendMode, BlendModeDef3> = {
   normal: blendNormal3,
   overlay: blendOverlay3,
   phoenix: blendPhoenix3,
+  "pin-light": blendPinLight3,
   reflect: blendReflect3,
   "vivid-light": blendVividLight3,
 };
@@ -88,6 +91,7 @@ export const BLEND_MODES_4: Record<BlendMode, BlendModeDef4> = {
   normal: blendNormal4,
   overlay: blendOverlay4,
   phoenix: blendPhoenix4,
+  "pin-light": blendPinLight4,
   reflect: blendReflect4,
   "vivid-light": blendVividLight4,
 };

@@ -24,6 +24,7 @@ import {
   vec4,
   Vec4Term,
 } from "@thi.ng/shader-ast";
+import { Blend } from "@thi.ng/webgl";
 import type { BlendModeFloat, ColorTerm } from "./api";
 import { defBlendFloat } from "./def-blend";
 
@@ -36,6 +37,12 @@ export const blendColorBurnFloat: BlendModeFloat = (base, blend) =>
 
 export const blendColorDodgeFloat: BlendModeFloat = (base, blend) =>
   mix(min(div(base, sub(FLOAT1, blend)), FLOAT1), blend, step(FLOAT1, blend));
+
+export const blendDarkenFloat: BlendModeFloat = (base, blend) =>
+  min(base, blend);
+
+export const blendLightenFloat: BlendModeFloat = (base, blend) =>
+  max(base, blend);
 
 export const blendLinearBurnFloat: BlendModeFloat = (base, blend) =>
   max(sub(add(base, blend), FLOAT1), FLOAT0);
@@ -51,6 +58,19 @@ export const blendLinearLightFloat = defBlendFloat(
         lt(base, FLOAT05),
         blendLinearBurnFloat(base, mul(FLOAT2, blend)),
         blendLinearDodgeFloat(base, mul(FLOAT2, sub(blend, FLOAT05)))
+      )
+    ),
+  ]
+);
+
+export const blendPinLightFloat = defBlendFloat(
+  "blendPinLightFloat",
+  (base, blend) => [
+    ret(
+      ternary(
+        lt(base, FLOAT05),
+        blendLightenFloat(base, mul(FLOAT2, sub(blend, FLOAT05))),
+        blendDarkenFloat(base, mul(FLOAT2, blend))
       )
     ),
   ]

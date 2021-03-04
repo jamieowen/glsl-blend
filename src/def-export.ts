@@ -21,6 +21,7 @@ import {
 import {
   blendHardMixFloat,
   blendLinearLightFloat,
+  blendPinLightFloat,
   blendVividLightFloat,
 } from "./blend-impl-float";
 import { defBlendFnPair } from "./def-blend";
@@ -114,6 +115,12 @@ export const [blendNormal3, blendNormal4] = defBlendFnPair(
 export const [blendOverlay3, blendOverlay4] = defBlendFnPair(
   FN_NAMES.overlay,
   blendOverlayVec
+);
+
+export const [blendPinLight3, blendPinLight4] = defBlendFnPair(
+  FN_NAMES["pin-light"],
+  blendFloatToVec3(blendPinLightFloat),
+  blendFloatToVec4(blendPinLightFloat)
 );
 
 export const [blendPhoenix3, blendPhoenix4] = defBlendFnPair(

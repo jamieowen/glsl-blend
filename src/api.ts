@@ -23,6 +23,7 @@ export type BlendMode =
   | "normal"
   | "overlay"
   | "phoenix"
+  | "pin-light"
   | "vivid-light"
   | "reflect";
 
