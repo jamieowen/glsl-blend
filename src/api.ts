@@ -27,6 +27,7 @@ export type BlendMode =
   | "reflect"
   | "screen"
   | "soft-light"
+  | "subtract"
   | "vivid-light";
 
 export type BlendModeFloat = (base: FloatTerm, blend: FloatTerm) => FloatTerm;

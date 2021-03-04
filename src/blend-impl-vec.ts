@@ -221,3 +221,9 @@ export function blendSoftLightVec(
     mul(mul(base, base), sub(FLOAT1, mul(FLOAT2, blend)))
   );
 }
+
+export function blendSubtractVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
+export function blendSubtractVec(base: Vec4Term, blend: Vec4Term): Vec4Term;
+export function blendSubtractVec(base: ColorTerm, blend: ColorTerm): Term<any> {
+  return max(sub(add(base, blend), FLOAT1), asVec(base, FLOAT0));
+}

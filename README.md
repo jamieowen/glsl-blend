@@ -18,6 +18,8 @@ As per https://github.com/jamieowen/glsl-blend/pull/4
 
 - Vivid Light & Soft Light ( NOW FIXED ) have quite a bit of 'banding' - need to look into this.
 
+- Subtract doesn't look right.
+
 # ----
 
 Photoshop blending modes in glsl for use with [glslify](https://github.com/stackgl/glslify).
