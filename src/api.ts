@@ -17,6 +17,7 @@ export type BlendMode =
   | "lighten"
   | "linear-burn"
   | "linear-dodge"
+  | "linear-light"
   | "multiply"
   | "negation"
   | "normal"

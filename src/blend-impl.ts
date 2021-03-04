@@ -7,70 +7,22 @@ import {
   FLOAT1,
   FLOAT2,
   FloatTerm,
-  gte,
-  lt,
-  lte,
   max,
   min,
   mix,
   mul,
-  ret,
   step,
   sub,
   Term,
-  ternary,
   vec3,
   Vec3Term,
   vec4,
   Vec4Term,
 } from "@thi.ng/shader-ast";
-import type { BlendModeFloat, ColorTerm } from "./api";
-import { defBlendFloat } from "./def-blend";
+import type { ColorTerm } from "./api";
 
 const asVec = <T extends ColorTerm>(base: T, x: FloatTerm) =>
   (base.type === "vec3" ? vec3 : vec4)(x);
-
-// export const blendColorBurnFloat: BlendModeFloat = (base, blend) =>
-//   ternary(
-//     lte(blend, FLOAT0),
-//     blend,
-//     max(sub(FLOAT1, div(sub(FLOAT1, base), blend)), FLOAT0)
-//   );
-
-export const blendColorBurnFloat: BlendModeFloat = (base, blend) =>
-  mix(
-    blend,
-    max(sub(FLOAT1, div(sub(FLOAT1, base), blend)), FLOAT0),
-    step(FLOAT05, blend)
-  );
-
-// export const blendColorDodgeFloat: BlendModeFloat = (base, blend) =>
-//   ternary(
-//     gte(blend, FLOAT1),
-//     blend,
-//     min(div(base, sub(FLOAT1, blend)), FLOAT1)
-//   );
-
-export const blendColorDodgeFloat: BlendModeFloat = (base, blend) =>
-  mix(min(div(base, sub(FLOAT1, blend)), FLOAT1), blend, step(FLOAT1, blend));
-
-export const blendVividLightFloat = defBlendFloat(
-  "blendVividLightFloat",
-  (base, blend) => [
-    ret(
-      ternary(
-        lt(base, FLOAT05),
-        blendColorBurnFloat(base, mul(FLOAT2, blend)),
-        blendColorDodgeFloat(base, mul(FLOAT2, sub(blend, FLOAT05)))
-      )
-    ),
-  ]
-);
-
-export const blendHardMixFloat = defBlendFloat(
-  "blendHardMixFloat",
-  (base, blend) => [ret(step(FLOAT05, blendVividLightFloat(base, blend)))]
-);
 
 export function blendAddVec(base: Vec3Term, blend: Vec3Term): Vec3Term;
 export function blendAddVec(base: Vec4Term, blend: Vec4Term): Vec4Term;

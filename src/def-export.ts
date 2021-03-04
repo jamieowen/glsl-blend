@@ -8,7 +8,6 @@ import {
   blendExclusionVec,
   blendGlowVec,
   blendHardLightVec,
-  blendHardMixFloat,
   blendLightenVec,
   blendLinearBurnVec,
   blendLinearDodgeVec,
@@ -18,8 +17,12 @@ import {
   blendOverlayVec,
   blendPhoenixVec,
   blendReflectVec,
-  blendVividLightFloat,
 } from "./blend-impl";
+import {
+  blendHardMixFloat,
+  blendLinearLightFloat,
+  blendVividLightFloat,
+} from "./blend-impl-float";
 import { defBlendFnPair } from "./def-blend";
 import { blendFloatToVec3, blendFloatToVec4 } from "./float-to-vec";
 import { FN_NAMES } from "./fn-names";
@@ -85,6 +88,12 @@ export const [blendLinearBurn3, blendLinearBurn4] = defBlendFnPair(
 export const [blendLinearDodge3, blendLinearDodge4] = defBlendFnPair(
   FN_NAMES["linear-dodge"],
   blendLinearDodgeVec
+);
+
+export const [blendLinearLight3, blendLinearLight4] = defBlendFnPair(
+  FN_NAMES["linear-light"],
+  blendFloatToVec3(blendLinearLightFloat),
+  blendFloatToVec4(blendLinearLightFloat)
 );
 
 export const [blendMultiply3, blendMultiply4] = defBlendFnPair(
