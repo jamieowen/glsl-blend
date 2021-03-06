@@ -878,6 +878,9 @@ const wrap = (type, ctor) => (x) => isNumber(x)
  */
 const wrapFloat = wrap("float", float);
 const FLOAT0 = float(0);
+const FLOAT1 = float(1);
+const FLOAT2 = float(2);
+const FLOAT05 = float(0.5);
 const $gvec = (wrap, init) => (xs) => [xs[0] === undefined ? init : wrap(xs[0]), ...xs.slice(1).map(wrap)];
 const $vec = $gvec(wrapFloat, FLOAT0);
 const $info = (xs, info) => isVec(xs[0]) ? xs[0].type[0] : info[xs.length];
@@ -921,4 +924,4 @@ const numberWithMatchingType = (t, x) => {
                 : float(x);
 };
 
-export { sym as a, allChildren as b, scopedChildren as c, isNumber as d, isMat as e, isVec as f, gensym as g, float as h, isString as i, illegalArgs as j, int as k, vec3 as l, isBoolean as m, numberWithMatchingType as n, itemType as o, process as p, equivArrayLike as q, program as r, scope as s, input as t, uniform as u, vec4 as v, walk as w, output as x };
+export { output as A, FLOAT0 as F, sym as a, allChildren as b, scopedChildren as c, isNumber as d, isMat as e, isVec as f, gensym as g, float as h, isString as i, illegalArgs as j, int as k, FLOAT05 as l, FLOAT1 as m, numberWithMatchingType as n, FLOAT2 as o, process as p, vec3 as q, isBoolean as r, scope as s, itemType as t, equivArrayLike as u, vec4 as v, walk as w, program as x, input as y, uniform as z };

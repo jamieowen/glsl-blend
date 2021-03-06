@@ -7,7 +7,8 @@ import {
   draw,
   TextureFilter,
   TextureFormat,
-  TextureTarget
+  TextureTarget,
+  setLogger
 } from "../_snowpack/pkg/@thi.ng/webgl.js";
 import {
   $xy,
@@ -19,8 +20,10 @@ import {
   texture,
   vec4
 } from "../_snowpack/pkg/@thi.ng/shader-ast.js";
+import {ConsoleLogger} from "../_snowpack/pkg/@thi.ng/api.js";
 import {stream, sync, fromDOMEvent} from "../_snowpack/pkg/@thi.ng/rstream.js";
 import {blendModeSelect3, BLEND_MODES_3} from "../src/index.js";
+setLogger(new ConsoleLogger("webgl"));
 const fromImage = (gl2, url) => stream(($) => {
   const image = document.createElement("img");
   let texture2;

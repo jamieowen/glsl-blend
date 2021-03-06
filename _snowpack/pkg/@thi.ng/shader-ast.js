@@ -1,5 +1,5 @@
-import { p as process, s as scope, g as gensym, a as sym, w as walk, b as allChildren, c as scopedChildren, i as isString, d as isNumber, e as isMat, f as isVec, h as float, n as numberWithMatchingType, j as illegalArgs } from '../common/item-70461230.js';
-export { h as float, k as int, a as sym, l as vec3, v as vec4 } from '../common/item-70461230.js';
+import { p as process, s as scope, g as gensym, a as sym, w as walk, b as allChildren, c as scopedChildren, i as isString, d as isNumber, e as isMat, f as isVec, h as float, n as numberWithMatchingType, j as illegalArgs } from '../common/item-3ed9024f.js';
+export { F as FLOAT0, l as FLOAT05, m as FLOAT1, o as FLOAT2, h as float, k as int, a as sym, q as vec3, v as vec4 } from '../common/item-3ed9024f.js';
 import { N as NO_OP } from '../common/map-fd6d0079.js';
 
 /**
@@ -209,8 +209,6 @@ function div(l, r) {
 const cmp = (op) => (a, b) => op2(op, a, b, "bool");
 const eq = cmp("==");
 const lt = cmp("<");
-const lte = cmp("<=");
-const gte = cmp(">=");
 
 function $(val, id) {
     const type = val.type[0];
@@ -243,7 +241,13 @@ const primOp1 = (name) => (a) => builtinCall(name, a.type, a);
 const primOp2 = (name) => (a, b) => builtinCall(name, a.type, a, b);
 const min = primOp2("min");
 const max = primOp2("max");
+const step = primOp2("step");
 const abs = primOp1("abs");
+function mix(a, b, c) {
+    const f = builtinCall("mix", a.type, a, b, c);
+    c.type === "float" && (f.info = "n");
+    return f;
+}
 
 const texRetType = (sampler) => {
     const t = sampler.type[0];
@@ -274,4 +278,4 @@ function texture(sampler, uv, bias) {
     return $call("texture", sampler, uv, bias);
 }
 
-export { $w, $x, $xy, $xyz, $y, $z, abs, add, assign, defMain, defn, div, eq, gte, ifThen, lt, lte, max, min, mul, ret, sub, ternary, texture };
+export { $w, $x, $xy, $xyz, $y, $z, abs, add, assign, defMain, defn, div, eq, ifThen, lt, max, min, mix, mul, ret, step, sub, ternary, texture };

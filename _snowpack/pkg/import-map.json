@@ -1,5 +1,6 @@
 {
   "imports": {
+    "@thi.ng/api": "./@thi.ng/api.js",
     "@thi.ng/rstream": "./@thi.ng/rstream.js",
     "@thi.ng/shader-ast": "./@thi.ng/shader-ast.js",
     "@thi.ng/webgl": "./@thi.ng/webgl.js"

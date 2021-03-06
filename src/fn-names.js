@@ -10,10 +10,18 @@ export const FN_NAMES = {
   "hard-light": "blendHardLight",
   "hard-mix": "blendHardMix",
   lighten: "blendLighten",
+  "linear-burn": "blendLinearBurn",
+  "linear-dodge": "blendLinearDodge",
+  "linear-light": "blendLinearLight",
   multiply: "blendMultiply",
   negation: "blendNegation",
   normal: "blendNormal",
   overlay: "blendOverlay",
+  phoenix: "blendPhoenix",
+  "pin-light": "blendPinLight",
   reflect: "blendReflect",
+  screen: "blendScreen",
+  "soft-light": "blendSoftLight",
+  subtract: "blendSubtract",
   "vivid-light": "blendVividLight"
 };

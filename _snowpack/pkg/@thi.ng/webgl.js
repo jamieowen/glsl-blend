@@ -1,6 +1,7 @@
-import { i as isString, a as sym, f as isVec, e as isMat, d as isNumber, m as isBoolean, o as itemType, q as equivArrayLike, r as program, t as input, u as uniform, x as output } from '../common/item-70461230.js';
+import { i as isString, a as sym, f as isVec, e as isMat, d as isNumber, r as isBoolean, t as itemType, u as equivArrayLike, x as program, y as input, z as uniform, A as output } from '../common/item-3ed9024f.js';
 import { d as defError, f as isArray } from '../common/map-fd6d0079.js';
-import { N as NULL_LOGGER, i as isFunction } from '../common/is-function-a2f84a73.js';
+import { N as NULL_LOGGER } from '../common/logger-bc193934.js';
+import { i as isFunction } from '../common/is-function-b13d3e65.js';
 
 /**
  * Returns true iff `x` implements {@link IDeref}.
@@ -251,6 +252,7 @@ const GL_EXT_INFO = {
 };
 
 let LOGGER$1 = NULL_LOGGER;
+const setLogger = (logger) => (LOGGER$1 = logger);
 
 var DrawMode;
 (function (DrawMode) {
@@ -1659,4 +1661,4 @@ const initUniforms = (gl, prog, uniforms = {}) => {
     return res;
 };
 
-export { TextureFilter, TextureFormat, TextureTarget, compileModel, defQuadModel, defShader, defTexture, draw, glCanvas };
+export { TextureFilter, TextureFormat, TextureTarget, compileModel, defQuadModel, defShader, defTexture, draw, glCanvas, setLogger };
