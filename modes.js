@@ -25,5 +25,5 @@ module.exports = {
 	SUBTRACT:24,
 	VIVID_LIGHT:25,
 	DIVIDE:26,
-	MULTIPLY_ADD:27,
+	MULTIPLY_ADD:27
 };
