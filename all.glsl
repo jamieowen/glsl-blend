@@ -9,6 +9,7 @@
 #pragma glslify: blendNormal = require(./normal)
 #pragma glslify: blendNegation = require(./negation)
 #pragma glslify: blendMultiply = require(./multiply)
+#pragma glslify: blendMultiplyAdd = require(./multiply-add)
 #pragma glslify: blendReflect = require(./reflect)
 #pragma glslify: blendAverage = require(./average)
 #pragma glslify: blendLinearBurn = require(./linear-burn)
@@ -16,6 +17,7 @@
 #pragma glslify: blendScreen = require(./screen)
 #pragma glslify: blendSoftLight = require(./soft-light)
 #pragma glslify: blendSubtract = require(./subtract)
+#pragma glslify: blendDivide = require(./divide)
 #pragma glslify: blendExclusion = require(./exclusion)
 #pragma glslify: blendDifference = require(./difference)
 #pragma glslify: blendDarken = require(./darken)
@@ -100,6 +102,12 @@ vec3 blendMode( int mode, vec3 base, vec3 blend ){
 	}else
 	if( mode == 25 ){
 		return blendVividLight( base, blend );
+	}else
+	if( mode == 26 ){
+		return blendDivide( base, blend );
+	}else
+	if( mode == 27 ){
+		return blendMultiplyAdd( base, blend );
 	}
 }
 
@@ -178,6 +186,12 @@ vec3 blendMode( int mode, vec3 base, vec3 blend, float opacity ){
 	}else
 	if( mode == 25 ){
 		return blendVividLight( base, blend, opacity );
+	}else
+	if( mode == 26 ){
+		return blendDivide( base, blend, opacity );
+	}else
+	if( mode == 27 ){
+		return blendMultiplyAdd( base, blend, opacity );
 	}
 }
 #pragma glslify:export(blendMode)
