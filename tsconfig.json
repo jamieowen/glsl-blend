@@ -1,14 +1,15 @@
 {
-  "include": ["src/*.*"],
+  "include": ["src/*.ts"],
   "compilerOptions": {
-    "module": "ES2020",
+    "module": "CommonJS",
     "target": "ES2017",
     "outDir": "ast",
     "moduleResolution": "node",
     "declaration": true,
     "declarationMap": true,
     "skipLibCheck": true,
-    "allowJs": true
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules"]
 }
