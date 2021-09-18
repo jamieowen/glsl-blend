@@ -1,13 +1,11 @@
 {
-  "include": ["*.ts"],
   "compilerOptions": {
-    "module": "ES2020",
-    "target": "ES2017",
-    "moduleResolution": "node",
-    "declaration": true,
-    "declarationMap": true,
-    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "moduleResolution": "Node",
+    "target": "es5",
     "allowJs": true
   },
-  "exclude": ["node_modules"]
+  "files": ["src/index.ts"]
 }

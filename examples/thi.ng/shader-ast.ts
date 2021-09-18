@@ -23,7 +23,7 @@ import {
 } from "@thi.ng/shader-ast";
 import { ConsoleLogger } from "@thi.ng/api";
 import { stream, sync, fromDOMEvent } from "@thi.ng/rstream";
-import { blendModeSelect3, blendModeSelect4, BLEND_MODES_3 } from "../src";
+import { blendModeSelect3, blendModeSelect4, BLEND_MODES_3 } from "../../src";
 
 // enable logger to see generated GLSL output
 setLogger(new ConsoleLogger("webgl"));

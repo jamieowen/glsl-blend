@@ -1,3 +1,6 @@
 node_modules
 build
 ast
+glsl
+esm
+.DS_Store
