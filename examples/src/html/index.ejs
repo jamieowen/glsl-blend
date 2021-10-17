@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <style>
+      body,
+      iframe {
+        display: block;
+        position: absolute;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+      nav {
+        z-index: 1000;
+        position: absolute;
+      }
+    </style>
+    <iframe name="examples-iframe" id="iframe"></iframe>
+    <script type="text/javascript" defer>
+      const examples = ["<%examples.join(',')%>"];
+      const iframe = document.getElementById("iframe");
+      // iframe.src = examples[0];
+    </script>
+    <nav>
+      <% examples.forEach(function(ex){ %>
+      <a target="examples-iframe" href="/<%=ex%>"><%=ex.split(".html")[0]%></a>
+      <% })%>
+    </nav>
+  </body>
+</html>
