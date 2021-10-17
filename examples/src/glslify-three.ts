@@ -1,1 +1,1 @@
-console.log("OKOKO");
+console.log("THREE");
