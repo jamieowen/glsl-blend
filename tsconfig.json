@@ -1,8 +1,7 @@
 {
-  "include": ["src/*.ts"],
   "compilerOptions": {
     "module": "CommonJS",
-    "target": "ES2017",
+    "target": "ESNext",
     "outDir": "ast",
     "moduleResolution": "node",
     "lib": ["ES2017", "DOM"],
@@ -12,5 +11,6 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true
   },
+  "include": ["src/*.ts"],
   "exclude": ["node_modules"]
 }
