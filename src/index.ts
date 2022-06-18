@@ -5,3 +5,5 @@ export * from "./blend-impl-vec";
 export * from "./blend-impl-float";
 export * from "./constants";
 export * from "./def-export";
+export * from "./fn-names";
+export * from "./float-to-vec";
