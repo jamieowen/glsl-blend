@@ -3,6 +3,7 @@
   "version": "1.0.3",
   "description": "glsl photoshop blend modes. glslify formatted.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
@@ -25,28 +26,9 @@
   },
   "homepage": "https://github.com/jamieowen/glsl-blend",
   "devDependencies": {
-    "@rollup/plugin-typescript": "^8.3.3",
-    "@snowpack/plugin-typescript": "^1.2.1",
-    "@thi.ng/rstream": "^7.2.8",
-    "@thi.ng/shader-ast-glsl": "^0.4.10",
-    "@thi.ng/webgl": "^6.1.14",
-    "@types/fs-extra": "^9.0.13",
-    "@types/node": "^18.0.0",
-    "@types/prettier": "^2.6.3",
-    "fs-extra": "^10.1.0",
-    "gh-pages": "^4.0.0",
-    "glslify": "^7.1.1",
-    "npm-check-updates": "^14.0.1",
-    "prettier": "^2.7.1",
-    "snowpack": "^3.8.8",
-    "three": "^0.141.0",
-    "ts-node": "^10.8.1",
-    "typescript": "^4.7.4",
-    "webpack": "^5.73.0",
-    "webpack-dev-server": "^4.9.2"
-  },
-  "dependencies": {
     "@thi.ng/api": "^8.3.7",
-    "@thi.ng/shader-ast": "^0.12.10"
+    "@thi.ng/shader-ast": "^0.12.10",
+    "gh-pages": "^4.0.0",
+    "typescript": "^4.7.4"
   }
 }

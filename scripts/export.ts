@@ -7,7 +7,7 @@ import {
   BLEND_MODES_4,
   blendModeSelect3,
   blendModeSelect4,
-} from "../ast";
+} from "../src";
 
 const OUTPUT = path.join(__dirname, "../");
 const OUTPUT_AST = path.join(OUTPUT, "ast");

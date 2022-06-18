@@ -1,15 +1,19 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    // "module": "CommonJS",
     "target": "ESNext",
     "outDir": "ast",
     "moduleResolution": "node",
-    "lib": ["ES2017", "DOM"],
+    "esModuleInterop": true,
+    // "lib": ["ES2017", "DOM"],
     "declaration": true,
     "declarationMap": true,
-    "skipLibCheck": true,
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true
+    // "skipLibCheck": true,
+    // "allowJs": true,
+    // "allowSyntheticDefaultImports": true
+    "paths": {
+      "glsl-blend": ["./src"]
+    }
   },
   "include": ["src/*.ts"],
   "exclude": ["node_modules"]
