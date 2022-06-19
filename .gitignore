@@ -5,3 +5,4 @@ dist
 glsl
 esm
 .DS_Store
+__*
