@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from "react";
+import { createRef, FC, useEffect, useMemo, useRef } from "react";
 import { styled } from "@stitches/react";
 import { FN_NAMES } from "glsl-blend/ast";
 import {
@@ -26,17 +26,27 @@ export const BlendRenderBlob: FC<{
   base_url: string;
   blend_url: string;
 }> = ({ blend, base_url, blend_url }) => {
+  const ref = useRef<HTMLDivElement>(null!);
+
   useEffect(() => {
     const $blob = renderBlob(base_url, blend_url, blend).subscribe({
       next: (blob) => {
-        console.log("BLOB", blob);
+        console.log("BLOB", ref.current);
+        if (blob) {
+          ref.current.style.backgroundImage = `url(${blob.url})`;
+        }
       },
     });
     return () => {
+      const blob = $blob.deref();
+      if (blob) {
+        console.log("Revoke");
+        blob.revoke();
+      }
       $blob.unsubscribe();
     };
   }, []);
-  return <div></div>;
+  return <div ref={ref} style={{ width: "100%", height: "100%" }}></div>;
 };
 
 export const BlendModeGrid: FC = () => {

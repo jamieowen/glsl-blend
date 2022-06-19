@@ -76,9 +76,11 @@ export const toTexture = (image: HTMLImageElement) => {};
 
 export const createRenderContext = () => {
   const { canvas, ext, gl } = glCanvas({
-    width: 1000,
-    height: 1000,
-    opts: {},
+    width: 1024,
+    height: 1024,
+    opts: {
+      preserveDrawingBuffer: true,
+    },
   });
 
   const quad = defQuadModel({});
@@ -120,7 +122,7 @@ export const createRenderContext = () => {
 
   compileModel(gl, quad);
 
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  gl.clearColor(1.0, 0.0, 0.0, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT);
 
   return {
@@ -149,59 +151,40 @@ export const renderBlob = (
   blendUrl: string,
   context: BlendRenderContext
 ) => {
-  const s = stream();
   return sync({
     src: {
       base: fromImage(baseUrl, context),
       blend: fromImage(blendUrl, context),
       context: reactive(context),
     },
-  })
-    .subscribe(
-      asyncMap(async ({ base, blend }) => {
-        // await new Promise((res) => setTimeout(res, 100));
+  }).subscribe(
+    asyncMap(async ({ base, blend }) => {
+      // await new Promise((res) => setTimeout(res, 100));
 
-        const res = await new Promise<null | {
-          blob: Blob;
-          url: string;
-          revoke: () => void;
-        }>((res) => {
-          requestIdleCallback(() => {
-            requestAnimationFrame(() => {
-              context.render(base, blend, 0.5, 0);
-              context.canvas.toBlob((blob) => {
-                console.log("Create Blob");
-                if (blob) {
-                  const url = URL.createObjectURL(blob);
-                  res({ url, blob, revoke: () => URL.revokeObjectURL(url) });
-                } else {
-                  res(null);
-                }
-              });
+      const res = await new Promise<null | {
+        blob: Blob;
+        url: string;
+        revoke: () => void;
+      }>((res) => {
+        requestIdleCallback(() => {
+          requestAnimationFrame(() => {
+            // context.render(base, blend, 0.5, 0);
+            context.canvas.toBlob((blob) => {
+              console.log("Create Blob");
+              if (blob) {
+                const url = URL.createObjectURL(blob);
+                res({ url, blob, revoke: () => URL.revokeObjectURL(url) });
+              } else {
+                res(null);
+              }
             });
           });
         });
+      });
 
-        return res;
-      })
-    )
-    .subscribe({
-      next: (s) => {
-        console.log("AFTER ASYNC", s?.url);
-      },
-    });
-
-  // .map(({ base, blend, context }) => {
-  //   context.render(base, blend, 0.5, 0);
-  // context.canvas.toBlob((blob) => {
-  // console.log("Create Blob", blob);
-  //   if (blob) {
-  //     const url = URL.createObjectURL(blob);
-  //     console.log(url);
-  //   }
-  // });
-  // return { base, blend };
-  // }); //.subscribe()
+      return res;
+    })
+  );
 };
 
 type AsyncMapFn<I, O> = (input: I) => Promise<O>;
