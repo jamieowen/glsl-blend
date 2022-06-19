@@ -7,6 +7,10 @@ const blend3Inputs = Object.keys(FN_NAMES).map((mode) => {
   return {
     fn: BLEND_MODES_3[mode],
     group: mode,
+    astOpts: {
+      argRen: ["base", "blend", "opacity"],
+      idRen: (s) => `${s}3`,
+    },
   };
 });
 
@@ -15,11 +19,14 @@ const blend4Inputs = Object.keys(FN_NAMES).map((mode) => {
   return {
     fn: BLEND_MODES_4[mode],
     group: mode,
+    astOpts: {
+      argRen: ["base", "blend", "opacity"],
+      idRen: (s) => `${s}4`,
+    },
   };
 });
 
 shaderAstGen({
   outDir: "",
-  transforms: ["esm-1"],
   inputs: [...blend3Inputs, ...blend4Inputs],
 });
