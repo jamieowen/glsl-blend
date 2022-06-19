@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { styled } from "@stitches/react";
+import { Router, Route, Link } from "wouter";
+import { BlendModeGrid } from "./examples/BlendModeGrid";
 
 const Button = styled("button", {
   backgroundColor: "Blue",
@@ -12,20 +14,47 @@ const Button = styled("button", {
   },
 });
 
-function App() {
-  const [count, setCount] = useState(0);
+const examples = [
+  { path: "/blendgrid", component: <BlendModeGrid /> },
+  { path: "/two", component: <div>Two</div> },
+  { path: "/three", component: <div>Three</div> },
+];
 
+const Menu = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Button color="pink">Button 1</Button>
-        <Button as="div">Button 2</Button>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
+    <>
+      {examples.map((e, i) => (
+        <Link key={i} to={e.path}>
+          {e.path}
+        </Link>
+      ))}
+    </>
+  );
+};
+
+const Examples = () => {
+  return (
+    <>
+      {examples.map((e, i) => (
+        <Route key={i} path={e.path}>
+          {e.component}
+        </Route>
+      ))}
+    </>
+  );
+};
+
+const Page = styled("div", {});
+
+function App() {
+  return (
+    <div>
+      <header>
+        <Menu />
       </header>
+      <section>
+        <Examples />
+      </section>
     </div>
   );
 }
