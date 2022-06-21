@@ -11,6 +11,7 @@
     "@stitches/react": "^1.2.8",
     "@thi.ng/rstream": "^7.2.8",
     "@thi.ng/shader-ast": "^0.12.10",
+    "@thi.ng/shader-ast-stdlib": "^0.12.3",
     "@thi.ng/transducers": "^8.3.5",
     "@thi.ng/webgl": "^6.1.14",
     "react": "^18.0.0",
