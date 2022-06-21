@@ -1,17 +1,7 @@
-import {
-  CloseMode,
-  fromPromise,
-  reactive,
-  sidechainPartition,
-  Stream,
-  stream,
-  Subscription,
-  sync,
-} from "@thi.ng/rstream";
+import { CloseMode, Stream, stream, Subscription, sync } from "@thi.ng/rstream";
 import {
   assign,
   defMain,
-  float,
   vec4,
   FLOAT0,
   FLOAT1,
@@ -34,50 +24,14 @@ import {
 } from "@thi.ng/webgl";
 import { blendModeSelect3 } from "glsl-blend/ast";
 
-const imageCache = new Map<any, any>();
-
-export const fromImage = (src: string, context: BlendRenderContext) => {
-  if (imageCache.has(src)) {
-    return imageCache.get(src);
-  }
-  const $image = stream<Texture>(
-    (s) => {
-      const image = document.createElement("img");
-      image.crossOrigin = "";
-      image.src = src;
-      image.decode().then((res) => {
-        const texture = defTexture(context.gl, {
-          image,
-          target: TextureTarget.TEXTURE_2D,
-          format: TextureFormat.RGBA,
-          flip: true,
-          filter: TextureFilter.LINEAR,
-          // Specifying width/height here causes an ArrayBufferView error.
-          // width: image.naturalWidth,
-          // height: image.naturalHeight,
-        });
-
-        s.next(texture);
-      });
-
-      return () => {
-        console.log("Close Stream");
-      };
-    },
-    {
-      // closeOut: CloseMode.LAST,
-    }
-  );
-  imageCache.set(src, $image);
-  return $image;
-};
-
-export const toTexture = (image: HTMLImageElement) => {};
-
-export const createRenderContext = () => {
+/**
+ * Create a square GL canvas with prepared quad to
+ * render a blend mode with a base & blend image.
+ */
+const createCanvasContext = () => {
   const { canvas, ext, gl } = glCanvas({
-    width: 1024,
-    height: 1024,
+    width: 512,
+    height: 512,
     opts: {
       preserveDrawingBuffer: true,
     },
@@ -122,69 +76,134 @@ export const createRenderContext = () => {
 
   compileModel(gl, quad);
 
-  gl.clearColor(1.0, 0.0, 0.0, 1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-
   return {
+    gl,
     canvas,
     quad,
     ext,
-    gl,
-    render: (
-      base: Texture,
-      blend: Texture,
-      opacity: number = 0.5,
-      mode: number = 0
-    ) => {
-      quad.textures = [base, blend];
-      quad.uniforms!.opacity = opacity;
-      quad.uniforms!.mode = mode;
-      draw(quad);
+    dispose: () => {
+      console.log("dispose canvas");
     },
   };
 };
 
-export type BlendRenderContext = ReturnType<typeof createRenderContext>;
-
-export const renderBlob = (
-  baseUrl: string,
-  blendUrl: string,
-  context: BlendRenderContext
-) => {
-  return sync({
-    src: {
-      base: fromImage(baseUrl, context),
-      blend: fromImage(blendUrl, context),
-      context: reactive(context),
-    },
-  }).subscribe(
-    asyncMap(async ({ base, blend }) => {
-      // await new Promise((res) => setTimeout(res, 100));
-
-      const res = await new Promise<null | {
-        blob: Blob;
-        url: string;
-        revoke: () => void;
-      }>((res) => {
-        requestIdleCallback(() => {
-          requestAnimationFrame(() => {
-            // context.render(base, blend, 0.5, 0);
-            context.canvas.toBlob((blob) => {
-              console.log("Create Blob");
-              if (blob) {
-                const url = URL.createObjectURL(blob);
-                res({ url, blob, revoke: () => URL.revokeObjectURL(url) });
-              } else {
-                res(null);
-              }
-            });
-          });
+export const textureFromImage = (src: string, gl: WebGLRenderingContext) => {
+  return stream<Texture>(
+    (s) => {
+      const image = document.createElement("img");
+      image.crossOrigin = "";
+      image.src = src;
+      let texture: Texture;
+      image.decode().then((res) => {
+        texture = defTexture(gl, {
+          image,
+          target: TextureTarget.TEXTURE_2D,
+          format: TextureFormat.RGBA,
+          flip: true,
+          filter: TextureFilter.LINEAR,
+          // Specifying width/height here causes an ArrayBufferView error.
+          // width: image.naturalWidth,
+          // height: image.naturalHeight,
         });
+        s.next(texture);
       });
 
-      return res;
-    })
+      return () => {
+        console.log("Close Stream");
+        if (texture) {
+          texture.release();
+        }
+      };
+    },
+    {
+      closeOut: CloseMode.NEVER,
+      closeIn: CloseMode.NEVER,
+    }
   );
+};
+
+export type RenderBlobContext = ReturnType<typeof createRenderBlobContext>;
+export type RenderBlobResult = { url: string; blob: Blob; revoke: () => void };
+
+export type RenderBlobOpts = {
+  base_url: string;
+  blend_url: string;
+  mode: number;
+  opacity: number;
+};
+
+export const createRenderBlobContext = () => {
+  const { gl, quad, canvas, dispose: disposeCanvas } = createCanvasContext();
+
+  const imageCache = new Map<any, Stream<any>>();
+  const fromImage = (src: string) => {
+    if (imageCache.has(src)) {
+      return imageCache.get(src)!;
+    } else {
+      const $image = textureFromImage(src, gl);
+      imageCache.set(src, $image);
+      return $image;
+    }
+  };
+
+  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+  return {
+    dispose: () => {
+      console.log("DISPOSE...");
+      disposeCanvas();
+    },
+    renderBlob: (opts: RenderBlobOpts) => {
+      const { base_url, blend_url, mode = 0, opacity = 0.5 } = opts;
+
+      /**
+       * Create dispose on render context.
+       * And move texture cache to context.
+       * Unsubscribe all subscriptions..
+       */
+      return sync({
+        src: {
+          base: fromImage(opts.base_url),
+          blend: fromImage(opts.blend_url),
+        },
+      }).subscribe(
+        asyncMap(async ({ base, blend }) => {
+          // await new Promise((res) => setTimeout(res, 100));
+
+          const res = await new Promise<null | {
+            blob: Blob;
+            url: string;
+            revoke: () => void;
+          }>((res) => {
+            requestIdleCallback(() => {
+              requestAnimationFrame(() => {
+                gl.clear(gl.COLOR_BUFFER_BIT);
+                quad.textures = [base, blend];
+                quad.uniforms!.opacity = opacity;
+                quad.uniforms!.mode = mode;
+                draw(quad);
+
+                canvas.toBlob((blob) => {
+                  if (blob) {
+                    const url = URL.createObjectURL(blob);
+                    res({
+                      url,
+                      blob,
+                      revoke: () => URL.revokeObjectURL(url),
+                    } as RenderBlobResult);
+                  } else {
+                    res(null);
+                  }
+                });
+              });
+            });
+          });
+
+          return res;
+        })
+      );
+    },
+  };
 };
 
 type AsyncMapFn<I, O> = (input: I) => Promise<O>;
