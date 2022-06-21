@@ -82,6 +82,7 @@ const createCanvasContext = () => {
     quad,
     ext,
     dispose: () => {
+      quad.shader.release();
       console.log("dispose canvas");
     },
   };
@@ -112,17 +113,19 @@ export const textureFromImage = (src: string, gl: WebGLRenderingContext) => {
         console.log("Close Stream");
         if (texture) {
           texture.release();
+          image.src = "";
         }
       };
     },
     {
-      closeOut: CloseMode.NEVER,
-      closeIn: CloseMode.NEVER,
+      closeOut: CloseMode.LAST,
+      // closeIn: CloseMode.NEVER,
     }
   );
 };
 
 export type RenderBlobContext = ReturnType<typeof createRenderBlobContext>;
+export type RenderBlobStream = ReturnType<RenderBlobContext["renderBlob"]>;
 export type RenderBlobResult = { url: string; blob: Blob; revoke: () => void };
 
 export type RenderBlobOpts = {
@@ -133,7 +136,7 @@ export type RenderBlobOpts = {
 };
 
 export const createRenderBlobContext = () => {
-  const { gl, quad, canvas, dispose: disposeCanvas } = createCanvasContext();
+  const { gl, quad, canvas, dispose } = createCanvasContext();
 
   const imageCache = new Map<any, Stream<any>>();
   const fromImage = (src: string) => {
@@ -150,8 +153,8 @@ export const createRenderBlobContext = () => {
 
   return {
     dispose: () => {
-      console.log("DISPOSE...");
-      disposeCanvas();
+      imageCache.clear();
+      dispose();
     },
     renderBlob: (opts: RenderBlobOpts) => {
       const { base_url, blend_url, mode = 0, opacity = 0.5 } = opts;

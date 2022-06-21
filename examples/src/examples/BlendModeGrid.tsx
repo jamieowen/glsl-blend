@@ -8,7 +8,6 @@ import {
   map,
   normRange2d,
   push,
-  range,
   range2d,
   transduce,
 } from "@thi.ng/transducers";

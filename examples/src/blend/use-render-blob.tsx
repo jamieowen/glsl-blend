@@ -7,7 +7,6 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState,
 } from "react";
 import {
   createRenderBlobContext,
@@ -47,8 +46,7 @@ export const useRenderBlob = (
   opts: RenderBlobOpts
 ) => {
   const ctx = useRenderBlobContext();
-  const blob =
-    useRef<ISubscription<RenderBlobStream, RenderBlobResult | null>>();
+  const blob = useRef<ISubscription<any, RenderBlobResult | null>>();
 
   useEffect(() => {
     if (intersecting && !blob.current) {
