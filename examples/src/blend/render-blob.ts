@@ -13,6 +13,9 @@ import {
   div,
   $x,
   $y,
+  sub,
+  add,
+  mul,
 } from "@thi.ng/shader-ast";
 import {
   compileModel,
@@ -24,6 +27,7 @@ import {
   Texture,
   TextureFilter,
   TextureFormat,
+  TextureRepeat,
   TextureTarget,
 } from "@thi.ng/webgl";
 import { blendModeSelect3 } from "glsl-blend/ast";
@@ -53,20 +57,19 @@ const createCanvasContext = () => {
       ];
     },
     fs: (gl, unis, inputs) => {
-      // const samp = aspectCorrectedUV($xy(inputs.vUv), vec2(0.2, ));
-      // const base = sym(texture(unis.base, $xy(inputs.vUv)));
-      // const blend = sym(texture(unis.blend, $xy(inputs.vUv)));
+      const uvBase = add(mul(unis.scaleBase, sub($xy(inputs.vUv), 0.5)), 0.5);
+      const uvBlend = add(mul(unis.scaleBlend, sub($xy(inputs.vUv), 0.5)), 0.5);
 
-      const base = sym(texture(unis.base, $xy(div(inputs.vUv, vec2(0.8, 1)))));
-      const blend = sym(texture(unis.blend, $xy(inputs.vUv)));
+      const base = sym(texture(unis.base, uvBase));
+      const blend = sym(texture(unis.blend, uvBlend));
 
-      const out33 = vec4(
+      const out3 = vec4(
         blendModeSelect3(unis.mode, $xyz(base), $xyz(blend), unis.opacity),
         1.0
       );
 
-      const samp = aspectCorrectedUV($xy(gl.gl_FragCoord), vec2(512, 512));
-      const out3 = vec4($x(samp), 0, 0, 1);
+      // const samp = aspectCorrectedUV($xy(gl.gl_FragCoord), vec2(512, 512));
+      // const out3 = vec4($x(samp), 0, 0, 1);
       // const out4 = blendModeSelect4(unis.mode, base, blend, unis.opacity);
 
       return [defMain(() => [base, blend, assign(gl.gl_FragColor, out3)])];
@@ -83,6 +86,8 @@ const createCanvasContext = () => {
       blend: ["sampler2D", 1],
       opacity: ["float", 0],
       mode: ["int", 0],
+      scaleBase: ["vec2", [1, 1]],
+      scaleBlend: ["vec2", [1, 1]],
     },
   });
 
@@ -114,6 +119,7 @@ export const textureFromImage = (src: string, gl: WebGLRenderingContext) => {
           format: TextureFormat.RGBA,
           flip: true,
           filter: TextureFilter.LINEAR,
+          // wrap: TextureRepeat.REPEAT_MIRROR,
           // Specifying width/height here causes an ArrayBufferView error.
           // width: image.naturalWidth,
           // height: image.naturalHeight,
@@ -178,8 +184,8 @@ export const createRenderBlobContext = () => {
        */
       return sync({
         src: {
-          base: fromImage(opts.base_url),
-          blend: fromImage(opts.blend_url),
+          base: fromImage(opts.base_url) as Stream<Texture>,
+          blend: fromImage(opts.blend_url) as Stream<Texture>,
         },
       }).subscribe(
         asyncMap(async ({ base, blend }) => {
@@ -196,6 +202,14 @@ export const createRenderBlobContext = () => {
                 quad.textures = [base, blend];
                 quad.uniforms!.opacity = opacity;
                 quad.uniforms!.mode = mode;
+
+                const scl = "fill";
+                quad.uniforms!.scaleBase = computeAspectScale(base.size, scl);
+                quad.uniforms!.scaleBlend = computeAspectScale(blend.size, scl);
+
+                // console.log(quad.uniforms!.scaleBlend);
+                // quad.uniforms!.scaleBlend = [1, 0.8];
+
                 draw(quad);
 
                 canvas.toBlob((blob) => {
@@ -219,6 +233,40 @@ export const createRenderBlobContext = () => {
       );
     },
   };
+};
+
+// landscape "Aspect Fit": vec2(1.0, aspect).
+// portrait "Aspect Fill": vec2(1.0, aspect).
+
+// landscape "Aspect Fill": vec2(1.0/aspect, 1.0).
+// portrait "Aspect Fit": vec2(1.0/aspect, 1.0).
+
+/**
+ * Based on this link, but with different aspect corrections below.
+ * ( along with shader offsets above )
+ * https://stackoverflow.com/questions/62821286/aspect-fit-and-aspect-fill-content-mode-with-opengl-es-2-0
+ **/
+const computeAspectScale = (
+  size: number[],
+  scale: "fit" | "fill" | "scale"
+): [number, number] => {
+  const aspect = size[1] / size[0];
+  const landscape = size[0] > size[1];
+  if (scale === "fit") {
+    if (landscape) {
+      return [1, 1 / aspect]; // Correct :)
+    } else {
+      return [aspect, 1]; // Correct :)
+    }
+  } else if (scale === "fill") {
+    if (landscape) {
+      return [aspect, 1]; // Correct :)
+    } else {
+      return [1, 1 / aspect]; // Correct :)
+    }
+  } else {
+    return [1, 1];
+  }
 };
 
 type AsyncMapFn<I, O> = (input: I) => Promise<O>;
