@@ -1,8 +1,8 @@
 import React, { FC, ReactNode, useMemo } from "react";
 import { styled } from "@stitches/react";
 import { FN_NAMES } from "glsl-blend/ast";
-import { useIntersection } from "../blend/use-intersection";
-import { RenderBlobProvider, useRenderBlob } from "../blend/use-render-blob";
+import { useIntersection } from "../hooks/use-intersection";
+import { RenderBlobProvider, useRenderBlob } from "../hooks/use-render-blob";
 import { RenderBlobOpts } from "../blend/render-blob";
 import {
   map,

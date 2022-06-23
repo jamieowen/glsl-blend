@@ -2,6 +2,7 @@ import { useState } from "react";
 import { styled } from "@stitches/react";
 import { Router, Route, Link } from "wouter";
 import { BlendModeGrid } from "./examples/BlendModeGrid";
+import { BlendLayers3JS } from "./examples/BlendLayers3JS";
 
 const Button = styled("button", {
   backgroundColor: "Blue",
@@ -16,7 +17,7 @@ const Button = styled("button", {
 
 const examples = [
   { path: "/blendgrid", component: <BlendModeGrid /> },
-  { path: "/two", component: <div>Two</div> },
+  { path: "/threejs-layers", component: <BlendLayers3JS /> },
   { path: "/three", component: <div>Three</div> },
 ];
 

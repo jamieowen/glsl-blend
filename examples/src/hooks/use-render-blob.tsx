@@ -12,8 +12,7 @@ import {
   createRenderBlobContext,
   RenderBlobContext,
   RenderBlobResult,
-  RenderBlobStream,
-} from "./render-blob";
+} from "../blend-ast/render-blob";
 
 export interface RenderBlobOpts {
   base_url: string;

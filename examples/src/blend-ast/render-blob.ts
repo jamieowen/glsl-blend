@@ -9,10 +9,6 @@ import {
   texture,
   $xy,
   $xyz,
-  vec2,
-  div,
-  $x,
-  $y,
   sub,
   add,
   mul,
@@ -27,11 +23,9 @@ import {
   Texture,
   TextureFilter,
   TextureFormat,
-  TextureRepeat,
   TextureTarget,
 } from "@thi.ng/webgl";
 import { blendModeSelect3 } from "glsl-blend/ast";
-import { aspectCorrectedUV } from "@thi.ng/shader-ast-stdlib";
 
 /**
  * Create a square GL canvas with prepared quad to
@@ -68,9 +62,10 @@ const createCanvasContext = () => {
         1.0
       );
 
-      // const samp = aspectCorrectedUV($xy(gl.gl_FragCoord), vec2(512, 512));
-      // const out3 = vec4($x(samp), 0, 0, 1);
-      // const out4 = blendModeSelect4(unis.mode, base, blend, unis.opacity);
+      // const out4 = vec4(
+      //   blendModeSelect3(unis.mode, $xyz(base), $xyz(blend), unis.opacity),
+      //   1.0
+      // );
 
       return [defMain(() => [base, blend, assign(gl.gl_FragColor, out3)])];
     },
