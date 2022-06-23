@@ -140,6 +140,10 @@ export const textureFromImage = (src: string, gl: WebGLRenderingContext) => {
 export type RenderBlobContext = ReturnType<typeof createRenderBlobContext>;
 export type RenderBlobStream = ReturnType<RenderBlobContext["renderBlob"]>;
 export type RenderBlobResult = { url: string; blob: Blob; revoke: () => void };
+export type RenderCanvasResult = {
+  canvas: HTMLCanvasElement;
+  dispose: () => void;
+};
 
 export type RenderBlobOpts = {
   base_url: string;
@@ -150,6 +154,7 @@ export type RenderBlobOpts = {
 
 export const createRenderBlobContext = () => {
   const { gl, quad, canvas, dispose } = createCanvasContext();
+  gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
   const imageCache = new Map<any, Stream<any>>();
   const fromImage = (src: string) => {
@@ -162,7 +167,32 @@ export const createRenderBlobContext = () => {
     }
   };
 
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  const fromImages = (opts: RenderBlobOpts) => {
+    const { base_url, blend_url } = opts;
+    return sync({
+      src: {
+        base: fromImage(base_url) as Stream<Texture>,
+        blend: fromImage(blend_url) as Stream<Texture>,
+      },
+    });
+  };
+
+  const render = (base: Texture, blend: Texture, opts: RenderBlobOpts) => {
+    const { mode = 0, opacity = 0.5 } = opts;
+
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    quad.textures = [base, blend];
+    quad.uniforms!.opacity = opacity;
+    quad.uniforms!.mode = mode;
+
+    const scl = "fill";
+    quad.uniforms!.scaleBase = computeAspectScale(base.size, scl);
+    quad.uniforms!.scaleBlend = computeAspectScale(blend.size, scl);
+
+    draw(quad);
+
+    return canvas;
+  };
 
   return {
     dispose: () => {
@@ -170,60 +200,48 @@ export const createRenderBlobContext = () => {
       dispose();
     },
     renderBlob: (opts: RenderBlobOpts) => {
-      const { base_url, blend_url, mode = 0, opacity = 0.5 } = opts;
-
-      /**
-       * Create dispose on render context.
-       * And move texture cache to context.
-       * Unsubscribe all subscriptions..
-       */
-      return sync({
-        src: {
-          base: fromImage(opts.base_url) as Stream<Texture>,
-          blend: fromImage(opts.blend_url) as Stream<Texture>,
-        },
-      }).subscribe(
+      return fromImages(opts).subscribe(
         asyncMap(async ({ base, blend }) => {
-          // await new Promise((res) => setTimeout(res, 100));
-
-          const res = await new Promise<null | {
-            blob: Blob;
-            url: string;
-            revoke: () => void;
-          }>((res) => {
-            requestIdleCallback(() => {
-              requestAnimationFrame(() => {
-                gl.clear(gl.COLOR_BUFFER_BIT);
-                quad.textures = [base, blend];
-                quad.uniforms!.opacity = opacity;
-                quad.uniforms!.mode = mode;
-
-                const scl = "fill";
-                quad.uniforms!.scaleBase = computeAspectScale(base.size, scl);
-                quad.uniforms!.scaleBlend = computeAspectScale(blend.size, scl);
-
-                // console.log(quad.uniforms!.scaleBlend);
-                // quad.uniforms!.scaleBlend = [1, 0.8];
-
-                draw(quad);
-
-                canvas.toBlob((blob) => {
-                  if (blob) {
-                    const url = URL.createObjectURL(blob);
-                    res({
-                      url,
-                      blob,
-                      revoke: () => URL.revokeObjectURL(url),
-                    } as RenderBlobResult);
-                  } else {
-                    res(null);
-                  }
-                });
+          return new Promise<RenderBlobResult | null>((res) => {
+            requestAnimationFrame(async () => {
+              render(base, blend, opts);
+              canvas.toBlob((blob) => {
+                if (blob) {
+                  const url = URL.createObjectURL(blob);
+                  res({
+                    url,
+                    blob,
+                    revoke: () => URL.revokeObjectURL(url),
+                  } as RenderBlobResult);
+                } else {
+                  res(null);
+                }
               });
             });
           });
+        })
+      );
+    },
 
-          return res;
+    renderCanvas: (opts: RenderBlobOpts) => {
+      return fromImages(opts).subscribe(
+        asyncMap(async ({ base, blend }) => {
+          return new Promise<RenderCanvasResult | null>((res) => {
+            requestAnimationFrame(async () => {
+              render(base, blend, opts);
+              const copy = document.createElement("canvas");
+              copy.width = canvas.width;
+              copy.height = canvas.height;
+              const ctx = copy.getContext("2d");
+              ctx?.drawImage(canvas, 0, 0);
+              res({
+                canvas: copy,
+                dispose: () => {
+                  // canvas.dose
+                },
+              });
+            });
+          });
         })
       );
     },

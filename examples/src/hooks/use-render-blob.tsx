@@ -12,6 +12,7 @@ import {
   createRenderBlobContext,
   RenderBlobContext,
   RenderBlobResult,
+  RenderCanvasResult,
 } from "../blend-ast/render-blob";
 
 export interface RenderBlobOpts {
@@ -67,6 +68,42 @@ export const useRenderBlob = (
         const res = blob.current.deref();
         if (res) {
           res.revoke();
+        }
+        blob.current.unsubscribe();
+      }
+    };
+  }, []);
+};
+
+export const useRenderCanvas = (
+  ref: MutableRefObject<HTMLElement>,
+  intersecting: boolean,
+  opts: RenderBlobOpts
+) => {
+  const ctx = useRenderBlobContext();
+  const blob = useRef<ISubscription<any, RenderCanvasResult | null>>();
+
+  useEffect(() => {
+    if (intersecting && !blob.current) {
+      console.log("Create blob, ");
+      blob.current = ctx.renderCanvas(opts).subscribe({
+        next: (blob) => {
+          const url = blob?.canvas.toDataURL("image/jpeg");
+          if (blob) {
+            ref.current.style.backgroundImage = `url(${url})`;
+          }
+        },
+      });
+    }
+  }, [intersecting]);
+
+  useEffect(() => {
+    return () => {
+      if (blob.current) {
+        console.log("Revoke");
+        const res = blob.current.deref();
+        if (res) {
+          res.dispose();
         }
         blob.current.unsubscribe();
       }
